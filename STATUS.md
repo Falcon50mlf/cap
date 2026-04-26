@@ -41,8 +41,10 @@
 
 ## 📦 Déploiement
 
-- **Repo GitHub** : _à renseigner après push_
-- **URL Vercel** : _à renseigner après deploy_
+- **Repo GitHub** : https://github.com/Falcon50mlf/cap
+- **URL Vercel (alias stable)** : https://cap-two-fawn.vercel.app
+- **URL Vercel (deploy)** : https://cap-f0pupi1s6-lekarma2s-projects.vercel.app
+- **Vercel project** : `lekarma2s-projects/cap` (auto-deploy on push to `main`)
 
 ## 📝 Notes / décisions
 
