@@ -1,6 +1,5 @@
 "use client";
 
-import { use } from "react";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { motion } from "framer-motion";
@@ -15,9 +14,9 @@ const ACCENT = "var(--family-marketing)";
 export default function MarketingGamePage({
   params,
 }: {
-  params: Promise<{ gameId: string }>;
+  params: { gameId: string };
 }) {
-  const { gameId } = use(params);
+  const { gameId } = params;
   const meta = getGame(gameId);
 
   if (!meta) notFound();
