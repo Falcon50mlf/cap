@@ -66,23 +66,26 @@ export default function OnboardingPage() {
       return;
     }
 
-    // Le trigger handle_new_user a déjà créé une row profiles avec role=null.
-    // On update.
-    const { error: updateError } = await supabase
+    // Upsert : insert si la row n'existe pas (trigger absent ou user créé
+    // avant le SQL), update sinon. .select().single() force le retour de la
+    // row mise à jour pour confirmer que le rôle est bien persisté avant
+    // de naviguer (sinon /hub re-redirige ici → boucle).
+    const { data, error: upsertError } = await supabase
       .from("profiles")
-      .update({ role, updated_at: new Date().toISOString() })
-      .eq("id", user.id);
+      .upsert(
+        { id: user.id, role, updated_at: new Date().toISOString() },
+        { onConflict: "id" },
+      )
+      .select("role")
+      .single();
 
-    if (updateError) {
-      // Fallback : la row n'existe pas (trigger absent ?), on insert.
-      const { error: insertError } = await supabase
-        .from("profiles")
-        .insert({ id: user.id, role });
-      if (insertError) {
-        setPicking(null);
-        setError(insertError.message);
-        return;
-      }
+    if (upsertError || data?.role !== role) {
+      setPicking(null);
+      setError(
+        upsertError?.message ??
+          "Sauvegarde impossible. Recharge la page et réessaie.",
+      );
+      return;
     }
 
     router.push("/hub");
