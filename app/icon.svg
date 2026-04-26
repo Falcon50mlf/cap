@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <rect width="512" height="512" rx="96" fill="#0E0E10"/>
+  <!-- Apostrophe Cap' : teardrop incliné, font-independent.
+       Construit comme bulb (ellipse) + tail (path) groupés et tournés. -->
+  <g fill="#FFDC32" transform="translate(256 256) rotate(-10)">
+    <!-- Bulb du haut -->
+    <ellipse cx="0" cy="-80" rx="70" ry="78"/>
+    <!-- Tail qui descend, légèrement effilée -->
+    <path d="M -62 -50 Q -64 30 -32 110 L 32 110 Q 60 30 62 -50 L -62 -50 Z"/>
+  </g>
+</svg>

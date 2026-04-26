@@ -26,6 +26,19 @@ export const metadata: Metadata = {
   title: "Cap' — Donne-toi un cap.",
   description:
     "La plateforme qui te fait découvrir les écoles de commerce et leurs métiers à travers des mini-jeux.",
+  icons: {
+    icon: [{ url: "/icon.svg", type: "image/svg+xml" }],
+    apple: "/apple-icon",
+  },
+  openGraph: {
+    title: "Cap' — Donne-toi un cap.",
+    description:
+      "Découvre les écoles de commerce et leurs débouchés à travers des mini-jeux.",
+    url: "https://cap-two-fawn.vercel.app",
+    siteName: "Cap'",
+    locale: "fr_FR",
+    type: "website",
+  },
 };
 
 export default function RootLayout({

@@ -1,7 +1,8 @@
 import { ImageResponse } from "next/og";
 
 // Apple touch icon (iOS home screen, Safari favoris).
-// Même monogramme "C'" que /icon, juste plus grand.
+// Même design que /icon.svg : apostrophe jaune sur fond noir arrondi.
+// On le génère en PNG via ImageResponse pour iOS qui ne lit pas SVG.
 
 export const size = { width: 180, height: 180 };
 export const contentType = "image/png";
@@ -17,28 +18,38 @@ export default function AppleIcon() {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
+          borderRadius: 34,
         }}
       >
         <div
           style={{
+            transform: "rotate(-10deg)",
             display: "flex",
-            alignItems: "baseline",
-            fontFamily: "system-ui, -apple-system, sans-serif",
-            fontWeight: 900,
-            lineHeight: 1,
-            letterSpacing: "-0.04em",
+            flexDirection: "column",
+            alignItems: "center",
           }}
         >
-          <span style={{ color: "#F0F0F0", fontSize: 130 }}>C</span>
-          <span
+          {/* Bulb */}
+          <div
             style={{
-              color: "#FFDC32",
-              fontSize: 168,
-              marginLeft: -6,
+              width: 50,
+              height: 56,
+              borderRadius: "50%",
+              background: "#FFDC32",
+              marginBottom: -8,
             }}
-          >
-            ’
-          </span>
+          />
+          {/* Tail (trapèze effilé) */}
+          <div
+            style={{
+              width: 0,
+              height: 0,
+              borderLeft: "22px solid transparent",
+              borderRight: "22px solid transparent",
+              borderTop: "70px solid #FFDC32",
+              marginTop: -2,
+            }}
+          />
         </div>
       </div>
     ),
