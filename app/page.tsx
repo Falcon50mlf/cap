@@ -157,7 +157,7 @@ export default function Home() {
               className="mt-10 flex flex-col sm:flex-row gap-4"
             >
               <Link
-                href="/login"
+                href="/pitch"
                 className="inline-flex items-center justify-center gap-2 bg-sun text-night font-bold px-8 py-4 rounded-2xl shadow-glow-sun hover:scale-[1.02] active:scale-[0.99] transition-transform"
               >
                 Lancer Cap&rsquo; <ArrowRight className="w-5 h-5" />
