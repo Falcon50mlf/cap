@@ -1,0 +1,122 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Backgrounds */
+  --night: #0E0E10;
+  --night-soft: #1A1A20;
+  --snow: #F0F0F0;
+
+  /* Accents */
+  --sun: #FFDC32;
+  --pivot: #8C6EFF;
+  --coral: #FF4D6D;
+  --mint: #00D4A8;
+
+  /* Family colors */
+  --family-strategy: #8C6EFF;
+  --family-finance: #00D4A8;
+  --family-marketing: #FF4D6D;
+  --family-tech: #FFDC32;
+  --family-startup: #FF8A3D;
+  --family-retail: #E5C7A0;
+
+  /* Schools */
+  --school-escp: #C8102E;
+  --school-hec: #002654;
+  --school-emlyon: #2D2D2D;
+  --school-essec: #003366;
+
+  /* Univers */
+  --discovery: #FFDC32;
+  --programs: #8C6EFF;
+
+  /* Neutrals */
+  --night-700: rgba(255, 255, 255, 0.7);
+  --night-500: rgba(255, 255, 255, 0.5);
+  --night-200: rgba(255, 255, 255, 0.15);
+  --night-100: rgba(255, 255, 255, 0.08);
+
+  /* shadcn aliases (dark by default) */
+  --background: var(--night);
+  --foreground: var(--snow);
+  --card: var(--night-soft);
+  --card-foreground: var(--snow);
+  --popover: var(--night-soft);
+  --popover-foreground: var(--snow);
+  --primary: var(--sun);
+  --primary-foreground: #0E0E10;
+  --secondary: var(--night-100);
+  --secondary-foreground: var(--snow);
+  --muted: var(--night-100);
+  --muted-foreground: var(--night-700);
+  --accent: var(--pivot);
+  --accent-foreground: var(--snow);
+  --destructive: var(--coral);
+  --destructive-foreground: var(--snow);
+  --border: var(--night-200);
+  --input: var(--night-200);
+  --ring: var(--sun);
+  --radius: 16px;
+}
+
+html,
+body {
+  background-color: var(--night);
+  color: var(--snow);
+}
+
+::selection {
+  background: var(--sun);
+  color: var(--night);
+}
+
+/* Scrollbar discrete */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--night);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--night-200);
+  border-radius: 8px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--night-500);
+}
+
+/* Logo apostrophe pulse on hover */
+@keyframes apostrophe-pulse {
+  0%,
+  100% {
+    transform: translateY(-0.08em) scale(1.2);
+  }
+  50% {
+    transform: translateY(-0.08em) scale(1.38);
+  }
+}
+
+.logo-wrap:hover .logo-apostrophe {
+  animation: apostrophe-pulse 0.6s ease-in-out;
+}
+
+/* Strikethrough utility for "quiz" */
+.strike-coral {
+  position: relative;
+  display: inline-block;
+}
+.strike-coral::after {
+  content: "";
+  position: absolute;
+  left: -2%;
+  right: -2%;
+  top: 55%;
+  height: 6px;
+  background: var(--coral);
+  opacity: 0.6;
+  transform: rotate(-3deg);
+  border-radius: 4px;
+}
