@@ -22,17 +22,20 @@ import Slide08 from "./slides/Slide08";
 import Slide09 from "./slides/Slide09";
 import Slide10 from "./slides/Slide10";
 
+// L'ordre de présentation ne suit PAS l'ordre des noms de fichiers — les fichiers
+// gardent leur nom d'origine pour ne pas casser les imports / les commits passés.
+// Slot 1 → 10  =  fichier source.
 const SLIDES = [
-  Slide01,
-  Slide02,
-  Slide03,
-  Slide04,
-  Slide05,
-  Slide06,
-  Slide07,
-  Slide08,
-  Slide09,
-  Slide10,
+  Slide01, // 01 — Hook (1 600 000 lycéens)
+  Slide09, // 02 — Pourquoi nous ? (équipe)
+  Slide02, // 03 — Problématique
+  Slide03, // 04 — Benchmark
+  Slide04, // 05 — La solution
+  Slide05, // 06 — Démo live
+  Slide06, // 07 — Intérêt pour les écoles
+  Slide07, // 08 — Modèle économique
+  Slide08, // 09 — Nos besoins
+  Slide10, // 10 — Cap' c'est simple (closing)
 ];
 const TOTAL = SLIDES.length;
 
