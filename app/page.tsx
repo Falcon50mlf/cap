@@ -533,6 +533,12 @@ export default function Home() {
             <Link className="hover:text-snow transition-colors" href="/login">
               Pour les diplômés
             </Link>
+            <Link
+              className="hover:text-snow transition-colors"
+              href="/criteres"
+            >
+              Critères de sélection des écoles
+            </Link>
             <Link className="hover:text-snow transition-colors" href="/login">
               Devenir bénévole
             </Link>

@@ -128,7 +128,7 @@ export default function HubPage() {
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-20">
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
@@ -175,6 +175,28 @@ export default function HubPage() {
           </div>
         </div>
       </section>
+
+      <footer className="px-6 md:px-10 py-8 border-t border-night-200 mt-auto">
+        <div className="max-w-[1200px] mx-auto flex flex-col md:flex-row gap-4 md:items-center md:justify-between">
+          <span className="font-mono text-[11px] uppercase tracking-widest text-night-500">
+            // Donne-toi un cap.
+          </span>
+          <nav className="flex flex-wrap gap-5 text-sm">
+            <Link
+              href="/criteres"
+              className="text-snow/60 hover:text-snow transition-colors"
+            >
+              Critères de sélection des écoles
+            </Link>
+            <a
+              href="mailto:team@cap.app?subject=Devenir%20b%C3%A9n%C3%A9vole"
+              className="text-snow/60 hover:text-snow transition-colors"
+            >
+              Devenir bénévole
+            </a>
+          </nav>
+        </div>
+      </footer>
     </main>
   );
 }
