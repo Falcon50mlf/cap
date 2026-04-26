@@ -11,6 +11,7 @@ import {
   Users,
 } from "lucide-react";
 import { Logo } from "@/components/layout/logo";
+import { ThemeToggle } from "@/components/layout/theme-toggle";
 import { FAMILIES } from "@/lib/families-database";
 
 const FAMILY = FAMILIES.marketing;
@@ -21,13 +22,16 @@ export default function MarketingFichePage() {
     <main className="relative min-h-screen flex flex-col">
       <header className="px-6 md:px-10 py-6 flex items-center justify-between">
         <Logo size="nav" />
-        <Link
-          href="/decouverte"
-          className="inline-flex items-center gap-2 text-snow/60 hover:text-snow text-sm transition-colors"
-        >
-          <ArrowLeft className="w-4 h-4" />
-          Découverte
-        </Link>
+        <div className="flex items-center gap-3">
+          <Link
+            href="/decouverte"
+            className="inline-flex items-center gap-2 text-snow/60 hover:text-snow text-sm transition-colors"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            Découverte
+          </Link>
+          <ThemeToggle />
+        </div>
       </header>
 
       {/* ── HERO ───────────────────────────────────────────────────── */}
@@ -114,7 +118,7 @@ export default function MarketingFichePage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-80px" }}
               transition={{ delay: i * 0.06, type: "spring", stiffness: 90, damping: 16 }}
-              className="p-6 rounded-3xl border border-night-200 bg-night/40"
+              className="p-6 rounded-3xl border border-night-200 bg-night-200"
             >
               <div
                 className="font-mono text-[10px] uppercase tracking-widest mb-3"

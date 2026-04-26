@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { Mail, Lock, Loader2, ArrowRight, Eye, EyeOff } from "lucide-react";
 import { Logo } from "@/components/layout/logo";
+import { ThemeToggle } from "@/components/layout/theme-toggle";
 import { createClient } from "@/lib/supabase/client";
 
 type Mode = "login" | "signup";
@@ -70,9 +71,12 @@ export default function LoginPage() {
     <main className="relative min-h-screen flex flex-col">
       <header className="px-6 md:px-10 py-6 flex items-center justify-between">
         <Logo size="nav" />
-        <span className="hidden sm:inline-block font-mono text-[11px] uppercase tracking-widest text-night-500">
-          {mode === "login" ? "// Bon retour" : "// Bienvenue"}
-        </span>
+        <div className="flex items-center gap-4">
+          <span className="hidden sm:inline-block font-mono text-[11px] uppercase tracking-widest text-night-500">
+            {mode === "login" ? "// Bon retour" : "// Bienvenue"}
+          </span>
+          <ThemeToggle />
+        </div>
       </header>
 
       <div className="flex-1 grid place-items-center px-6 md:px-10 pb-20">

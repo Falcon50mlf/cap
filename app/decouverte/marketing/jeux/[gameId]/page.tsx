@@ -5,6 +5,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowLeft, ArrowRight, Lock } from "lucide-react";
 import { Logo } from "@/components/layout/logo";
+import { ThemeToggle } from "@/components/layout/theme-toggle";
 import { GameShell } from "@/components/games/GameShell";
 import { gameComponents } from "@/lib/game-components";
 import { getGame } from "@/lib/games-registry";
@@ -59,13 +60,16 @@ function ComingSoon({
     <main className="relative min-h-screen flex flex-col">
       <header className="px-6 md:px-10 py-6 flex items-center justify-between">
         <Logo size="nav" />
-        <Link
-          href="/decouverte/marketing/jeux"
-          className="inline-flex items-center gap-2 text-snow/60 hover:text-snow text-sm transition-colors"
-        >
-          <ArrowLeft className="w-4 h-4" />
-          Mini-jeux Marketing
-        </Link>
+        <div className="flex items-center gap-3">
+          <Link
+            href="/decouverte/marketing/jeux"
+            className="inline-flex items-center gap-2 text-snow/60 hover:text-snow text-sm transition-colors"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            Mini-jeux Marketing
+          </Link>
+          <ThemeToggle />
+        </div>
       </header>
 
       <section className="flex-1 grid place-items-center px-6 md:px-10 py-16">

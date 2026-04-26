@@ -12,6 +12,7 @@ import {
   GraduationCap,
 } from "lucide-react";
 import { Logo } from "@/components/layout/logo";
+import { ThemeToggle } from "@/components/layout/theme-toggle";
 import { createClient } from "@/lib/supabase/client";
 import type { Profile } from "@/types/database";
 
@@ -85,6 +86,7 @@ export default function HubPage() {
           <span className="hidden sm:inline-block font-mono text-[11px] uppercase tracking-widest text-night-500">
             // {email}
           </span>
+          <ThemeToggle />
           <button
             onClick={logout}
             className="inline-flex items-center gap-2 text-sm text-snow/60 hover:text-snow border border-night-200 rounded-2xl px-4 py-2 transition-colors hover:border-night-500"

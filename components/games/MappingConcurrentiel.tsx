@@ -283,7 +283,7 @@ function Plane({
                 transform: "translate(-50%, 50%)",
               }}
             >
-              <div className="w-3 h-3 rounded-full border-2 border-mint bg-night/60" />
+              <div className="w-3 h-3 rounded-full border-2 border-mint bg-night-200" />
               <div
                 className="absolute top-4 left-1/2 -translate-x-1/2 font-mono text-[9px] uppercase tracking-wider text-mint whitespace-nowrap"
                 style={{ color: "var(--mint)" }}

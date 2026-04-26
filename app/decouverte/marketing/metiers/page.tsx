@@ -12,6 +12,7 @@ import {
   TrendingUp,
 } from "lucide-react";
 import { Logo } from "@/components/layout/logo";
+import { ThemeToggle } from "@/components/layout/theme-toggle";
 import { getJobsByFamily, type Job } from "@/lib/jobs-database";
 
 const ICONS: Record<string, React.ComponentType<{ className?: string }>> = {
@@ -32,13 +33,16 @@ export default function MarketingMetiersPage() {
     <main className="relative min-h-screen flex flex-col">
       <header className="px-6 md:px-10 py-6 flex items-center justify-between">
         <Logo size="nav" />
-        <Link
-          href="/decouverte/marketing"
-          className="inline-flex items-center gap-2 text-snow/60 hover:text-snow text-sm transition-colors"
-        >
-          <ArrowLeft className="w-4 h-4" />
-          Marketing
-        </Link>
+        <div className="flex items-center gap-3">
+          <Link
+            href="/decouverte/marketing"
+            className="inline-flex items-center gap-2 text-snow/60 hover:text-snow text-sm transition-colors"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            Marketing
+          </Link>
+          <ThemeToggle />
+        </div>
       </header>
 
       <section className="px-6 md:px-10 pt-8 pb-20">
@@ -130,7 +134,7 @@ function JobCard({ job, index }: { job: Job; index: number }) {
           {job.skills.map((s) => (
             <span
               key={s}
-              className="font-mono text-[10px] uppercase tracking-wider text-snow/60 bg-night/50 px-2.5 py-1 rounded-full"
+              className="font-mono text-[10px] uppercase tracking-wider text-snow/60 bg-night-200 px-2.5 py-1 rounded-full"
             >
               {s}
             </span>
@@ -176,7 +180,7 @@ function JobCard({ job, index }: { job: Job; index: number }) {
 
 function SmallStat({ label, value }: { label: string; value: string }) {
   return (
-    <div className="px-4 py-3 rounded-2xl bg-night/50">
+    <div className="px-4 py-3 rounded-2xl bg-night-200">
       <div className="font-mono text-[9px] uppercase tracking-widest text-snow/50 mb-1">
         {label}
       </div>

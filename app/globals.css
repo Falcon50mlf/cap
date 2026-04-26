@@ -38,6 +38,46 @@
   --night-200: rgba(255, 255, 255, 0.15);
   --night-100: rgba(255, 255, 255, 0.08);
 
+  /* Overlays — toujours sombres (modals, scrim) — pas swap par light */
+  --scrim-strong: rgba(0, 0, 0, 0.7);
+  --scrim-soft: rgba(0, 0, 0, 0.4);
+}
+
+/* ─── LIGHT MODE — keep the brand soul, no corporate gray-blue ──────────── */
+[data-theme="light"] {
+  --night: #FAF9F5;
+  --night-soft: #F0EEE6;
+  --snow: #1A1A1F;
+
+  --sun: #F5C518;
+  --pivot: #6B4FE8;
+  --coral: #E63462;
+  --mint: #00B894;
+
+  --family-strategy: #6B4FE8;
+  --family-finance: #00B894;
+  --family-marketing: #E63462;
+  --family-tech: #D4A20A;
+  --family-startup: #E8732D;
+  --family-retail: #B89968;
+
+  --school-escp: #C8102E;
+  --school-hec: #002654;
+  --school-emlyon: #2D2D2D;
+  --school-essec: #003366;
+
+  --discovery: #F5C518;
+  --programs: #6B4FE8;
+
+  --night-700: rgba(26, 26, 31, 0.7);
+  --night-500: rgba(26, 26, 31, 0.5);
+  --night-200: rgba(26, 26, 31, 0.15);
+  --night-100: rgba(26, 26, 31, 0.08);
+
+  /* Overlays restent dark (modals lisibles dans les 2 modes) */
+  --scrim-strong: rgba(0, 0, 0, 0.55);
+  --scrim-soft: rgba(0, 0, 0, 0.35);
+
   /* shadcn aliases (dark by default) */
   --background: var(--night);
   --foreground: var(--snow);
@@ -69,7 +109,7 @@ body {
 
 ::selection {
   background: var(--sun);
-  color: var(--night);
+  color: #0E0E10; /* toujours dark sur fond jaune (lisible dans les 2 modes) */
 }
 
 /* Scrollbar discrete */

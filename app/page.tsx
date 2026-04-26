@@ -17,6 +17,7 @@ import {
   ContactRound,
 } from "lucide-react";
 import { Logo } from "@/components/layout/logo";
+import { ThemeToggle } from "@/components/layout/theme-toggle";
 import { PartnershipSection } from "@/components/landing/partnership-section";
 
 const FAMILIES = [
@@ -84,9 +85,12 @@ export default function Home() {
       {/* ───────── NAV ───────── */}
       <nav className="relative z-10 flex items-center justify-between px-6 md:px-10 py-6">
         <Logo size="nav" />
-        <span className="hidden md:inline-block font-mono text-[11px] uppercase tracking-widest text-night-500">
-          // 2 univers · 6 familles · 30 métiers
-        </span>
+        <div className="flex items-center gap-4">
+          <span className="hidden md:inline-block font-mono text-[11px] uppercase tracking-widest text-night-500">
+            // 2 univers · 6 familles · 30 métiers
+          </span>
+          <ThemeToggle />
+        </div>
       </nav>
 
       {/* ───────── HERO ───────── */}
@@ -264,10 +268,10 @@ export default function Home() {
                 </div>
               </div>
               <div className="flex flex-wrap gap-2 mt-4">
-                <span className="bg-night/10 px-2.5 py-1 rounded-full text-[11px] font-mono">
+                <span className="bg-night-100 px-2.5 py-1 rounded-full text-[11px] font-mono">
                   Stages M&amp;A
                 </span>
-                <span className="bg-night/10 px-2.5 py-1 rounded-full text-[11px] font-mono">
+                <span className="bg-night-100 px-2.5 py-1 rounded-full text-[11px] font-mono">
                   Vie en école
                 </span>
               </div>
@@ -554,7 +558,7 @@ function FeatureRow({
   body: string;
 }) {
   return (
-    <div className="flex items-start gap-4 p-4 rounded-2xl border border-night-200 bg-night/40">
+    <div className="flex items-start gap-4 p-4 rounded-2xl border border-night-200 bg-night-200">
       <div
         className="w-10 h-10 rounded-xl grid place-items-center shrink-0"
         style={{ background: `${color}1f`, color }}

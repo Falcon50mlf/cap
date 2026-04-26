@@ -10,6 +10,7 @@ import {
   Phone,
 } from "lucide-react";
 import { Logo } from "@/components/layout/logo";
+import { ThemeToggle } from "@/components/layout/theme-toggle";
 import {
   getVolunteersByFamily,
   type Volunteer,
@@ -36,13 +37,16 @@ export default function MarketingBenevolesPage() {
     <main className="relative min-h-screen flex flex-col">
       <header className="px-6 md:px-10 py-6 flex items-center justify-between">
         <Logo size="nav" />
-        <Link
-          href="/decouverte/marketing"
-          className="inline-flex items-center gap-2 text-snow/60 hover:text-snow text-sm transition-colors"
-        >
-          <ArrowLeft className="w-4 h-4" />
-          Marketing
-        </Link>
+        <div className="flex items-center gap-3">
+          <Link
+            href="/decouverte/marketing"
+            className="inline-flex items-center gap-2 text-snow/60 hover:text-snow text-sm transition-colors"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            Marketing
+          </Link>
+          <ThemeToggle />
+        </div>
       </header>
 
       <section className="px-6 md:px-10 pt-8 pb-20">
@@ -184,7 +188,7 @@ function VolunteerCard({ v, index }: { v: Volunteer; index: number }) {
             return (
               <span
                 key={f}
-                className="inline-flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-wider text-snow/60 bg-night/50 px-2.5 py-1 rounded-full"
+                className="inline-flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-wider text-snow/60 bg-night-200 px-2.5 py-1 rounded-full"
               >
                 <Icon className="w-3 h-3" />
                 {FORMAT_LABELS[f]}

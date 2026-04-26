@@ -12,6 +12,7 @@ import {
   ArrowRight,
 } from "lucide-react";
 import { Logo } from "@/components/layout/logo";
+import { ThemeToggle } from "@/components/layout/theme-toggle";
 import { saveGameResult } from "@/lib/save-game-result";
 import {
   GameShellContext,
@@ -108,7 +109,7 @@ export function GameShell({
         {/* Header sticky */}
         <header
           className="sticky top-0 z-30 backdrop-blur-md border-b border-night-200"
-          style={{ background: "rgba(14,14,16,0.85)" }}
+          style={{ background: "var(--night)" }}
         >
           <div className="px-6 md:px-10 py-4 flex items-center justify-between gap-4">
             <div className="flex items-center gap-4 min-w-0">
@@ -126,6 +127,7 @@ export function GameShell({
                 Manche {currentRound.toString().padStart(2, "0")} /{" "}
                 {totalRounds.toString().padStart(2, "0")}
               </span>
+              <ThemeToggle />
               <button
                 onClick={handleQuit}
                 aria-label="Quitter"

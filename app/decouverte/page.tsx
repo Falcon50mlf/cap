@@ -16,6 +16,7 @@ import {
   TrendingUp,
 } from "lucide-react";
 import { Logo } from "@/components/layout/logo";
+import { ThemeToggle } from "@/components/layout/theme-toggle";
 import { createClient } from "@/lib/supabase/client";
 import { FAMILY_LIST } from "@/lib/families-database";
 import type { Family } from "@/types/database";
@@ -65,13 +66,16 @@ export default function DecouvertePage() {
     <main className="relative min-h-screen flex flex-col">
       <header className="px-6 md:px-10 py-6 flex items-center justify-between">
         <Logo size="nav" />
-        <Link
-          href="/hub"
-          className="inline-flex items-center gap-2 text-snow/60 hover:text-snow text-sm transition-colors"
-        >
-          <ArrowLeft className="w-4 h-4" />
-          Hub
-        </Link>
+        <div className="flex items-center gap-3">
+          <Link
+            href="/hub"
+            className="inline-flex items-center gap-2 text-snow/60 hover:text-snow text-sm transition-colors"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            Hub
+          </Link>
+          <ThemeToggle />
+        </div>
       </header>
 
       <section className="px-6 md:px-10 pb-20">
@@ -190,7 +194,7 @@ function FamilyCard({
         {preview.map((p) => (
           <span
             key={p}
-            className="font-mono text-[10px] uppercase tracking-wider text-snow/50 bg-night/40 px-2 py-1 rounded-full"
+            className="font-mono text-[10px] uppercase tracking-wider text-snow/50 bg-night-200 px-2 py-1 rounded-full"
           >
             {p}
           </span>

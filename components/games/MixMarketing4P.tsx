@@ -394,7 +394,7 @@ function CardPill({
 
   return (
     <div
-      className="px-3 py-2 rounded-2xl border-2 text-sm leading-snug bg-night/80 cursor-grab active:cursor-grabbing select-none flex items-start gap-2"
+      className="px-3 py-2 rounded-2xl border-2 text-sm leading-snug bg-night-soft cursor-grab active:cursor-grabbing select-none flex items-start gap-2"
       style={{
         borderColor,
         color: textColor,
