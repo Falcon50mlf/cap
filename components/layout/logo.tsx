@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { cn } from "@/lib/utils";
 
 type LogoSize = "nav" | "hero" | "default";
@@ -11,16 +12,19 @@ const sizeMap: Record<LogoSize, string> = {
 export function Logo({
   size = "default",
   className,
+  href = "/",
 }: {
   size?: LogoSize;
   className?: string;
+  /** Destination du clic. Passe `null` pour désactiver le lien. */
+  href?: string | null;
 }) {
-  return (
+  const wordmark = (
     <span
       className={cn(
         "logo-wrap font-display font-extrabold tracking-tight inline-flex items-center leading-none select-none",
         sizeMap[size],
-        className
+        className,
       )}
     >
       <span>Cap</span>
@@ -36,5 +40,13 @@ export function Logo({
         &rsquo;
       </span>
     </span>
+  );
+
+  if (href === null) return wordmark;
+
+  return (
+    <Link href={href} aria-label="Retour à l'accueil Cap'">
+      {wordmark}
+    </Link>
   );
 }
