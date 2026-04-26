@@ -25,7 +25,7 @@ export default function Slide01() {
           style={{ fontSize: "clamp(72px, 11vw, 160px)" }}
         >
           1 600 000{" "}
-          <span style={{ color: "var(--sun)" }}>lycéens</span>.
+          <span style={{ color: "var(--sun)" }}>lycéens</span>
         </motion.h1>
 
         <motion.p

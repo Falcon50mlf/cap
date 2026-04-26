@@ -1,25 +1,43 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { Check } from "lucide-react";
 import { SlideContainer, Tag, fadeUp, stagger } from "../slide-utils";
 
-const CHIPS = ["Marketing", "Finance", "Entrepreneuriat", "Conseil", "International"];
+type Competitor = {
+  name: string;
+  isCap?: boolean;
+};
 
-const KPIS = [
+const COMPETITORS: Competitor[] = [
+  { name: "Open Classroom" },
+  { name: "Conseillers d'orientation" },
+  { name: "Hello Charly" },
+  { name: "Direct Diplomeo" },
+  { name: "Cap'", isCap: true },
+];
+
+const ROWS: { label: string; checks: boolean[] }[] = [
+  // Order : Open Classroom, Conseillers, Hello Charly, Direct Diplomeo, Cap'
   {
-    big: "3-5 min",
-    color: "var(--sun)",
-    label: "Durée par jeu",
+    label: "Renseignements sur les formations",
+    checks: [false, true, true, true, true],
   },
   {
-    big: "Fiche métier",
-    color: "var(--pivot)",
-    label: "À la fin du jeu",
+    label: "Liste des métiers liés",
+    checks: [false, true, true, true, true],
   },
   {
-    big: "Validé",
-    color: "var(--mint)",
-    label: "Par les écoles",
+    label: "Contact direct avec les écoles",
+    checks: [false, false, true, true, true],
+  },
+  {
+    label: "Test des cours",
+    checks: [true, false, false, false, true],
+  },
+  {
+    label: "Ludique",
+    checks: [false, false, false, false, true],
   },
 ];
 
@@ -30,71 +48,135 @@ export default function Slide03() {
         variants={stagger}
         initial="hidden"
         animate="show"
-        className="flex-1 flex flex-col justify-center max-w-[1200px] mx-auto w-full"
+        className="flex-1 flex flex-col justify-center max-w-[1300px] mx-auto w-full"
       >
-        <Tag color="var(--pivot)">// La réponse Cap&rsquo;</Tag>
+        <Tag color="var(--pivot)">// Concurrence</Tag>
 
         <motion.h1
           variants={fadeUp}
           className="font-display font-extrabold tracking-[-0.04em] leading-[0.95] mb-10"
-          style={{ fontSize: "clamp(56px, 8vw, 112px)" }}
+          style={{ fontSize: "clamp(48px, 7vw, 96px)" }}
         >
-          La solution.
+          Benchmark
         </motion.h1>
 
         <motion.div
           variants={fadeUp}
-          className="bg-night-soft rounded-3xl p-8 md:p-10 mb-8 border-l-4"
-          style={{ borderLeftColor: "var(--pivot)" }}
+          className="overflow-x-auto rounded-3xl border-2"
+          style={{ borderColor: "var(--sun)" }}
         >
-          <p
-            className="text-snow/85 font-light leading-relaxed"
-            style={{ fontSize: "clamp(22px, 2.2vw, 32px)" }}
+          <table
+            className="w-full border-collapse"
+            style={{ minWidth: 760 }}
           >
-            <span className="font-display font-bold text-snow">Cap&rsquo;</span>
-            , une plateforme web de{" "}
-            <span style={{ color: "var(--sun)", fontWeight: 600 }}>
-              mini-jeux immersifs
-            </span>{" "}
-            pour étudiants, qui simulent les matières des écoles de commerce.
-          </p>
+            {/* Header row */}
+            <thead>
+              <tr>
+                <th
+                  className="text-left p-4 font-display font-bold text-snow"
+                  style={{
+                    background: "var(--pivot)",
+                    borderRight: "1px solid rgba(255,220,50,0.3)",
+                  }}
+                >
+                  Critère
+                </th>
+                {COMPETITORS.map((c, i) => (
+                  <th
+                    key={c.name}
+                    className="text-center p-4 font-display font-bold whitespace-nowrap"
+                    style={{
+                      background: c.isCap ? "var(--sun)" : "var(--pivot)",
+                      color: c.isCap ? "#0E0E10" : "var(--snow)",
+                      borderRight:
+                        i < COMPETITORS.length - 1
+                          ? "1px solid rgba(255,220,50,0.3)"
+                          : undefined,
+                      boxShadow: c.isCap
+                        ? "0 0 24px rgba(255,220,50,0.4)"
+                        : undefined,
+                    }}
+                  >
+                    {c.isCap ? (
+                      <>
+                        Cap
+                        <span style={{ color: "#0E0E10", fontWeight: 900 }}>
+                          ’
+                        </span>
+                      </>
+                    ) : (
+                      c.name
+                    )}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {ROWS.map((row) => (
+                <tr key={row.label}>
+                  <td
+                    className="p-4 font-display font-bold text-snow text-sm md:text-base"
+                    style={{
+                      background: "var(--pivot)",
+                      borderTop: "1px solid rgba(255,220,50,0.2)",
+                      borderRight: "1px solid rgba(255,220,50,0.3)",
+                    }}
+                  >
+                    {row.label}
+                  </td>
+                  {row.checks.map((checked, ci) => {
+                    const isCapColumn = ci === COMPETITORS.length - 1;
+                    return (
+                      <td
+                        key={ci}
+                        className="p-4 text-center"
+                        style={{
+                          background: isCapColumn
+                            ? "rgba(255,220,50,0.06)"
+                            : "var(--night)",
+                          borderTop: "1px solid rgba(255,220,50,0.2)",
+                          borderRight:
+                            ci < row.checks.length - 1
+                              ? "1px solid rgba(255,220,50,0.15)"
+                              : undefined,
+                        }}
+                      >
+                        {checked && (
+                          <Check
+                            className="w-7 h-7 md:w-8 md:h-8 mx-auto"
+                            strokeWidth={3}
+                            style={{
+                              color: isCapColumn
+                                ? "var(--sun)"
+                                : "var(--snow)",
+                            }}
+                          />
+                        )}
+                      </td>
+                    );
+                  })}
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </motion.div>
 
-        <motion.div
+        <motion.p
           variants={fadeUp}
-          className="flex flex-wrap gap-2.5 mb-12"
+          className="text-snow/85 font-semibold italic mt-8 max-w-3xl"
+          style={{
+            fontSize: "clamp(18px, 1.8vw, 24px)",
+            fontStyle: "italic",
+            lineHeight: 1.4,
+          }}
         >
-          {CHIPS.map((c) => (
-            <motion.span
-              key={c}
-              whileHover={{ scale: 1.05, y: -2 }}
-              className="px-5 py-2.5 rounded-full border-2 border-pivot/40 bg-pivot/10 text-snow font-display font-semibold cursor-default transition-colors"
-            >
-              {c}
-            </motion.span>
-          ))}
-        </motion.div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-          {KPIS.map((k) => (
-            <motion.div
-              key={k.big}
-              variants={fadeUp}
-              className="rounded-3xl p-7 border-2 text-center bg-night-soft/40"
-              style={{ borderColor: k.color, background: `${k.color}0d` }}
-            >
-              <div
-                className="font-display font-extrabold tracking-tight leading-none mb-3"
-                style={{ fontSize: "clamp(36px, 4vw, 64px)", color: k.color }}
-              >
-                {k.big}
-              </div>
-              <div className="font-mono text-[11px] uppercase tracking-widest text-snow/60">
-                {k.label}
-              </div>
-            </motion.div>
-          ))}
-        </div>
+          Cap
+          <span style={{ color: "var(--sun)" }}>&rsquo;</span> est la SEULE
+          plateforme qui combine{" "}
+          <span style={{ color: "var(--sun)" }}>ludique</span> +{" "}
+          <span style={{ color: "var(--sun)" }}>test des cours</span> +{" "}
+          <span style={{ color: "var(--sun)" }}>contact écoles</span>.
+        </motion.p>
       </motion.div>
     </SlideContainer>
   );

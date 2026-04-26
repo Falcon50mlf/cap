@@ -44,20 +44,36 @@ export default function Slide02() {
 
         <motion.h1
           variants={fadeUp}
-          className="font-display font-extrabold tracking-[-0.04em] leading-[0.95] mb-10"
+          className="font-display font-extrabold tracking-[-0.04em] leading-[0.95] mb-6"
           style={{ fontSize: "clamp(56px, 8vw, 112px)" }}
         >
-          Problématique.
+          Problématique
         </motion.h1>
+
+        <motion.p
+          variants={fadeUp}
+          className="text-snow font-light italic mb-10 max-w-3xl"
+          style={{
+            fontSize: "clamp(24px, 2.8vw, 40px)",
+            fontWeight: 600,
+            fontStyle: "italic",
+            lineHeight: 1.25,
+            letterSpacing: "-0.01em",
+          }}
+        >
+          Comment bien s&rsquo;orienter, quand la{" "}
+          <span style={{ color: "var(--sun)" }}>transition</span> lycée — études
+          sup n&rsquo;est que théorique ?
+        </motion.p>
 
         <motion.div
           variants={fadeUp}
-          className="bg-night-soft rounded-3xl p-8 md:p-10 mb-10 border-l-4"
+          className="bg-night-soft rounded-3xl p-7 md:p-9 mb-6 border-l-4"
           style={{ borderLeftColor: "var(--sun)" }}
         >
           <p
             className="text-snow/85 font-light leading-relaxed"
-            style={{ fontSize: "clamp(20px, 2vw, 28px)" }}
+            style={{ fontSize: "clamp(18px, 1.8vw, 24px)" }}
           >
             Chaque année,{" "}
             <span style={{ color: "var(--sun)", fontWeight: 600 }}>
@@ -73,27 +89,62 @@ export default function Slide02() {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
           {POINTS.map((p) => (
             <motion.div
               key={p.n}
               variants={fadeUp}
-              className="rounded-3xl p-7 border bg-night-soft/40"
+              className="rounded-3xl p-5 border bg-night-soft/40"
               style={{
                 borderColor: `${p.color}50`,
                 background: `${p.color}10`,
               }}
             >
-              <div className="flex items-center gap-3 mb-5">
+              <div className="flex items-center gap-3 mb-3">
                 <NumCircle n={p.n} color={p.color} />
-                <p.Icon className="w-6 h-6" style={{ color: p.color }} />
+                <p.Icon className="w-5 h-5" style={{ color: p.color }} />
               </div>
-              <p className="text-snow/85 leading-snug font-medium text-lg">
+              <p className="text-snow/85 leading-snug font-medium text-base">
                 {p.text}
               </p>
             </motion.div>
           ))}
         </div>
+
+        <motion.div
+          variants={fadeUp}
+          className="rounded-3xl p-6 md:p-7 border-2"
+          style={{
+            borderColor: "var(--sun)",
+            background:
+              "linear-gradient(135deg, rgba(255,220,50,0.08), rgba(255,220,50,0.02))",
+          }}
+        >
+          <div
+            className="font-mono text-[11px] uppercase tracking-widest mb-3"
+            style={{ color: "var(--sun)" }}
+          >
+            // Potentiel marché
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+            <div>
+              <div className="font-display font-extrabold text-xl md:text-2xl text-snow mb-1">
+                230 écoles · 115 000 places/an
+              </div>
+              <div className="text-snow/60 text-sm">
+                Marché total adressable
+              </div>
+            </div>
+            <div>
+              <div className="font-display font-extrabold text-xl md:text-2xl text-snow mb-1">
+                500 — 2 000€ / étudiant
+              </div>
+              <div className="text-snow/60 text-sm">
+                Budget acquisition actuel des écoles
+              </div>
+            </div>
+          </div>
+        </motion.div>
       </motion.div>
     </SlideContainer>
   );

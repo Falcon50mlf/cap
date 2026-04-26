@@ -1,73 +1,152 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ExternalLink } from "lucide-react";
-import { Tag, fadeUp, stagger } from "../slide-utils";
+import {
+  SlideContainer,
+  Tag,
+  fadeUp,
+  stagger,
+  NumCircle,
+} from "../slide-utils";
 
-// Slide 6 = démo live. L'iframe ne charge le mini-jeu QUE quand
-// cette slide est mounted (AnimatePresence mode="wait" garantit que
-// les autres slides sont démontées). Sa key change quand on revient
-// sur la slide → reset automatique.
+type Card = {
+  n: number;
+  color: string;
+  title: string;
+  body: React.ReactNode;
+};
 
-const GAME_PATH = "/decouverte/marketing/jeux/mapping-concurrentiel";
+const POINTS: Card[] = [
+  {
+    n: 1,
+    color: "var(--sun)",
+    title: "Leads qualifiés et consentis",
+    body: (
+      <>L&rsquo;étudiant a déjà expérimenté votre matière, son intérêt est validé.</>
+    ),
+  },
+  {
+    n: 2,
+    color: "var(--pivot)",
+    title: "Gamification > Communication classique",
+    body: (
+      <>
+        Vos étudiants jouent avec votre pédagogie au lieu de scroller des
+        plaquettes.
+      </>
+    ),
+  },
+  {
+    n: 3,
+    color: "var(--mint)",
+    title: "Visibilité auprès d'une cible jeune et engagée",
+    body: <>Lycéens 15-18 ans actifs, pas une audience passive.</>,
+  },
+  {
+    n: 4,
+    color: "#3B82F6",
+    title: "Coût d'acquisition bien en dessous du marché",
+    body: (
+      <>
+        <span style={{ color: "var(--sun)", fontWeight: 600 }}>
+          20-30€/lead
+        </span>{" "}
+        vs{" "}
+        <span style={{ color: "var(--sun)", fontWeight: 600 }}>
+          500-2 000€/étudiant
+        </span>{" "}
+        en com classique.
+      </>
+    ),
+  },
+];
+
+const HIGHLIGHT: Card = {
+  n: 5,
+  color: "var(--coral)",
+  title: "Réactivité produit unique",
+  body: (
+    <>
+      Manque sur une formation ? On produit un module de 30 min en 1 mois pour
+      renforcer votre communication.
+    </>
+  ),
+};
 
 export default function Slide06() {
   return (
-    <div className="min-h-screen w-full flex flex-col px-6 md:px-10 lg:px-12 pt-12 pb-24">
+    <SlideContainer>
       <motion.div
         variants={stagger}
         initial="hidden"
         animate="show"
-        className="max-w-[1400px] w-full mx-auto flex-1 flex flex-col"
+        className="flex-1 flex flex-col justify-center max-w-[1200px] mx-auto w-full"
       >
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-3 mb-5">
-          <div>
-            <Tag>// Démo live · cap-two-fawn.vercel.app</Tag>
-            <motion.h1
-              variants={fadeUp}
-              className="font-display font-extrabold tracking-[-0.04em] leading-[0.95]"
-              style={{ fontSize: "clamp(40px, 5vw, 72px)" }}
-            >
-              Et concrètement ?
-            </motion.h1>
-            <motion.p
-              variants={fadeUp}
-              className="mt-2 text-snow/70"
-              style={{ fontSize: "clamp(16px, 1.5vw, 22px)" }}
-            >
-              On l&rsquo;a déjà construit. Joue avec.
-            </motion.p>
-          </div>
+        <Tag color="var(--pivot)">// Pour les écoles</Tag>
 
-          <motion.a
-            variants={fadeUp}
-            href={GAME_PATH}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 bg-sun text-night font-bold px-5 py-3 rounded-2xl text-sm transition-transform hover:scale-[1.02] self-start md:self-end"
-            style={{ boxShadow: "0 0 16px var(--sun)" }}
-          >
-            <ExternalLink className="w-4 h-4" />
-            Ouvrir en plein écran
-          </motion.a>
+        <motion.h1
+          variants={fadeUp}
+          className="font-display font-extrabold tracking-[-0.04em] leading-[0.95] mb-10"
+          style={{ fontSize: "clamp(48px, 7vw, 96px)" }}
+        >
+          Intérêt pour les écoles
+        </motion.h1>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
+          {POINTS.map((p) => (
+            <motion.div
+              key={p.n}
+              variants={fadeUp}
+              className="rounded-3xl p-6 border bg-night-soft/40 flex items-start gap-4"
+              style={{
+                borderColor: `${p.color}50`,
+                background: `${p.color}0a`,
+              }}
+            >
+              <NumCircle n={p.n} color={p.color} />
+              <div className="pt-1">
+                <div
+                  className="font-display font-bold mb-1.5"
+                  style={{
+                    color: p.color,
+                    fontSize: "clamp(16px, 1.4vw, 19px)",
+                  }}
+                >
+                  {p.title}
+                </div>
+                <p className="text-snow/80 text-sm md:text-base leading-snug">
+                  {p.body}
+                </p>
+              </div>
+            </motion.div>
+          ))}
         </div>
 
         <motion.div
           variants={fadeUp}
-          className="relative flex-1 rounded-3xl overflow-hidden border border-night-200 bg-night-soft"
-          style={{ boxShadow: "0 30px 60px rgba(0,0,0,0.45)", minHeight: 480 }}
+          className="rounded-3xl p-7 border-2 flex items-start gap-4"
+          style={{
+            borderColor: HIGHLIGHT.color,
+            background: `${HIGHLIGHT.color}10`,
+          }}
         >
-          <iframe
-            // key inutile ici car AnimatePresence remount quand on revient
-            src={GAME_PATH}
-            title="Démo Cap' — Mapping Concurrentiel"
-            sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
-            loading="lazy"
-            className="w-full h-full absolute inset-0"
-            style={{ border: 0 }}
-          />
+          <NumCircle n={HIGHLIGHT.n} color={HIGHLIGHT.color} />
+          <div className="pt-1">
+            <div
+              className="font-display font-extrabold mb-2"
+              style={{
+                color: HIGHLIGHT.color,
+                fontSize: "clamp(18px, 1.8vw, 26px)",
+              }}
+            >
+              {HIGHLIGHT.title}
+            </div>
+            <p className="text-snow/85 text-base md:text-lg leading-snug">
+              {HIGHLIGHT.body}
+            </p>
+          </div>
         </motion.div>
       </motion.div>
-    </div>
+    </SlideContainer>
   );
 }
