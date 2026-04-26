@@ -152,7 +152,7 @@ export default function Home() {
               className="mt-10 flex flex-col sm:flex-row gap-4"
             >
               <Link
-                href="/onboarding"
+                href="/login"
                 className="inline-flex items-center justify-center gap-2 bg-sun text-night font-bold px-8 py-4 rounded-2xl shadow-glow-sun hover:scale-[1.02] active:scale-[0.99] transition-transform"
               >
                 Lancer Cap&rsquo; <ArrowRight className="w-5 h-5" />
@@ -519,13 +519,13 @@ export default function Home() {
             <span className="text-snow/50 text-sm">Donne-toi un cap.</span>
           </div>
           <nav className="flex flex-wrap gap-6 text-sm text-snow/60">
-            <Link className="hover:text-snow transition-colors" href="/onboarding">
+            <Link className="hover:text-snow transition-colors" href="/login">
               Pour les lycéens
             </Link>
-            <Link className="hover:text-snow transition-colors" href="/onboarding">
+            <Link className="hover:text-snow transition-colors" href="/login">
               Pour les diplômés
             </Link>
-            <Link className="hover:text-snow transition-colors" href="/onboarding">
+            <Link className="hover:text-snow transition-colors" href="/login">
               Devenir bénévole
             </Link>
           </nav>

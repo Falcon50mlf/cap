@@ -1,5 +1,6 @@
 // Types reflétant supabase/schema.sql.
-// À régénérer plus tard via `supabase gen types typescript` quand on aura la CLI.
+// Structure complète exigée par @supabase/supabase-js pour que `.select()`
+// et `.from()` infèrent correctement les types de retour.
 
 export type Family =
   | "strategy"
@@ -13,7 +14,7 @@ export type Role = "lyceen" | "diplome";
 
 export type Profile = {
   id: string;
-  role: Role;
+  role: Role | null;
   first_name: string | null;
   last_name: string | null;
   niveau: string | null;
@@ -51,19 +52,26 @@ export type Database = {
         Row: Profile;
         Insert: Pick<Profile, "id"> & Partial<Omit<Profile, "id">>;
         Update: Partial<Profile>;
+        Relationships: [];
       };
       discovery_runs: {
         Row: DiscoveryRun;
         Insert: Omit<DiscoveryRun, "id" | "completed_at"> &
           Partial<Pick<DiscoveryRun, "id" | "completed_at">>;
         Update: Partial<DiscoveryRun>;
+        Relationships: [];
       };
       program_leads: {
         Row: ProgramLead;
         Insert: Omit<ProgramLead, "id" | "created_at"> &
           Partial<Pick<ProgramLead, "id" | "created_at">>;
         Update: Partial<ProgramLead>;
+        Relationships: [];
       };
     };
+    Views: Record<string, never>;
+    Functions: Record<string, never>;
+    Enums: Record<string, never>;
+    CompositeTypes: Record<string, never>;
   };
 };

@@ -20,7 +20,7 @@ export default function AuthErrorPage() {
             Le lien magique n&rsquo;a pas marché. Demande-en un nouveau.
           </p>
           <Link
-            href="/onboarding"
+            href="/login"
             className="mt-8 inline-flex items-center gap-2 bg-sun text-night font-bold px-6 py-3 rounded-2xl"
           >
             Recommencer

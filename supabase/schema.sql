@@ -12,7 +12,7 @@ drop table if exists public.profiles cascade;
 
 create table public.profiles (
   id          uuid primary key references auth.users (id) on delete cascade,
-  role        text check (role in ('lyceen', 'diplome')) not null default 'lyceen',
+  role        text check (role in ('lyceen', 'diplome')), -- nullable: choisi à /onboarding après auth
   first_name  text,
   last_name   text,
   niveau      text, -- 'Terminale' | 'L1' .. 'M2' | 'Diplomé 2024' | etc.
@@ -44,10 +44,7 @@ set search_path = public
 as $$
 begin
   insert into public.profiles (id, role)
-  values (
-    new.id,
-    coalesce(new.raw_user_meta_data ->> 'role', 'lyceen')
-  );
+  values (new.id, new.raw_user_meta_data ->> 'role');
   return new;
 end;
 $$;
