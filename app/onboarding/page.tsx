@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import {
   GraduationCap,
@@ -15,17 +16,18 @@ import { Logo } from "@/components/layout/logo";
 import { createClient } from "@/lib/supabase/client";
 import type { Role } from "@/types/database";
 
-type Step = "role" | "email" | "sent";
+type Step = "role" | "email" | "code" | "success";
 
 export default function OnboardingPage() {
+  const router = useRouter();
   const [step, setStep] = useState<Step>("role");
   const [role, setRole] = useState<Role | null>(null);
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  async function sendMagicLink(e: React.FormEvent) {
-    e.preventDefault();
+  async function sendCode(e?: React.FormEvent) {
+    e?.preventDefault();
     if (!role) return;
     setLoading(true);
     setError(null);
@@ -34,7 +36,8 @@ export default function OnboardingPage() {
     const { error: authError } = await supabase.auth.signInWithOtp({
       email,
       options: {
-        emailRedirectTo: `${window.location.origin}/auth/callback?next=/hub`,
+        // Pas de emailRedirectTo : on lit le code 6 chiffres dans l'email.
+        // Le magic link reste actif en backup si l'allowlist Supabase est OK.
         data: { role },
       },
     });
@@ -44,7 +47,29 @@ export default function OnboardingPage() {
       setError(authError.message);
       return;
     }
-    setStep("sent");
+    setStep("code");
+  }
+
+  async function verifyCode(token: string) {
+    setLoading(true);
+    setError(null);
+
+    const supabase = createClient();
+    const { error: verifyError } = await supabase.auth.verifyOtp({
+      email,
+      token,
+      type: "email",
+    });
+
+    if (verifyError) {
+      setLoading(false);
+      setError(verifyError.message);
+      return;
+    }
+
+    setStep("success");
+    // Petite pause visuelle puis redirect
+    setTimeout(() => router.push("/hub"), 900);
   }
 
   return (
@@ -52,9 +77,10 @@ export default function OnboardingPage() {
       <header className="px-6 md:px-10 py-6 flex items-center justify-between">
         <Logo size="nav" />
         <span className="font-mono text-[11px] uppercase tracking-widest text-night-500">
-          {step === "role" && "// Étape 1 / 2"}
-          {step === "email" && "// Étape 2 / 2"}
-          {step === "sent" && "// Lien envoyé"}
+          {step === "role" && "// Étape 1 / 3"}
+          {step === "email" && "// Étape 2 / 3"}
+          {step === "code" && "// Étape 3 / 3"}
+          {step === "success" && "// Bienvenue"}
         </span>
       </header>
 
@@ -78,20 +104,32 @@ export default function OnboardingPage() {
                 setEmail={setEmail}
                 loading={loading}
                 error={error}
-                onBack={() => setStep("role")}
-                onSubmit={sendMagicLink}
+                onBack={() => {
+                  setStep("role");
+                  setError(null);
+                }}
+                onSubmit={sendCode}
               />
             )}
-            {step === "sent" && (
-              <SentStep
-                key="sent"
+            {step === "code" && role && (
+              <CodeStep
+                key="code"
+                role={role}
                 email={email}
+                loading={loading}
+                error={error}
+                onSubmit={verifyCode}
+                onResend={() => {
+                  setError(null);
+                  sendCode();
+                }}
                 onBack={() => {
                   setStep("email");
                   setError(null);
                 }}
               />
             )}
+            {step === "success" && <SuccessStep key="success" />}
           </AnimatePresence>
         </div>
       </div>
@@ -247,7 +285,7 @@ function EmailStep({
         Ton email.
       </h1>
       <p className="text-snow/60 mb-10 max-w-md">
-        On t&rsquo;envoie un lien magique. Pas de mot de passe à retenir.
+        On t&rsquo;envoie un code à 6 chiffres. Pas de mot de passe à retenir.
       </p>
 
       <form onSubmit={onSubmit} className="space-y-4">
@@ -295,7 +333,7 @@ function EmailStep({
             </>
           ) : (
             <>
-              Recevoir le lien magique
+              Recevoir le code
               <ArrowRight className="w-5 h-5" />
             </>
           )}
@@ -310,10 +348,190 @@ function EmailStep({
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// Step 3 — Sent
+// Step 3 — 6-digit code
 // ─────────────────────────────────────────────────────────────────────────────
 
-function SentStep({ email, onBack }: { email: string; onBack: () => void }) {
+function CodeStep({
+  role,
+  email,
+  loading,
+  error,
+  onSubmit,
+  onResend,
+  onBack,
+}: {
+  role: Role;
+  email: string;
+  loading: boolean;
+  error: string | null;
+  onSubmit: (token: string) => void;
+  onResend: () => void;
+  onBack: () => void;
+}) {
+  const accent = role === "lyceen" ? "var(--sun)" : "var(--pivot)";
+  const [digits, setDigits] = useState<string[]>(["", "", "", "", "", ""]);
+  const inputs = useRef<Array<HTMLInputElement | null>>([]);
+  const [resendCooldown, setResendCooldown] = useState(30);
+
+  // Cooldown for resend
+  useEffect(() => {
+    if (resendCooldown <= 0) return;
+    const t = setTimeout(() => setResendCooldown((c) => c - 1), 1000);
+    return () => clearTimeout(t);
+  }, [resendCooldown]);
+
+  // Focus first input on mount
+  useEffect(() => {
+    inputs.current[0]?.focus();
+  }, []);
+
+  function setDigit(i: number, value: string) {
+    const v = value.replace(/\D/g, "").slice(-1);
+    setDigits((prev) => {
+      const next = [...prev];
+      next[i] = v;
+      return next;
+    });
+    if (v && i < 5) inputs.current[i + 1]?.focus();
+
+    // Auto-submit when all 6 filled
+    const filled = [...digits];
+    filled[i] = v;
+    if (filled.every((d) => d !== "") && filled.join("").length === 6) {
+      onSubmit(filled.join(""));
+    }
+  }
+
+  function handleKeyDown(i: number, e: React.KeyboardEvent<HTMLInputElement>) {
+    if (e.key === "Backspace" && !digits[i] && i > 0) {
+      inputs.current[i - 1]?.focus();
+    }
+  }
+
+  function handlePaste(e: React.ClipboardEvent<HTMLInputElement>) {
+    e.preventDefault();
+    const pasted = e.clipboardData.getData("text").replace(/\D/g, "").slice(0, 6);
+    if (!pasted) return;
+    const next = pasted.split("").concat(Array(6).fill("")).slice(0, 6);
+    setDigits(next);
+    const lastFilled = Math.min(pasted.length, 6) - 1;
+    inputs.current[Math.min(lastFilled + 1, 5)]?.focus();
+    if (pasted.length === 6) onSubmit(pasted);
+  }
+
+  function handleManualSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    const token = digits.join("");
+    if (token.length === 6) onSubmit(token);
+  }
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -20 }}
+      transition={{ type: "spring", stiffness: 90, damping: 16 }}
+    >
+      <button
+        onClick={onBack}
+        className="inline-flex items-center gap-2 text-snow/60 hover:text-snow text-sm mb-8 transition-colors"
+      >
+        <ArrowLeft className="w-4 h-4" />
+        Changer d&rsquo;email
+      </button>
+
+      <div
+        className="font-mono text-[11px] uppercase tracking-widest mb-3"
+        style={{ color: accent }}
+      >
+        // Code envoyé à <span className="text-snow normal-case">{email}</span>
+      </div>
+      <h1
+        className="font-display font-extrabold tracking-[-0.04em] leading-[0.95] mb-4"
+        style={{ fontSize: "clamp(40px, 6vw, 72px)" }}
+      >
+        Le code.
+      </h1>
+      <p className="text-snow/60 mb-10 max-w-md">
+        Tape les 6 chiffres reçus par email. Valable 1h.
+      </p>
+
+      <form onSubmit={handleManualSubmit} className="space-y-6">
+        <div className="flex gap-2 sm:gap-3 justify-between max-w-md">
+          {digits.map((d, i) => (
+            <input
+              key={i}
+              ref={(el) => {
+                inputs.current[i] = el;
+              }}
+              type="text"
+              inputMode="numeric"
+              autoComplete="one-time-code"
+              maxLength={1}
+              value={d}
+              disabled={loading}
+              onChange={(e) => setDigit(i, e.target.value)}
+              onKeyDown={(e) => handleKeyDown(i, e)}
+              onPaste={handlePaste}
+              className="w-12 h-16 sm:w-14 sm:h-18 bg-night-soft border-2 border-night-200 rounded-2xl text-center font-mono font-bold text-3xl text-snow focus:outline-none focus:border-snow transition-colors disabled:opacity-50"
+              style={{
+                boxShadow: error
+                  ? `0 0 0 2px var(--coral)`
+                  : d
+                    ? `0 0 0 2px ${accent}88`
+                    : undefined,
+              }}
+            />
+          ))}
+        </div>
+
+        {error && (
+          <motion.div
+            initial={{ opacity: 0, y: -5 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-coral text-sm flex items-start gap-2"
+          >
+            <span>×</span>
+            <span>{error}</span>
+          </motion.div>
+        )}
+
+        {loading && (
+          <div className="flex items-center gap-2 text-snow/60 text-sm">
+            <Loader2 className="w-4 h-4 animate-spin" />
+            Vérification...
+          </div>
+        )}
+
+        <div className="flex items-center justify-between pt-2">
+          <span className="font-mono text-[11px] uppercase tracking-widest text-night-500">
+            // Pas reçu ?
+          </span>
+          <button
+            type="button"
+            disabled={resendCooldown > 0 || loading}
+            onClick={() => {
+              onResend();
+              setResendCooldown(30);
+            }}
+            className="text-sm font-semibold disabled:opacity-40 disabled:cursor-not-allowed hover:underline"
+            style={{ color: accent }}
+          >
+            {resendCooldown > 0
+              ? `Renvoyer (${resendCooldown}s)`
+              : "Renvoyer le code"}
+          </button>
+        </div>
+      </form>
+    </motion.div>
+  );
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Step 4 — Success
+// ─────────────────────────────────────────────────────────────────────────────
+
+function SuccessStep() {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -325,7 +543,7 @@ function SentStep({ email, onBack }: { email: string; onBack: () => void }) {
       <motion.div
         initial={{ scale: 0.6, rotate: -10 }}
         animate={{ scale: 1, rotate: 0 }}
-        transition={{ type: "spring", stiffness: 140, damping: 12, delay: 0.1 }}
+        transition={{ type: "spring", stiffness: 140, damping: 12 }}
         className="w-20 h-20 mx-auto mb-8 rounded-3xl grid place-items-center"
         style={{ background: "var(--mint)", color: "var(--night)" }}
       >
@@ -336,28 +554,11 @@ function SentStep({ email, onBack }: { email: string; onBack: () => void }) {
         className="font-display font-extrabold tracking-[-0.04em] leading-[0.95] mb-4"
         style={{ fontSize: "clamp(40px, 6vw, 72px)" }}
       >
-        Check tes mails.
+        C&rsquo;est parti.
       </h1>
-      <p className="text-snow/70 max-w-md mx-auto mb-2 text-lg">
-        On a envoyé un lien magique à
+      <p className="text-snow/60 max-w-md mx-auto">
+        On t&rsquo;emmène sur ton hub...
       </p>
-      <p className="font-mono text-snow text-base mb-10 break-all">{email}</p>
-
-      <div className="rounded-2xl border border-night-200 bg-night-soft p-5 max-w-md mx-auto text-left text-sm text-snow/60 space-y-2">
-        <p>
-          <strong className="text-snow">Tu as 1h</strong> pour cliquer sur le
-          lien.
-        </p>
-        <p>Pas reçu ? Vérifie tes spams ou réessaie.</p>
-      </div>
-
-      <button
-        onClick={onBack}
-        className="mt-8 inline-flex items-center gap-2 text-snow/60 hover:text-snow text-sm transition-colors"
-      >
-        <ArrowLeft className="w-4 h-4" />
-        Renvoyer le lien
-      </button>
     </motion.div>
   );
 }
