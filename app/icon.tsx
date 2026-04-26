@@ -1,7 +1,8 @@
 import { ImageResponse } from "next/og";
 
-// Favicon dynamique : wordmark "Cap'" avec apostrophe jaune iconique.
-// Next.js le sert sur /icon.png et l'injecte automatiquement dans <head>.
+// Favicon : monogramme "C'" — la lettre + l'apostrophe jaune iconique.
+// Le wordmark complet "Cap'" devient illisible au scale favicon (16x16),
+// donc on garde l'élément brand le plus distinctif : la grande apostrophe.
 
 export const size = { width: 64, height: 64 };
 export const contentType = "image/png";
@@ -17,26 +18,29 @@ export default function Icon() {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          color: "#F0F0F0",
-          fontWeight: 900,
-          fontSize: 42,
-          letterSpacing: "-0.06em",
-          fontFamily: "system-ui, -apple-system, sans-serif",
-          lineHeight: 1,
         }}
       >
-        Cap
-        <span
+        <div
           style={{
-            color: "#FFDC32",
-            fontSize: 50,
-            marginLeft: -2,
-            marginTop: -8,
+            display: "flex",
+            alignItems: "baseline",
+            fontFamily: "system-ui, -apple-system, sans-serif",
             fontWeight: 900,
+            lineHeight: 1,
+            letterSpacing: "-0.04em",
           }}
         >
-          &apos;
-        </span>
+          <span style={{ color: "#F0F0F0", fontSize: 46 }}>C</span>
+          <span
+            style={{
+              color: "#FFDC32",
+              fontSize: 60,
+              marginLeft: -2,
+            }}
+          >
+            ’
+          </span>
+        </div>
       </div>
     ),
     { ...size },

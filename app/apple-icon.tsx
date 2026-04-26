@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 
 // Apple touch icon (iOS home screen, Safari favoris).
-// Même design que /icon, juste plus grand.
+// Même monogramme "C'" que /icon, juste plus grand.
 
 export const size = { width: 180, height: 180 };
 export const contentType = "image/png";
@@ -17,26 +17,29 @@ export default function AppleIcon() {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          color: "#F0F0F0",
-          fontWeight: 900,
-          fontSize: 116,
-          letterSpacing: "-0.06em",
-          fontFamily: "system-ui, -apple-system, sans-serif",
-          lineHeight: 1,
         }}
       >
-        Cap
-        <span
+        <div
           style={{
-            color: "#FFDC32",
-            fontSize: 140,
-            marginLeft: -6,
-            marginTop: -22,
+            display: "flex",
+            alignItems: "baseline",
+            fontFamily: "system-ui, -apple-system, sans-serif",
             fontWeight: 900,
+            lineHeight: 1,
+            letterSpacing: "-0.04em",
           }}
         >
-          &apos;
-        </span>
+          <span style={{ color: "#F0F0F0", fontSize: 130 }}>C</span>
+          <span
+            style={{
+              color: "#FFDC32",
+              fontSize: 168,
+              marginLeft: -6,
+            }}
+          >
+            ’
+          </span>
+        </div>
       </div>
     ),
     { ...size },
