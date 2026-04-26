@@ -1,4 +1,4 @@
-// Types reflétant supabase/schema.sql.
+// Types reflétant le schema SQL v1 (profiles + game_results + leads).
 // Structure complète exigée par @supabase/supabase-js pour que `.select()`
 // et `.from()` infèrent correctement les types de retour.
 
@@ -22,26 +22,28 @@ export type Profile = {
   updated_at: string;
 };
 
-export type DiscoveryRun = {
+export type GameResult = {
   id: string;
   user_id: string | null;
-  family: Family;
-  game_key: string;
+  game_id: string;
+  family_id: string;
+  skills: Record<string, number>;
+  enjoyment: number | null;
   score: number | null;
   duration_ms: number | null;
   payload: unknown | null;
   completed_at: string;
 };
 
-export type ProgramLead = {
+export type Lead = {
   id: string;
-  user_id: string | null;
-  school: string;
-  module: string;
-  first_name: string;
-  last_name: string;
-  email: string;
-  niveau: string | null;
+  school_name: string;
+  contact_first_name: string;
+  contact_last_name: string;
+  contact_email: string;
+  contact_role: string | null;
+  message: string | null;
+  source: string | null;
   created_at: string;
 };
 
@@ -54,18 +56,18 @@ export type Database = {
         Update: Partial<Profile>;
         Relationships: [];
       };
-      discovery_runs: {
-        Row: DiscoveryRun;
-        Insert: Omit<DiscoveryRun, "id" | "completed_at"> &
-          Partial<Pick<DiscoveryRun, "id" | "completed_at">>;
-        Update: Partial<DiscoveryRun>;
+      game_results: {
+        Row: GameResult;
+        Insert: Omit<GameResult, "id" | "completed_at"> &
+          Partial<Pick<GameResult, "id" | "completed_at">>;
+        Update: Partial<GameResult>;
         Relationships: [];
       };
-      program_leads: {
-        Row: ProgramLead;
-        Insert: Omit<ProgramLead, "id" | "created_at"> &
-          Partial<Pick<ProgramLead, "id" | "created_at">>;
-        Update: Partial<ProgramLead>;
+      leads: {
+        Row: Lead;
+        Insert: Omit<Lead, "id" | "created_at"> &
+          Partial<Pick<Lead, "id" | "created_at">>;
+        Update: Partial<Lead>;
         Relationships: [];
       };
     };

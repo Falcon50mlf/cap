@@ -17,6 +17,7 @@ import {
   ContactRound,
 } from "lucide-react";
 import { Logo } from "@/components/layout/logo";
+import { PartnershipSection } from "@/components/landing/partnership-section";
 
 const FAMILIES = [
   {
@@ -510,6 +511,9 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* ───────── PARTENARIAT ÉCOLES ───────── */}
+      <PartnershipSection />
 
       {/* ───────── FOOTER ───────── */}
       <footer className="px-6 md:px-10 py-12 border-t border-night-200">
