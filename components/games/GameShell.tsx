@@ -40,6 +40,7 @@ const FAMILY_COLOR: Record<FamilyId, string> = {
   tech: "var(--family-tech)",
   startup: "var(--family-startup)",
   retail: "var(--family-retail)",
+  "programs-ucl": "var(--pivot)",
 };
 
 export function GameShell({

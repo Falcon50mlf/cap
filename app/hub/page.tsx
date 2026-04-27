@@ -162,7 +162,7 @@ export default function HubPage() {
               }}
             >
               <UniverseCard
-                href="/programmes"
+                href="/programmes/ucl/gestion-entreprise"
                 color="var(--pivot)"
                 Icon={GraduationCap}
                 tag="// UNIVERS 02"

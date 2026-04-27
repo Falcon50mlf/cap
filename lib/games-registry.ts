@@ -74,6 +74,48 @@ export const GAMES: GameMeta[] = [
     concept:
       "Drag & drop : place des infos dans la bonne case SWOT d'une vraie entreprise.",
   },
+
+  // ─── Programmes · UCL Lille · Module Gestion d'entreprise ─────────────
+  {
+    id: "ucl-entreprise-explorer",
+    name: "Entreprise Explorer",
+    family: "programs-ucl",
+    status: "available",
+    order: 1,
+    totalRounds: 1,
+    concept:
+      "Tri multi-critères : classe 12 entreprises réelles sur 3 axes (forme juridique / secteur / taille).",
+  },
+  {
+    id: "ucl-statut-quiz",
+    name: "Statut Quiz",
+    family: "programs-ucl",
+    status: "available",
+    order: 2,
+    totalRounds: 5,
+    concept:
+      "Arbre de décision : 5 cas d'entrepreneurs à résoudre en naviguant dans les questions clés.",
+  },
+  {
+    id: "ucl-pestel-match",
+    name: "PESTEL Match",
+    family: "programs-ucl",
+    status: "available",
+    order: 3,
+    totalRounds: 3,
+    concept:
+      "Drag & drop : classe 18 facteurs dans les 6 dimensions PESTEL pour 3 secteurs.",
+  },
+  {
+    id: "ucl-market-radar",
+    name: "Market Radar",
+    family: "programs-ucl",
+    status: "available",
+    order: 4,
+    totalRounds: 3,
+    concept:
+      "Mixte QCM + calculs : segmente des marchés et calcule des parts de marché sur 3 cas.",
+  },
 ];
 
 export function getGame(id: string): GameMeta | undefined {

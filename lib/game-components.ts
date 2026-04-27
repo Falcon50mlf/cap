@@ -8,10 +8,24 @@ import type { ComponentType } from "react";
 export const gameComponents: Record<string, ComponentType> = {
   "mapping-concurrentiel": dynamic(
     () => import("@/components/games/MappingConcurrentiel"),
-    { ssr: false }
+    { ssr: false },
   ),
   "mix-marketing-4p": dynamic(
     () => import("@/components/games/MixMarketing4P"),
-    { ssr: false }
+    { ssr: false },
   ),
+  // UCL · Gestion d'entreprise
+  "ucl-entreprise-explorer": dynamic(
+    () => import("@/components/games/EntrepriseExplorer"),
+    { ssr: false },
+  ),
+  "ucl-statut-quiz": dynamic(() => import("@/components/games/StatutQuiz"), {
+    ssr: false,
+  }),
+  "ucl-pestel-match": dynamic(() => import("@/components/games/PestelMatch"), {
+    ssr: false,
+  }),
+  "ucl-market-radar": dynamic(() => import("@/components/games/MarketRadar"), {
+    ssr: false,
+  }),
 };
