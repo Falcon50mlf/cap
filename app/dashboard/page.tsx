@@ -16,7 +16,7 @@ export default function DashboardPage() {
             WIP
           </h1>
           <p className="mt-4 text-snow/60">
-            Ta progression sur les 6 familles + tes contacts ESCP.
+            Ta progression sur les 6 familles + tes contacts écoles.
           </p>
         </div>
       </div>

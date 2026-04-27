@@ -70,18 +70,18 @@ Métiers : Buyer / Acheteur, Visual Merchandiser, Retail Manager, Brand Ambassad
 
 Pour le hackathon, on **simule UN partenariat école** avec UN module transformé en mini-jeu.
 
-### École partenaire de la démo : **ESCP Business School**
-- **Module transformé** : "Business Plan & Création d'Entreprise"
-- **Mini-jeu** : `BusinessCanvas` (cf. specs plus bas)
-- **Plaquette mockée** : 1 page synthétique avec angle pédagogique de l'ESCP, parcours type, débouchés, témoignages
-- **Formulaire coordonnées** : nom, prénom, email, niveau d'études → "L'ESCP te recontactera sous 7 jours"
+### École partenaire pilote : **Université Catholique de Lille (UCL Lille)**
+- **Module disponible** : "Introduction à la gestion d'entreprise" (cours de Monica Scarano)
+- **4 sous-modules** + 4 mini-jeux :
+  1. Reconnaître une entreprise → `EntrepriseExplorer` (tri multi-critères)
+  2. Choisir le bon statut → `StatutQuiz` (arbre de décision)
+  3. Analyser l'environnement → `PestelMatch` (drag & drop PESTEL)
+  4. Comprendre son marché → `MarketRadar` (mixte QCM + calculs)
+- **Plaquette UCL** : page de fin avec présentation de l'école + programmes liés
+- **Formulaire de contact** : capture des coordonnées étudiant → "L'UCL te recontactera sous 7 jours"
 
-### Roadmap futurs partenariats (à mentionner dans le pitch, pas à coder)
-- EMLyon — module "Change Management"
-- HEC — module "Stratégie & 5 forces de Porter"
-- ESSEC — module "Innovation & Design Thinking"
-- NEOMA — module "International Business"
-- SKEMA — module "Marketing Digital"
+### Roadmap futurs partenariats
+- À renseigner au fil des partenariats signés.
 
 ---
 
@@ -117,11 +117,6 @@ Pour le hackathon, on **simule UN partenariat école** avec UN module transform�
   --family-retail: #E5C7A0;
 
   /* School colors (univers Programmes) */
-  --school-escp: #C8102E;    /* rouge ESCP */
-  --school-hec: #002654;     /* bleu HEC */
-  --school-emlyon: #2D2D2D;  /* anthracite EMLyon */
-  --school-essec: #003366;   /* bleu ESSEC */
-
   /* Univers (couleur dominante de chaque univers) */
   --discovery: #FFDC32;      /* univers Découverte = jaune sun */
   --programs: #8C6EFF;       /* univers Programmes = violet pivot */

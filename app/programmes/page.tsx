@@ -16,7 +16,7 @@ export default function ProgrammesPage() {
             WIP
           </h1>
           <p className="mt-4 text-snow/60">
-            Module ESCP &laquo; Business Plan &raquo; arrive en session 2.
+            Module UCL &laquo; Gestion d&rsquo;entreprise &raquo; disponible.
           </p>
         </div>
       </div>

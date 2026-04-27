@@ -20,19 +20,19 @@ export type Volunteer = {
 
 export const VOLUNTEERS: Volunteer[] = [
   {
-    id: "lea-marketing-escp",
+    id: "lea-marketing-master",
     family: "marketing",
     firstName: "Léa",
     lastInitial: "M.",
     age: 24,
-    current: "ESCP M2 · Stage Brand chez Mondelēz",
+    current: "Master Marketing · Stage Brand chez Mondelēz",
     trajectory:
-      "Prépa HEC → ESCP → stage chez TBWA puis L'Oréal Paris → en poste à Mondelēz sur Milka.",
-    bio: "Je suis tombée dedans en stage en agence pendant un césure. J'aime tout ce qui touche au branding émotionnel et au luxe accessible. Je peux te parler vrai du quotidien Brand Assistant, des entretiens chez les FMCG, et de comment se faire repérer en stage.",
+      "Prépa éco → école de commerce → stage chez TBWA puis L'Oréal Paris → en poste à Mondelēz sur Milka.",
+    bio: "Je suis tombée dedans en stage en agence pendant une césure. J'aime tout ce qui touche au branding émotionnel et au luxe accessible. Je peux te parler vrai du quotidien Brand Assistant, des entretiens chez les FMCG, et de comment se faire repérer en stage.",
     topics: [
       "Brand Marketing en grande conso",
       "Entretiens chez L'Oréal / Mondelēz / LVMH",
-      "Vie en école (ESCP, M2 spé Marketing)",
+      "Vie en école (M2 spé Marketing)",
       "Choisir entre agence et annonceur en stage",
     ],
     availability: "2 échanges / mois",

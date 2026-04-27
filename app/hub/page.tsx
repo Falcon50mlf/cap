@@ -167,7 +167,7 @@ export default function HubPage() {
                 Icon={GraduationCap}
                 tag="// UNIVERS 02"
                 title="Programmes"
-                body="Teste les modules de cours emblématiques des écoles partenaires. ESCP est dispo. D'autres arrivent."
+                body="Teste les modules de cours emblématiques des écoles partenaires. UCL Lille est dispo. D'autres arrivent."
                 cta="Découvrir"
                 stats="1 école · 1 module dispo"
               />

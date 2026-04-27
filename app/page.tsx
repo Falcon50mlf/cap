@@ -214,21 +214,21 @@ export default function Home() {
               className="absolute top-32 right-0 w-[290px] md:w-[330px] bg-pivot text-snow p-7 rounded-3xl shadow-card z-[2]"
             >
               <div className="font-mono text-[10px] uppercase tracking-widest opacity-70 mb-4">
-                // Univers Programmes · ESCP
+                // Univers Programmes · UCL Lille
               </div>
               <div className="font-display font-extrabold text-2xl leading-tight mb-3">
-                Business Canvas
+                Gestion d&rsquo;entreprise
               </div>
               <p className="text-sm leading-snug opacity-90">
-                L&rsquo;ESCP te confie un projet. Construis ton Business Model
-                Canvas.
+                4 sous-modules pour comprendre les fondamentaux par
+                l&rsquo;expérience.
               </p>
               <div className="mt-6 flex flex-wrap gap-2">
                 <span className="bg-white/15 px-3 py-1 rounded-full text-xs font-mono">
-                  ★ Stratégie
+                  ★ Statuts
                 </span>
                 <span className="bg-white/15 px-3 py-1 rounded-full text-xs font-mono">
-                  ★ Création
+                  ★ PESTEL
                 </span>
               </div>
             </motion.div>
@@ -263,7 +263,7 @@ export default function Home() {
                     Léa M., 22 ans
                   </div>
                   <div className="text-xs opacity-60 mt-1">
-                    ESCP M2 · 2 échanges/mois
+                    Master Marketing · 2 échanges/mois
                   </div>
                 </div>
               </div>
@@ -454,17 +454,18 @@ export default function Home() {
             Écoles partenaires.
           </h2>
           <p className="text-snow/60 text-[18px] mb-12 max-w-[560px]">
-            On commence avec l&rsquo;ESCP. D&rsquo;autres écoles arrivent.
+            On commence avec l&rsquo;UCL Lille. D&rsquo;autres écoles
+            arrivent.
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-5 gap-5">
-            {/* ESCP — featured */}
+            {/* UCL Lille — featured */}
             <div
-              className="md:col-span-2 p-8 rounded-3xl border-2 relative overflow-hidden"
+              className="md:col-span-3 p-8 rounded-3xl border-2 relative overflow-hidden"
               style={{
-                borderColor: "var(--school-escp)",
+                borderColor: "var(--pivot)",
                 background:
-                  "linear-gradient(135deg, rgba(200,16,46,0.18), rgba(200,16,46,0.04))",
+                  "linear-gradient(135deg, rgba(140,110,255,0.18), rgba(140,110,255,0.04))",
               }}
             >
               <div className="absolute top-5 right-5 font-mono text-[10px] uppercase tracking-widest bg-mint/15 text-mint px-2.5 py-1 rounded-full border border-mint/30">
@@ -472,37 +473,38 @@ export default function Home() {
               </div>
               <div
                 className="font-display font-extrabold text-3xl tracking-tight mb-1"
-                style={{ color: "var(--school-escp)" }}
+                style={{ color: "var(--pivot)" }}
               >
-                ESCP
+                Université Catholique de Lille
               </div>
               <div className="font-mono text-[11px] uppercase tracking-widest text-snow/50 mb-6">
-                Business School · Paris
+                UCL Lille · Faculté de gestion
               </div>
               <div className="font-mono text-[10px] uppercase tracking-widest text-snow/50 mb-2">
                 Module disponible
               </div>
-              <div className="font-display font-bold text-xl leading-tight mb-6">
-                Business Plan & Création d&rsquo;Entreprise
+              <div className="font-display font-bold text-xl leading-tight mb-2">
+                Introduction à la gestion d&rsquo;entreprise
+              </div>
+              <div className="text-snow/60 text-sm mb-6">
+                4 sous-modules · 4 mini-jeux · cours de Monica Scarano
               </div>
               <Link
-                href="/programmes"
+                href="/programmes/ucl/gestion-entreprise"
                 className="inline-flex items-center gap-2 bg-snow text-night font-bold px-5 py-2.5 rounded-xl text-sm hover:scale-[1.02] transition-transform"
               >
                 Tester le module <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
 
-            {/* Coming soon */}
+            {/* Coming soon — placeholders génériques */}
             {[
-              { name: "HEC Paris" },
-              { name: "EMLyon" },
-              { name: "ESSEC" },
-              { name: "NEOMA" },
-            ].map((s) => (
+              { name: "École en attente" },
+              { name: "École en attente" },
+            ].map((s, i) => (
               <div
-                key={s.name}
-                className="p-6 rounded-3xl border border-night-200 opacity-50 hover:opacity-70 transition-opacity"
+                key={i}
+                className="md:col-span-1 p-6 rounded-3xl border border-night-200 opacity-50 hover:opacity-70 transition-opacity"
               >
                 <div className="font-display font-bold text-xl tracking-tight mb-3">
                   {s.name}

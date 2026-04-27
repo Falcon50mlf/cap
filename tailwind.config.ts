@@ -30,12 +30,6 @@ const config: Config = {
           startup: "var(--family-startup)",
           retail: "var(--family-retail)",
         },
-        school: {
-          escp: "var(--school-escp)",
-          hec: "var(--school-hec)",
-          emlyon: "var(--school-emlyon)",
-          essec: "var(--school-essec)",
-        },
         discovery: "var(--discovery)",
         programs: "var(--programs)",
         background: "var(--background)",

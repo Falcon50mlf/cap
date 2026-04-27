@@ -119,7 +119,7 @@ export const JOBS: Job[] = [
     salaire: { junior: "40-46k€", senior: "75-105k€" },
     skills: ["Vision produit", "Rigueur", "Analyse de marché", "Négo interne", "Sens commercial"],
     parcours:
-      "École de commerce école-métier (HEC, ESSEC, ESCP) → stage long FMCG → Chef de Produit Junior 2 ans → Chef de Produit / Senior PM.",
+      "École de commerce reconnue → stage long en FMCG → Chef de Produit Junior 2 ans → Chef de Produit / Senior PM.",
     iconName: "Package",
   },
 ];

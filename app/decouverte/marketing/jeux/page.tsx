@@ -88,7 +88,7 @@ export default function MarketingGamesHubPage() {
                   Tu as joué ? Échange avec 2 bénévoles Marketing.
                 </h3>
                 <p className="text-snow/70">
-                  Léa (ESCP M2, Mondelēz) et Tom (Doctolib, ex-Vinted) sont
+                  Léa (Master Marketing, Mondelēz) et Tom (Doctolib, ex-Vinted) sont
                   dispo pour 1-2 échanges par mois.
                 </p>
               </div>

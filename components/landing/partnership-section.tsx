@@ -93,17 +93,17 @@ export function PartnershipSection() {
               className="absolute inset-0 bg-night-soft border-2 border-pivot/40 rounded-3xl p-7 shadow-card"
             >
               <div className="font-mono text-[10px] uppercase tracking-widest text-pivot mb-5">
-                // Échantillon · ESCP
+                // Échantillon · UCL Lille
               </div>
               <div className="font-display font-extrabold text-2xl mb-3 leading-tight">
                 Module
                 <br />
-                Business Plan
+                Gestion d&rsquo;entreprise
               </div>
               <div className="space-y-2 text-snow/70 text-sm mb-6">
                 <Row label="Format" value="Mini-jeu interactif 8 min" />
                 <Row label="Mécanique" value="Construction Canvas" />
-                <Row label="Branding" value="Couleurs ESCP" />
+                <Row label="Branding" value="Aux couleurs de l'école" />
                 <Row label="Leads collectés" value="Coordonnées + niveau" />
               </div>
               <div className="border-t border-night-200 pt-4 flex items-center justify-between">
