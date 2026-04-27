@@ -79,7 +79,7 @@ export default function MappingConcurrentiel() {
   const [validated, setValidated] = useState(false);
   const [scores, setScores] = useState<number[]>([]);
 
-  const round = ROUNDS[roundIdx];
+  const round = ROUNDS[roundIdx]!; // safe: roundIdx in [0, ROUNDS.length)
   const isLast = roundIdx === ROUNDS.length - 1;
   const allPlaced = round.brands.every((b) => placements[b.id]);
 
@@ -170,7 +170,7 @@ export default function MappingConcurrentiel() {
             <ResultPanel
               brands={round.brands}
               placements={placements}
-              score={scores[scores.length - 1]}
+              score={scores[scores.length - 1] ?? 0}
               isLast={isLast}
               onNext={nextRound}
               onFinish={finish}
@@ -297,7 +297,7 @@ function Plane({
         {brands.map((b) => {
           const p = placements[b.id];
           if (!p) return null;
-          const m = matches[b.id];
+          const m = matches[b.id] ?? 0;
           const c = validated ? colorForMatch(m) : ACCENT;
           return (
             <motion.div
@@ -496,9 +496,10 @@ function RoundsBadge({
   return (
     <div className="flex items-center gap-1.5">
       {Array.from({ length: total }).map((_, i) => {
-        const done = scores[i] !== undefined;
+        const s = scores[i];
+        const done = s !== undefined;
         const active = i === current;
-        const c = done ? colorForMatch(scores[i]) : "var(--night-200)";
+        const c = done ? colorForMatch(s) : "var(--night-200)";
         return (
           <div
             key={i}
@@ -509,7 +510,7 @@ function RoundsBadge({
               background: done ? `${c}15` : "transparent",
             }}
           >
-            {done ? `${scores[i]}` : `M${i + 1}`}
+            {done ? `${s}` : `M${i + 1}`}
           </div>
         );
       })}

@@ -125,7 +125,7 @@ export function SlideShell() {
     }
   }
 
-  const Slide = SLIDES[current - 1];
+  const Slide = SLIDES[current - 1]!; // safe: current ∈ [1, TOTAL]
 
   return (
     <div className="fixed inset-0 bg-night text-snow overflow-hidden">

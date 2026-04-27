@@ -251,7 +251,7 @@ export default function MarketRadar() {
   const [validated, setValidated] = useState(false);
   const [scores, setScores] = useState<number[]>([]);
 
-  const round = ROUNDS[roundIdx];
+  const round = ROUNDS[roundIdx]!; // safe: roundIdx in [0, ROUNDS.length)
   const isLast = roundIdx === ROUNDS.length - 1;
 
   useEffect(() => {
@@ -384,7 +384,7 @@ export default function MarketRadar() {
 
       {phase === "result" && (
         <ResultPanel
-          score={scores[scores.length - 1]}
+          score={scores[scores.length - 1] ?? 0}
           isLast={isLast}
           onNext={nextRound}
           onFinish={finish}
@@ -393,12 +393,13 @@ export default function MarketRadar() {
 
       <div className="mt-6 flex items-center gap-1.5 justify-center">
         {Array.from({ length: ROUNDS.length }).map((_, i) => {
-          const done = scores[i] !== undefined;
+          const s = scores[i];
+          const done = s !== undefined;
           const active = i === roundIdx;
           const c = done
-            ? scores[i] >= 75
+            ? s >= 75
               ? "var(--mint)"
-              : scores[i] >= 50
+              : s >= 50
                 ? "var(--sun)"
                 : "var(--coral)"
             : "var(--night-200)";
@@ -412,7 +413,7 @@ export default function MarketRadar() {
                 background: done ? `${c}15` : "transparent",
               }}
             >
-              {done ? `${scores[i]}` : `M${i + 1}`}
+              {done ? `${s}` : `M${i + 1}`}
             </div>
           );
         })}

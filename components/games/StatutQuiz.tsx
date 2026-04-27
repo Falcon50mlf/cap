@@ -173,8 +173,8 @@ export default function StatutQuiz() {
   const [validated, setValidated] = useState(false);
   const [scores, setScores] = useState<boolean[]>([]);
 
-  const round = CASES[roundIdx];
-  const currentNodeId = path[path.length - 1];
+  const round = CASES[roundIdx]!; // safe: roundIdx in [0, CASES.length)
+  const currentNodeId = path[path.length - 1] ?? "q1";
   const currentNode = NODES[currentNodeId];
   const atResult = isResult(currentNode);
   const isLast = roundIdx === CASES.length - 1;
