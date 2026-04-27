@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from 'react';
 import {
   DndContext,
   DragEndEvent,
@@ -10,14 +10,14 @@ import {
   useDroppable,
   useSensor,
   useSensors,
-} from "@dnd-kit/core";
-import { motion } from "framer-motion";
-import { ArrowRight, Check, X } from "lucide-react";
-import { useGameShell } from "./game-shell-context";
+} from '@dnd-kit/core';
+import { motion } from 'framer-motion';
+import { ArrowRight, Check, X } from 'lucide-react';
+import { useGameShell } from './game-shell-context';
 
-const ACCENT = "var(--pivot)";
+const ACCENT = 'var(--pivot)';
 
-type ZoneId = "P" | "E" | "S" | "T" | "Eco" | "L";
+type ZoneId = 'P' | 'E' | 'S' | 'T' | 'Eco' | 'L';
 
 const ZONES: {
   id: ZoneId;
@@ -25,12 +25,12 @@ const ZONES: {
   label: string;
   color: string;
 }[] = [
-  { id: "P", letter: "P", label: "Politique", color: "var(--sun)" },
-  { id: "E", letter: "E", label: "Économique", color: "var(--pivot)" },
-  { id: "S", letter: "S", label: "Socioculturel", color: "var(--coral)" },
-  { id: "T", letter: "T", label: "Technologique", color: "var(--mint)" },
-  { id: "Eco", letter: "É", label: "Écologique", color: "#3B82F6" },
-  { id: "L", letter: "L", label: "Légal", color: "#E8732D" },
+  { id: 'P', letter: 'P', label: 'Politique', color: 'var(--sun)' },
+  { id: 'E', letter: 'E', label: 'Économique', color: 'var(--pivot)' },
+  { id: 'S', letter: 'S', label: 'Socioculturel', color: 'var(--coral)' },
+  { id: 'T', letter: 'T', label: 'Technologique', color: 'var(--mint)' },
+  { id: 'Eco', letter: 'É', label: 'Écologique', color: '#3B82F6' },
+  { id: 'L', letter: 'L', label: 'Légal', color: '#E8732D' },
 ];
 
 type Card = { id: string; text: string; expected: ZoneId };
@@ -39,107 +39,104 @@ type Round = { name: string; brief: string; cards: Card[] };
 
 const ROUNDS: Round[] = [
   {
-    name: "Industrie pétrolière",
-    brief:
-      "Le cas du PDF de Monica Scarano. Classe les 18 facteurs dans les 6 dimensions PESTEL.",
+    name: 'Industrie pétrolière',
+    brief: 'Le cas du PDF de Monica Scarano. Classe les 18 facteurs dans les 6 dimensions PESTEL.',
     cards: [
-      { id: "p1-1", text: "Soutien gouvernemental", expected: "P" },
-      { id: "p1-2", text: "Pacte PME", expected: "P" },
-      { id: "p1-3", text: "Stabilité politique", expected: "P" },
-      { id: "p1-4", text: "Taxes TIPP", expected: "E" },
-      { id: "p1-5", text: "Taux de croissance économique", expected: "E" },
-      { id: "p1-6", text: "Pouvoir d'achat des ménages", expected: "E" },
-      { id: "p1-7", text: "Demande croissante en énergie", expected: "S" },
-      { id: "p1-8", text: "Contexte RSE", expected: "S" },
-      { id: "p1-9", text: "Évolution du mode de vie", expected: "S" },
-      { id: "p1-10", text: "Nouvelles technos de captage", expected: "T" },
-      { id: "p1-11", text: "Énergies complémentaires", expected: "T" },
-      { id: "p1-12", text: "Découverte de gisements", expected: "T" },
-      { id: "p1-13", text: "Contrôle des GES", expected: "Eco" },
-      { id: "p1-14", text: "Épuisement des ressources", expected: "Eco" },
-      { id: "p1-15", text: "Prix du baril", expected: "Eco" },
-      { id: "p1-16", text: "Réglementation gaz à effet de serre", expected: "L" },
-      { id: "p1-17", text: "Réglementation HSE", expected: "L" },
-      { id: "p1-18", text: "Norme REACH", expected: "L" },
+      { id: 'p1-1', text: 'Soutien gouvernemental', expected: 'P' },
+      { id: 'p1-2', text: 'Pacte PME', expected: 'P' },
+      { id: 'p1-3', text: 'Stabilité politique', expected: 'P' },
+      { id: 'p1-4', text: 'Taxes TIPP', expected: 'E' },
+      { id: 'p1-5', text: 'Taux de croissance économique', expected: 'E' },
+      { id: 'p1-6', text: "Pouvoir d'achat des ménages", expected: 'E' },
+      { id: 'p1-7', text: 'Demande croissante en énergie', expected: 'S' },
+      { id: 'p1-8', text: 'Contexte RSE', expected: 'S' },
+      { id: 'p1-9', text: 'Évolution du mode de vie', expected: 'S' },
+      { id: 'p1-10', text: 'Nouvelles technos de captage', expected: 'T' },
+      { id: 'p1-11', text: 'Énergies complémentaires', expected: 'T' },
+      { id: 'p1-12', text: 'Découverte de gisements', expected: 'T' },
+      { id: 'p1-13', text: 'Contrôle des GES', expected: 'Eco' },
+      { id: 'p1-14', text: 'Épuisement des ressources', expected: 'Eco' },
+      { id: 'p1-15', text: 'Prix du baril', expected: 'Eco' },
+      { id: 'p1-16', text: 'Réglementation gaz à effet de serre', expected: 'L' },
+      { id: 'p1-17', text: 'Réglementation HSE', expected: 'L' },
+      { id: 'p1-18', text: 'Norme REACH', expected: 'L' },
     ],
   },
   {
-    name: "Industrie de la mode",
-    brief:
-      "Fast-fashion, seconde main, RSE textile : 18 facteurs à classer.",
+    name: 'Industrie de la mode',
+    brief: 'Fast-fashion, seconde main, RSE textile : 18 facteurs à classer.',
     cards: [
-      { id: "p2-1", text: "Tarifs douaniers UE-Asie", expected: "P" },
-      { id: "p2-2", text: "Politiques anti-fast-fashion", expected: "P" },
-      { id: "p2-3", text: "Stabilité des zones de production", expected: "P" },
-      { id: "p2-4", text: "Pouvoir d'achat des 15-25 ans", expected: "E" },
+      { id: 'p2-1', text: 'Tarifs douaniers UE-Asie', expected: 'P' },
+      { id: 'p2-2', text: 'Politiques anti-fast-fashion', expected: 'P' },
+      { id: 'p2-3', text: 'Stabilité des zones de production', expected: 'P' },
+      { id: 'p2-4', text: "Pouvoir d'achat des 15-25 ans", expected: 'E' },
       {
-        id: "p2-5",
-        text: "Inflation des matières premières (coton)",
-        expected: "E",
+        id: 'p2-5',
+        text: 'Inflation des matières premières (coton)',
+        expected: 'E',
       },
-      { id: "p2-6", text: "Taux de change €/Yuan", expected: "E" },
-      { id: "p2-7", text: "Tendance seconde main", expected: "S" },
-      { id: "p2-8", text: "Préoccupation éthique des conso", expected: "S" },
-      { id: "p2-9", text: "Influence des créateurs de contenu", expected: "S" },
-      { id: "p2-10", text: "E-commerce et marketplaces", expected: "T" },
+      { id: 'p2-6', text: 'Taux de change €/Yuan', expected: 'E' },
+      { id: 'p2-7', text: 'Tendance seconde main', expected: 'S' },
+      { id: 'p2-8', text: 'Préoccupation éthique des conso', expected: 'S' },
+      { id: 'p2-9', text: 'Influence des créateurs de contenu', expected: 'S' },
+      { id: 'p2-10', text: 'E-commerce et marketplaces', expected: 'T' },
       {
-        id: "p2-11",
+        id: 'p2-11',
         text: "Cabines d'essayage en réalité augmentée",
-        expected: "T",
+        expected: 'T',
       },
-      { id: "p2-12", text: "IA générative pour le design", expected: "T" },
-      { id: "p2-13", text: "Empreinte carbone textile", expected: "Eco" },
-      { id: "p2-14", text: "Recyclabilité des matières", expected: "Eco" },
+      { id: 'p2-12', text: 'IA générative pour le design', expected: 'T' },
+      { id: 'p2-13', text: 'Empreinte carbone textile', expected: 'Eco' },
+      { id: 'p2-14', text: 'Recyclabilité des matières', expected: 'Eco' },
       {
-        id: "p2-15",
-        text: "Pollution aux micro-plastiques",
-        expected: "Eco",
+        id: 'p2-15',
+        text: 'Pollution aux micro-plastiques',
+        expected: 'Eco',
       },
-      { id: "p2-16", text: "Loi anti-gaspillage (AGEC)", expected: "L" },
+      { id: 'p2-16', text: 'Loi anti-gaspillage (AGEC)', expected: 'L' },
       {
-        id: "p2-17",
-        text: "Devoir de vigilance sur les fournisseurs",
-        expected: "L",
+        id: 'p2-17',
+        text: 'Devoir de vigilance sur les fournisseurs',
+        expected: 'L',
       },
-      { id: "p2-18", text: "RGPD données client", expected: "L" },
+      { id: 'p2-18', text: 'RGPD données client', expected: 'L' },
     ],
   },
   {
-    name: "Automobile électrique",
-    brief:
-      "Tesla, Renault Mégane E-tech, BYD : un secteur en pleine bascule. 18 facteurs.",
+    name: 'Automobile électrique',
+    brief: 'Tesla, Renault Mégane E-tech, BYD : un secteur en pleine bascule. 18 facteurs.',
     cards: [
       {
-        id: "p3-1",
-        text: "Politique de transition écologique",
-        expected: "P",
+        id: 'p3-1',
+        text: 'Politique de transition écologique',
+        expected: 'P',
       },
-      { id: "p3-2", text: "Subventions véhicules électriques", expected: "P" },
-      { id: "p3-3", text: "Géopolitique des terres rares", expected: "P" },
-      { id: "p3-4", text: "Coût des batteries lithium-ion", expected: "E" },
-      { id: "p3-5", text: "Pouvoir d'achat des ménages", expected: "E" },
-      { id: "p3-6", text: "Croissance du PIB", expected: "E" },
+      { id: 'p3-2', text: 'Subventions véhicules électriques', expected: 'P' },
+      { id: 'p3-3', text: 'Géopolitique des terres rares', expected: 'P' },
+      { id: 'p3-4', text: 'Coût des batteries lithium-ion', expected: 'E' },
+      { id: 'p3-5', text: "Pouvoir d'achat des ménages", expected: 'E' },
+      { id: 'p3-6', text: 'Croissance du PIB', expected: 'E' },
       {
-        id: "p3-7",
-        text: "Sensibilité écologique des conducteurs",
-        expected: "S",
+        id: 'p3-7',
+        text: 'Sensibilité écologique des conducteurs',
+        expected: 'S',
       },
-      { id: "p3-8", text: "Image de marque verte", expected: "S" },
-      { id: "p3-9", text: "Adoption des nouvelles mobilités", expected: "S" },
-      { id: "p3-10", text: "Densité énergétique des batteries", expected: "T" },
-      { id: "p3-11", text: "Réseau de bornes de recharge", expected: "T" },
-      { id: "p3-12", text: "Progrès de la conduite autonome", expected: "T" },
-      { id: "p3-13", text: "Empreinte CO₂ de production", expected: "Eco" },
-      { id: "p3-14", text: "Filière de recyclage des batteries", expected: "Eco" },
-      { id: "p3-15", text: "Origine carbonée de l'électricité", expected: "Eco" },
-      { id: "p3-16", text: "Norme CAFE sur les émissions", expected: "L" },
-      { id: "p3-17", text: "Bonus / malus écologique", expected: "L" },
-      { id: "p3-18", text: "Zones à faibles émissions (ZFE)", expected: "L" },
+      { id: 'p3-8', text: 'Image de marque verte', expected: 'S' },
+      { id: 'p3-9', text: 'Adoption des nouvelles mobilités', expected: 'S' },
+      { id: 'p3-10', text: 'Densité énergétique des batteries', expected: 'T' },
+      { id: 'p3-11', text: 'Réseau de bornes de recharge', expected: 'T' },
+      { id: 'p3-12', text: 'Progrès de la conduite autonome', expected: 'T' },
+      { id: 'p3-13', text: 'Empreinte CO₂ de production', expected: 'Eco' },
+      { id: 'p3-14', text: 'Filière de recyclage des batteries', expected: 'Eco' },
+      { id: 'p3-15', text: "Origine carbonée de l'électricité", expected: 'Eco' },
+      { id: 'p3-16', text: 'Norme CAFE sur les émissions', expected: 'L' },
+      { id: 'p3-17', text: 'Bonus / malus écologique', expected: 'L' },
+      { id: 'p3-18', text: 'Zones à faibles émissions (ZFE)', expected: 'L' },
     ],
   },
 ];
 
-type Assignments = Record<string, ZoneId | "pool">;
+type Assignments = Record<string, ZoneId | 'pool'>;
 
 // ─── Component ─────────────────────────────────────────────────────────────
 export default function PestelMatch() {
@@ -149,9 +146,7 @@ export default function PestelMatch() {
   const [validated, setValidated] = useState(false);
   const [scores, setScores] = useState<number[]>([]);
   const [activeId, setActiveId] = useState<string | null>(null);
-  const sensors = useSensors(
-    useSensor(PointerSensor, { activationConstraint: { distance: 4 } }),
-  );
+  const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 4 } }));
 
   const round = ROUNDS[roundIdx]!; // safe: roundIdx in [0, ROUNDS.length)
   const isLast = roundIdx === ROUNDS.length - 1;
@@ -162,7 +157,7 @@ export default function PestelMatch() {
 
   useEffect(() => {
     const init: Assignments = {};
-    round.cards.forEach((c) => (init[c.id] = "pool"));
+    round.cards.forEach((c) => (init[c.id] = 'pool'));
     setAssignments(init);
     setValidated(false);
   }, [roundIdx, round.cards]);
@@ -171,23 +166,18 @@ export default function PestelMatch() {
     setActiveId(null);
     if (!e.over || validated) return;
     const cardId = e.active.id as string;
-    const zoneId = e.over.id as ZoneId | "pool";
+    const zoneId = e.over.id as ZoneId | 'pool';
     setAssignments((p) => ({ ...p, [cardId]: zoneId }));
   }
 
   const allPlaced = useMemo(
-    () =>
-      round.cards.every(
-        (c) => assignments[c.id] && assignments[c.id] !== "pool",
-      ),
+    () => round.cards.every((c) => assignments[c.id] && assignments[c.id] !== 'pool'),
     [round.cards, assignments],
   );
 
   function validate() {
     if (!allPlaced || validated) return;
-    const correct = round.cards.filter(
-      (c) => assignments[c.id] === c.expected,
-    ).length;
+    const correct = round.cards.filter((c) => assignments[c.id] === c.expected).length;
     const score = Math.round((correct / round.cards.length) * 100);
     setScores((s) => [...s, score]);
     setValidated(true);
@@ -198,9 +188,7 @@ export default function PestelMatch() {
   }
 
   function finish() {
-    const finalScore = Math.round(
-      scores.reduce((a, b) => a + b, 0) / scores.length,
-    );
+    const finalScore = Math.round(scores.reduce((a, b) => a + b, 0) / scores.length);
     shell.complete(
       {
         analyse: Math.min(100, Math.round(finalScore / 2 + 30)),
@@ -211,9 +199,7 @@ export default function PestelMatch() {
     );
   }
 
-  const pool = round.cards.filter(
-    (c) => !assignments[c.id] || assignments[c.id] === "pool",
-  );
+  const pool = round.cards.filter((c) => !assignments[c.id] || assignments[c.id] === 'pool');
 
   return (
     <div className="max-w-[1300px] mx-auto">
@@ -224,9 +210,7 @@ export default function PestelMatch() {
         >
           Manche {roundIdx + 1} / {ROUNDS.length} · {round.name}
         </div>
-        <p className="text-snow/70 text-sm md:text-base max-w-3xl">
-          {round.brief}
-        </p>
+        <p className="text-snow/70 text-sm md:text-base max-w-3xl">{round.brief}</p>
       </div>
 
       <DndContext
@@ -251,10 +235,7 @@ export default function PestelMatch() {
 
         <DragOverlay>
           {activeId ? (
-            <CardPill
-              text={round.cards.find((c) => c.id === activeId)?.text ?? ""}
-              floating
-            />
+            <CardPill text={round.cards.find((c) => c.id === activeId)?.text ?? ''} floating />
           ) : null}
         </DragOverlay>
       </DndContext>
@@ -268,12 +249,10 @@ export default function PestelMatch() {
             disabled={!allPlaced}
             className="inline-flex items-center justify-center gap-2 bg-pivot text-snow font-bold px-7 py-4 rounded-2xl text-base disabled:opacity-50 disabled:cursor-not-allowed transition-transform hover:scale-[1.01]"
             style={{
-              boxShadow: allPlaced ? "0 0 24px var(--pivot)" : "none",
+              boxShadow: allPlaced ? '0 0 24px var(--pivot)' : 'none',
             }}
           >
-            {allPlaced
-              ? "Valider mon classement"
-              : `Place encore ${pool.length}`}
+            {allPlaced ? 'Valider mon classement' : `Place encore ${pool.length}`}
             {allPlaced && <ArrowRight className="w-5 h-5" />}
           </button>
         ) : (
@@ -306,8 +285,8 @@ function Zone({
       ref={setNodeRef}
       className="rounded-2xl border-2 p-2.5 min-h-[180px] transition-colors"
       style={{
-        borderColor: isOver ? zone.color : "var(--night-200)",
-        background: isOver ? `${zone.color}14` : "var(--night-soft)",
+        borderColor: isOver ? zone.color : 'var(--night-200)',
+        background: isOver ? `${zone.color}14` : 'var(--night-soft)',
       }}
     >
       <div className="flex items-center gap-2 mb-2.5">
@@ -317,23 +296,12 @@ function Zone({
         >
           {zone.letter}
         </div>
-        <div className="font-display font-bold text-xs leading-none">
-          {zone.label}
-        </div>
+        <div className="font-display font-bold text-xs leading-none">{zone.label}</div>
       </div>
       <div className="space-y-1.5">
         {cards.map((c) => {
-          const correct =
-            validated &&
-            roundCards.find((x) => x.id === c.id)?.expected === zone.id;
-          return (
-            <DraggableCard
-              key={c.id}
-              card={c}
-              validated={validated}
-              correct={correct}
-            />
-          );
+          const correct = validated && roundCards.find((x) => x.id === c.id)?.expected === zone.id;
+          return <DraggableCard key={c.id} card={c} validated={validated} correct={correct} />;
         })}
       </div>
     </div>
@@ -341,14 +309,14 @@ function Zone({
 }
 
 function Pool({ cards, validated }: { cards: Card[]; validated: boolean }) {
-  const { setNodeRef, isOver } = useDroppable({ id: "pool" });
+  const { setNodeRef, isOver } = useDroppable({ id: 'pool' });
   return (
     <div
       ref={setNodeRef}
       className="rounded-3xl border-2 border-dashed p-4 transition-colors"
       style={{
-        borderColor: isOver ? ACCENT : "var(--night-200)",
-        background: isOver ? `${ACCENT}08` : "transparent",
+        borderColor: isOver ? ACCENT : 'var(--night-200)',
+        background: isOver ? `${ACCENT}08` : 'transparent',
       }}
     >
       <div
@@ -380,12 +348,12 @@ function DraggableCard({
   validated: boolean;
   correct?: boolean;
 }) {
-  const { attributes, listeners, setNodeRef, transform, isDragging } =
-    useDraggable({ id: card.id, disabled: validated });
+  const { attributes, listeners, setNodeRef, transform, isDragging } = useDraggable({
+    id: card.id,
+    disabled: validated,
+  });
   const style: React.CSSProperties = {
-    transform: transform
-      ? `translate3d(${transform.x}px, ${transform.y}px, 0)`
-      : undefined,
+    transform: transform ? `translate3d(${transform.x}px, ${transform.y}px, 0)` : undefined,
     opacity: isDragging ? 0.4 : 1,
   };
   return (
@@ -406,15 +374,15 @@ function CardPill({
   correct?: boolean;
   floating?: boolean;
 }) {
-  let borderColor = "var(--night-200)";
-  let textColor = "var(--snow)";
+  let borderColor = 'var(--night-200)';
+  let textColor = 'var(--snow)';
   if (validated) {
     if (correct) {
-      borderColor = "var(--mint)";
-      textColor = "var(--mint)";
+      borderColor = 'var(--mint)';
+      textColor = 'var(--mint)';
     } else if (correct === false) {
-      borderColor = "var(--coral)";
-      textColor = "var(--coral)";
+      borderColor = 'var(--coral)';
+      textColor = 'var(--coral)';
     }
   }
   return (
@@ -423,10 +391,8 @@ function CardPill({
       style={{
         borderColor,
         color: textColor,
-        cursor: validated ? "default" : "grab",
-        boxShadow: floating
-          ? `0 20px 40px rgba(0,0,0,0.5), 0 0 16px ${ACCENT}`
-          : undefined,
+        cursor: validated ? 'default' : 'grab',
+        boxShadow: floating ? `0 20px 40px rgba(0,0,0,0.5), 0 0 16px ${ACCENT}` : undefined,
       }}
     >
       {validated && correct === true && (
@@ -451,19 +417,16 @@ function ResultActions({
   onNext: () => void;
   onFinish: () => void;
 }) {
-  const c =
-    score >= 75 ? "var(--mint)" : score >= 50 ? "var(--sun)" : "var(--coral)";
+  const c = score >= 75 ? 'var(--mint)' : score >= 50 ? 'var(--sun)' : 'var(--coral)';
   return (
     <motion.div
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ type: "spring", stiffness: 90, damping: 16 }}
+      transition={{ type: 'spring', stiffness: 90, damping: 16 }}
       className="flex items-center gap-4"
     >
       <div className="text-right">
-        <div className="font-mono text-[10px] uppercase tracking-widest text-snow/50">
-          Score
-        </div>
+        <div className="font-mono text-[10px] uppercase tracking-widest text-snow/50">Score</div>
         <div
           className="font-display font-extrabold text-3xl tracking-tight leading-none"
           style={{ color: c }}
@@ -476,7 +439,7 @@ function ResultActions({
         onClick={isLast ? onFinish : onNext}
         className="inline-flex items-center gap-2 bg-pivot text-snow font-bold px-6 py-4 rounded-2xl transition-transform hover:scale-[1.01]"
       >
-        {isLast ? "Voir mes résultats" : "Manche suivante"}
+        {isLast ? 'Voir mes résultats' : 'Manche suivante'}
         <ArrowRight className="w-5 h-5" />
       </button>
     </motion.div>
@@ -500,19 +463,19 @@ function RoundsBadge({
         const active = i === current;
         const c = done
           ? s >= 75
-            ? "var(--mint)"
+            ? 'var(--mint)'
             : s >= 50
-              ? "var(--sun)"
-              : "var(--coral)"
-          : "var(--night-200)";
+              ? 'var(--sun)'
+              : 'var(--coral)'
+          : 'var(--night-200)';
         return (
           <div
             key={i}
             className="px-2.5 py-1 rounded-full font-mono text-[10px] uppercase tracking-widest border"
             style={{
-              borderColor: active && !done ? "var(--snow)" : c,
-              color: done ? c : active ? "var(--snow)" : "var(--night-500)",
-              background: done ? `${c}15` : "transparent",
+              borderColor: active && !done ? 'var(--snow)' : c,
+              color: done ? c : active ? 'var(--snow)' : 'var(--night-500)',
+              background: done ? `${c}15` : 'transparent',
             }}
           >
             {done ? `${s}` : `M${i + 1}`}

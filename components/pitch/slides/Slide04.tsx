@@ -1,20 +1,14 @@
-"use client";
+'use client';
 
-import { motion } from "framer-motion";
-import { SlideContainer, Tag, fadeUp, stagger } from "../slide-utils";
+import { motion } from 'framer-motion';
+import { SlideContainer, Tag, fadeUp, stagger } from '../slide-utils';
 
-const CHIPS = [
-  "Marketing",
-  "Finance",
-  "Entrepreneuriat",
-  "Conseil",
-  "International",
-];
+const CHIPS = ['Marketing', 'Finance', 'Entrepreneuriat', 'Conseil', 'International'];
 
 const KPIS = [
-  { big: "3-5 min", color: "var(--sun)", label: "Durée par jeu" },
-  { big: "Fiche métier", color: "var(--pivot)", label: "À la fin du jeu" },
-  { big: "Validé", color: "var(--mint)", label: "Par les écoles" },
+  { big: '3-5 min', color: 'var(--sun)', label: 'Durée par jeu' },
+  { big: 'Fiche métier', color: 'var(--pivot)', label: 'À la fin du jeu' },
+  { big: 'Validé', color: 'var(--mint)', label: 'Par les écoles' },
 ];
 
 export default function Slide04() {
@@ -31,7 +25,7 @@ export default function Slide04() {
         <motion.h1
           variants={fadeUp}
           className="font-display font-extrabold tracking-[-0.04em] leading-[0.95] mb-10"
-          style={{ fontSize: "clamp(56px, 8vw, 112px)" }}
+          style={{ fontSize: 'clamp(56px, 8vw, 112px)' }}
         >
           La solution
         </motion.h1>
@@ -39,25 +33,19 @@ export default function Slide04() {
         <motion.div
           variants={fadeUp}
           className="bg-night-soft rounded-3xl p-8 md:p-10 mb-8 border-l-4"
-          style={{ borderLeftColor: "var(--pivot)" }}
+          style={{ borderLeftColor: 'var(--pivot)' }}
         >
           <p
             className="text-snow/85 font-light leading-relaxed"
-            style={{ fontSize: "clamp(22px, 2.2vw, 32px)" }}
+            style={{ fontSize: 'clamp(22px, 2.2vw, 32px)' }}
           >
-            <span className="font-display font-bold text-snow">Cap&rsquo;</span>
-            , une plateforme web de{" "}
-            <span style={{ color: "var(--sun)", fontWeight: 600 }}>
-              mini-jeux immersifs
-            </span>{" "}
+            <span className="font-display font-bold text-snow">Cap&rsquo;</span>, une plateforme web
+            de <span style={{ color: 'var(--sun)', fontWeight: 600 }}>mini-jeux immersifs</span>{' '}
             pour étudiants, qui simulent les matières des écoles de commerce.
           </p>
         </motion.div>
 
-        <motion.div
-          variants={fadeUp}
-          className="flex flex-wrap gap-2.5 mb-12"
-        >
+        <motion.div variants={fadeUp} className="flex flex-wrap gap-2.5 mb-12">
           {CHIPS.map((c) => (
             <motion.span
               key={c}
@@ -79,7 +67,7 @@ export default function Slide04() {
             >
               <div
                 className="font-display font-extrabold tracking-tight leading-none mb-3"
-                style={{ fontSize: "clamp(36px, 4vw, 64px)", color: k.color }}
+                style={{ fontSize: 'clamp(36px, 4vw, 64px)', color: k.color }}
               >
                 {k.big}
               </div>

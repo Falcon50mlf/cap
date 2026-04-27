@@ -1,4 +1,4 @@
-import { Logo } from "@/components/layout/logo";
+import { Logo } from '@/components/layout/logo';
 
 export default function JeuxLibresPage() {
   return (
@@ -11,13 +11,11 @@ export default function JeuxLibresPage() {
           </div>
           <h1
             className="font-display font-extrabold tracking-[-0.04em] leading-[0.95]"
-            style={{ fontSize: "clamp(48px, 7vw, 88px)" }}
+            style={{ fontSize: 'clamp(48px, 7vw, 88px)' }}
           >
             WIP
           </h1>
-          <p className="mt-4 text-snow/60">
-            Mini-jeux jouables sans compte — bientôt dispo.
-          </p>
+          <p className="mt-4 text-snow/60">Mini-jeux jouables sans compte — bientôt dispo.</p>
         </div>
       </div>
     </main>

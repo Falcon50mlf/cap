@@ -1,4 +1,4 @@
-import { SlideShell } from "@/components/pitch/SlideShell";
+import { SlideShell } from '@/components/pitch/SlideShell';
 
 export const metadata = {
   title: "Cap' — Pitch",

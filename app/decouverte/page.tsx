@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import Link from "next/link";
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-import { motion } from "framer-motion";
+import Link from 'next/link';
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { motion } from 'framer-motion';
 import {
   ArrowLeft,
   ArrowRight,
@@ -14,12 +14,12 @@ import {
   Rocket,
   Sparkles,
   TrendingUp,
-} from "lucide-react";
-import { Logo } from "@/components/layout/logo";
-import { ThemeToggle } from "@/components/layout/theme-toggle";
-import { createClient } from "@/lib/supabase/client";
-import { FAMILY_LIST } from "@/lib/families-database";
-import type { Family } from "@/types/database";
+} from 'lucide-react';
+import { Logo } from '@/components/layout/logo';
+import { ThemeToggle } from '@/components/layout/theme-toggle';
+import { createClient } from '@/lib/supabase/client';
+import { FAMILY_LIST } from '@/lib/families-database';
+import type { Family } from '@/types/database';
 
 const ICONS: Record<string, React.ComponentType<{ className?: string }>> = {
   Megaphone,
@@ -44,7 +44,7 @@ export default function DecouvertePage() {
       } = await supabase.auth.getUser();
       if (cancelled) return;
       if (!user) {
-        router.replace("/login");
+        router.replace('/login');
         return;
       }
       setLoading(false);
@@ -83,7 +83,7 @@ export default function DecouvertePage() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ type: "spring", stiffness: 90, damping: 16 }}
+            transition={{ type: 'spring', stiffness: 90, damping: 16 }}
             className="mt-8 mb-16"
           >
             <div className="font-mono text-[11px] uppercase tracking-widest text-sun mb-3">
@@ -91,14 +91,13 @@ export default function DecouvertePage() {
             </div>
             <h1
               className="font-display font-extrabold tracking-[-0.04em] leading-[0.95]"
-              style={{ fontSize: "clamp(48px, 7vw, 96px)" }}
+              style={{ fontSize: 'clamp(48px, 7vw, 96px)' }}
             >
-              6 familles.{" "}
-              <span className="text-snow/40">30 métiers.</span>
+              6 familles. <span className="text-snow/40">30 métiers.</span>
             </h1>
             <p className="mt-6 text-snow/60 text-lg max-w-xl">
-              Pour chacune : des mini-jeux qui simulent le vrai monde pro, une
-              fiche secteur, et des bénévoles qui y sont déjà.
+              Pour chacune : des mini-jeux qui simulent le vrai monde pro, une fiche secteur, et des
+              bénévoles qui y sont déjà.
             </p>
           </motion.div>
 
@@ -138,19 +137,19 @@ function FamilyCard({
   tagline: string;
   color: string;
   iconName: string;
-  status: "live" | "soon";
+  status: 'live' | 'soon';
   preview: string[];
   index: number;
 }) {
   const Icon = ICONS[iconName] ?? Briefcase;
-  const live = status === "live";
+  const live = status === 'live';
   const inner = (
     <motion.div
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{
         delay: 0.05 * index,
-        type: "spring",
+        type: 'spring',
         stiffness: 90,
         damping: 16,
       }}
@@ -160,7 +159,7 @@ function FamilyCard({
         borderColor: color,
         background: `${color}14`,
         opacity: live ? 1 : 0.55,
-        cursor: live ? "pointer" : "not-allowed",
+        cursor: live ? 'pointer' : 'not-allowed',
       }}
     >
       <div className="flex items-start justify-between mb-6">
@@ -173,19 +172,16 @@ function FamilyCard({
         <span
           className="font-mono text-[10px] uppercase tracking-widest px-2 py-1 rounded-full border"
           style={{
-            borderColor: live ? "var(--mint)" : "var(--night-200)",
-            color: live ? "var(--mint)" : "var(--night-500)",
-            background: live ? "rgba(0,212,168,0.1)" : "transparent",
+            borderColor: live ? 'var(--mint)' : 'var(--night-200)',
+            color: live ? 'var(--mint)' : 'var(--night-500)',
+            background: live ? 'rgba(0,212,168,0.1)' : 'transparent',
           }}
         >
-          {live ? "Disponible" : "Bientôt"}
+          {live ? 'Disponible' : 'Bientôt'}
         </span>
       </div>
 
-      <h3
-        className="font-display font-extrabold text-2xl tracking-tight mb-2"
-        style={{ color }}
-      >
+      <h3 className="font-display font-extrabold text-2xl tracking-tight mb-2" style={{ color }}>
         {name}
       </h3>
       <p className="text-snow/70 text-base leading-snug mb-5">{tagline}</p>

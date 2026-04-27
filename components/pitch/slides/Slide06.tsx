@@ -1,13 +1,7 @@
-"use client";
+'use client';
 
-import { motion } from "framer-motion";
-import {
-  SlideContainer,
-  Tag,
-  fadeUp,
-  stagger,
-  NumCircle,
-} from "../slide-utils";
+import { motion } from 'framer-motion';
+import { SlideContainer, Tag, fadeUp, stagger, NumCircle } from '../slide-utils';
 
 type Card = {
   n: number;
@@ -19,43 +13,31 @@ type Card = {
 const POINTS: Card[] = [
   {
     n: 1,
-    color: "var(--sun)",
-    title: "Leads qualifiés et consentis",
-    body: (
-      <>L&rsquo;étudiant a déjà expérimenté votre matière, son intérêt est validé.</>
-    ),
+    color: 'var(--sun)',
+    title: 'Leads qualifiés et consentis',
+    body: <>L&rsquo;étudiant a déjà expérimenté votre matière, son intérêt est validé.</>,
   },
   {
     n: 2,
-    color: "var(--pivot)",
-    title: "Gamification > Communication classique",
-    body: (
-      <>
-        Vos étudiants jouent avec votre pédagogie au lieu de scroller des
-        plaquettes.
-      </>
-    ),
+    color: 'var(--pivot)',
+    title: 'Gamification > Communication classique',
+    body: <>Vos étudiants jouent avec votre pédagogie au lieu de scroller des plaquettes.</>,
   },
   {
     n: 3,
-    color: "var(--mint)",
+    color: 'var(--mint)',
     title: "Visibilité auprès d'une cible jeune et engagée",
     body: <>Lycéens 15-18 ans actifs, pas une audience passive.</>,
   },
   {
     n: 4,
-    color: "#3B82F6",
+    color: '#3B82F6',
     title: "Coût d'acquisition bien en dessous du marché",
     body: (
       <>
-        <span style={{ color: "var(--sun)", fontWeight: 600 }}>
-          20-30€/lead
-        </span>{" "}
-        vs{" "}
-        <span style={{ color: "var(--sun)", fontWeight: 600 }}>
-          500-2 000€/étudiant
-        </span>{" "}
-        en com classique.
+        <span style={{ color: 'var(--sun)', fontWeight: 600 }}>20-30€/lead</span> vs{' '}
+        <span style={{ color: 'var(--sun)', fontWeight: 600 }}>500-2 000€/étudiant</span> en com
+        classique.
       </>
     ),
   },
@@ -63,12 +45,12 @@ const POINTS: Card[] = [
 
 const HIGHLIGHT: Card = {
   n: 5,
-  color: "var(--coral)",
-  title: "Réactivité produit unique",
+  color: 'var(--coral)',
+  title: 'Réactivité produit unique',
   body: (
     <>
-      Manque sur une formation ? On produit un module de 30 min en 1 mois pour
-      renforcer votre communication.
+      Manque sur une formation ? On produit un module de 30 min en 1 mois pour renforcer votre
+      communication.
     </>
   ),
 };
@@ -87,7 +69,7 @@ export default function Slide06() {
         <motion.h1
           variants={fadeUp}
           className="font-display font-extrabold tracking-[-0.04em] leading-[0.95] mb-10"
-          style={{ fontSize: "clamp(48px, 7vw, 96px)" }}
+          style={{ fontSize: 'clamp(48px, 7vw, 96px)' }}
         >
           Intérêt pour les écoles
         </motion.h1>
@@ -109,14 +91,12 @@ export default function Slide06() {
                   className="font-display font-bold mb-1.5"
                   style={{
                     color: p.color,
-                    fontSize: "clamp(16px, 1.4vw, 19px)",
+                    fontSize: 'clamp(16px, 1.4vw, 19px)',
                   }}
                 >
                   {p.title}
                 </div>
-                <p className="text-snow/80 text-sm md:text-base leading-snug">
-                  {p.body}
-                </p>
+                <p className="text-snow/80 text-sm md:text-base leading-snug">{p.body}</p>
               </div>
             </motion.div>
           ))}
@@ -136,14 +116,12 @@ export default function Slide06() {
               className="font-display font-extrabold mb-2"
               style={{
                 color: HIGHLIGHT.color,
-                fontSize: "clamp(18px, 1.8vw, 26px)",
+                fontSize: 'clamp(18px, 1.8vw, 26px)',
               }}
             >
               {HIGHLIGHT.title}
             </div>
-            <p className="text-snow/85 text-base md:text-lg leading-snug">
-              {HIGHLIGHT.body}
-            </p>
+            <p className="text-snow/85 text-base md:text-lg leading-snug">{HIGHLIGHT.body}</p>
           </div>
         </motion.div>
       </motion.div>

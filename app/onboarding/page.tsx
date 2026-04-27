@@ -1,18 +1,13 @@
-"use client";
+'use client';
 
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-import { motion } from "framer-motion";
-import {
-  GraduationCap,
-  Briefcase,
-  ArrowRight,
-  Loader2,
-} from "lucide-react";
-import { Logo } from "@/components/layout/logo";
-import { ThemeToggle } from "@/components/layout/theme-toggle";
-import { createClient } from "@/lib/supabase/client";
-import type { Role } from "@/types/database";
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { motion } from 'framer-motion';
+import { GraduationCap, Briefcase, ArrowRight, Loader2 } from 'lucide-react';
+import { Logo } from '@/components/layout/logo';
+import { ThemeToggle } from '@/components/layout/theme-toggle';
+import { createClient } from '@/lib/supabase/client';
+import type { Role } from '@/types/database';
 
 export default function OnboardingPage() {
   const router = useRouter();
@@ -31,20 +26,20 @@ export default function OnboardingPage() {
       if (cancelled) return;
 
       if (!user) {
-        router.replace("/login");
+        router.replace('/login');
         return;
       }
 
       const { data: profile } = await supabase
-        .from("profiles")
-        .select("role")
-        .eq("id", user.id)
+        .from('profiles')
+        .select('role')
+        .eq('id', user.id)
         .maybeSingle();
 
       if (cancelled) return;
 
       if (profile?.role) {
-        router.replace("/hub");
+        router.replace('/hub');
         return;
       }
       setChecking(false);
@@ -63,7 +58,7 @@ export default function OnboardingPage() {
       data: { user },
     } = await supabase.auth.getUser();
     if (!user) {
-      router.replace("/login");
+      router.replace('/login');
       return;
     }
 
@@ -72,24 +67,18 @@ export default function OnboardingPage() {
     // row mise à jour pour confirmer que le rôle est bien persisté avant
     // de naviguer (sinon /hub re-redirige ici → boucle).
     const { data, error: upsertError } = await supabase
-      .from("profiles")
-      .upsert(
-        { id: user.id, role, updated_at: new Date().toISOString() },
-        { onConflict: "id" },
-      )
-      .select("role")
+      .from('profiles')
+      .upsert({ id: user.id, role, updated_at: new Date().toISOString() }, { onConflict: 'id' })
+      .select('role')
       .single();
 
     if (upsertError || data?.role !== role) {
       setPicking(null);
-      setError(
-        upsertError?.message ??
-          "Sauvegarde impossible. Recharge la page et réessaie.",
-      );
+      setError(upsertError?.message ?? 'Sauvegarde impossible. Recharge la page et réessaie.');
       return;
     }
 
-    router.push("/hub");
+    router.push('/hub');
   }
 
   if (checking) {
@@ -116,12 +105,12 @@ export default function OnboardingPage() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ type: "spring", stiffness: 90, damping: 16 }}
+          transition={{ type: 'spring', stiffness: 90, damping: 16 }}
           className="w-full max-w-2xl"
         >
           <h1
             className="font-display font-extrabold tracking-[-0.04em] leading-[0.95] text-center mb-3"
-            style={{ fontSize: "clamp(40px, 6vw, 72px)" }}
+            style={{ fontSize: 'clamp(40px, 6vw, 72px)' }}
           >
             Tu es...
           </h1>
@@ -136,9 +125,9 @@ export default function OnboardingPage() {
               title="Lycéen·ne"
               subtitle="J'hésite encore pour mes études"
               tag="Découvre les écoles & métiers"
-              loading={picking === "lyceen"}
+              loading={picking === 'lyceen'}
               disabled={picking !== null}
-              onClick={() => pick("lyceen")}
+              onClick={() => pick('lyceen')}
             />
             <RoleCard
               color="var(--pivot)"
@@ -146,9 +135,9 @@ export default function OnboardingPage() {
               title="Jeune diplômé·e"
               subtitle="Je cherche mon orientation pro"
               tag="Explore les 6 familles de métiers"
-              loading={picking === "diplome"}
+              loading={picking === 'diplome'}
               disabled={picking !== null}
-              onClick={() => pick("diplome")}
+              onClick={() => pick('diplome')}
             />
           </div>
 
@@ -203,23 +192,14 @@ function RoleCard({
         className="w-14 h-14 rounded-2xl grid place-items-center mb-6"
         style={{ background: `${color}33`, color }}
       >
-        {loading ? (
-          <Loader2 className="w-7 h-7 animate-spin" />
-        ) : (
-          <Icon className="w-7 h-7" />
-        )}
+        {loading ? <Loader2 className="w-7 h-7 animate-spin" /> : <Icon className="w-7 h-7" />}
       </div>
-      <div
-        className="font-display font-extrabold text-3xl tracking-tight mb-2"
-        style={{ color }}
-      >
+      <div className="font-display font-extrabold text-3xl tracking-tight mb-2" style={{ color }}>
         {title}
       </div>
       <p className="text-snow/70 text-base mb-6">{subtitle}</p>
       <div className="flex items-center justify-between">
-        <span className="font-mono text-[10px] uppercase tracking-widest text-snow/50">
-          {tag}
-        </span>
+        <span className="font-mono text-[10px] uppercase tracking-widest text-snow/50">{tag}</span>
         <ArrowRight
           className="w-5 h-5 transition-transform group-hover:translate-x-1"
           style={{ color }}

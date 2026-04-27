@@ -1,22 +1,13 @@
-"use client";
+'use client';
 
-import Link from "next/link";
-import { motion } from "framer-motion";
-import {
-  ArrowLeft,
-  ArrowRight,
-  Coffee,
-  MessageSquare,
-  Phone,
-} from "lucide-react";
-import { Logo } from "@/components/layout/logo";
-import { ThemeToggle } from "@/components/layout/theme-toggle";
-import {
-  getVolunteersByFamily,
-  type Volunteer,
-} from "@/lib/volunteers-database";
+import Link from 'next/link';
+import { motion } from 'framer-motion';
+import { ArrowLeft, ArrowRight, Coffee, MessageSquare, Phone } from 'lucide-react';
+import { Logo } from '@/components/layout/logo';
+import { ThemeToggle } from '@/components/layout/theme-toggle';
+import { getVolunteersByFamily, type Volunteer } from '@/lib/volunteers-database';
 
-const ACCENT = "var(--family-marketing)";
+const ACCENT = 'var(--family-marketing)';
 
 const FORMAT_ICONS = {
   call: Phone,
@@ -25,13 +16,13 @@ const FORMAT_ICONS = {
 };
 
 const FORMAT_LABELS = {
-  call: "Call 30 min",
-  cafe: "Café IRL",
-  message: "Messages",
+  call: 'Call 30 min',
+  cafe: 'Café IRL',
+  message: 'Messages',
 };
 
 export default function MarketingBenevolesPage() {
-  const volunteers = getVolunteersByFamily("marketing");
+  const volunteers = getVolunteersByFamily('marketing');
 
   return (
     <main className="relative min-h-screen flex flex-col">
@@ -54,7 +45,7 @@ export default function MarketingBenevolesPage() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ type: "spring", stiffness: 90, damping: 16 }}
+            transition={{ type: 'spring', stiffness: 90, damping: 16 }}
             className="mb-16"
           >
             <div
@@ -65,15 +56,15 @@ export default function MarketingBenevolesPage() {
             </div>
             <h1
               className="font-display font-extrabold tracking-[-0.04em] leading-[0.95]"
-              style={{ fontSize: "clamp(48px, 7vw, 96px)" }}
+              style={{ fontSize: 'clamp(48px, 7vw, 96px)' }}
             >
-              2 bénévoles<br />
+              2 bénévoles
+              <br />
               <span className="text-snow/40">qui y sont déjà.</span>
             </h1>
             <p className="mt-6 text-snow/60 text-lg max-w-xl">
-              Des étudiants en cours d&rsquo;études et des pros en poste.
-              Chacun a choisi de partager son retour d&rsquo;expérience pour
-              t&rsquo;éviter les angles morts.
+              Des étudiants en cours d&rsquo;études et des pros en poste. Chacun a choisi de
+              partager son retour d&rsquo;expérience pour t&rsquo;éviter les angles morts.
             </p>
           </motion.div>
 
@@ -91,8 +82,8 @@ export default function MarketingBenevolesPage() {
               Tu es étudiant·e ou pro en poste ?
             </h3>
             <p className="text-snow/60 mb-6 max-w-md mx-auto">
-              Cap&rsquo; recrute des bénévoles pour partager 1-2 fois par mois.
-              C&rsquo;est ton tour d&rsquo;aider la suite.
+              Cap&rsquo; recrute des bénévoles pour partager 1-2 fois par mois. C&rsquo;est ton tour
+              d&rsquo;aider la suite.
             </p>
             <a
               href="mailto:team@cap.app?subject=Devenir%20b%C3%A9n%C3%A9vole%20Cap%27"
@@ -115,8 +106,8 @@ function VolunteerCard({ v, index }: { v: Volunteer; index: number }) {
     <motion.article
       initial={{ opacity: 0, y: 16 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-60px" }}
-      transition={{ delay: index * 0.08, type: "spring", stiffness: 90, damping: 16 }}
+      viewport={{ once: true, margin: '-60px' }}
+      transition={{ delay: index * 0.08, type: 'spring', stiffness: 90, damping: 16 }}
       className="p-6 md:p-8 rounded-3xl border-2 flex flex-col"
       style={{ borderColor: ACCENT, background: `${ACCENT}0a` }}
     >
@@ -130,9 +121,7 @@ function VolunteerCard({ v, index }: { v: Volunteer; index: number }) {
         <div className="flex-1 min-w-0">
           <div className="font-display font-extrabold text-2xl tracking-tight mb-1">
             {v.firstName} {v.lastInitial}
-            <span className="text-snow/50 font-normal text-lg ml-2">
-              · {v.age} ans
-            </span>
+            <span className="text-snow/50 font-normal text-lg ml-2">· {v.age} ans</span>
           </div>
           <div
             className="font-mono text-[11px] uppercase tracking-widest mb-2"
@@ -149,9 +138,7 @@ function VolunteerCard({ v, index }: { v: Volunteer; index: number }) {
       >
         // Parcours
       </div>
-      <p className="text-snow/80 text-sm mb-5 leading-relaxed">
-        {v.trajectory}
-      </p>
+      <p className="text-snow/80 text-sm mb-5 leading-relaxed">{v.trajectory}</p>
 
       <div
         className="font-mono text-[10px] uppercase tracking-widest mb-2"
@@ -159,9 +146,7 @@ function VolunteerCard({ v, index }: { v: Volunteer; index: number }) {
       >
         // Pitch
       </div>
-      <p className="text-snow/80 leading-relaxed mb-6 italic">
-        &ldquo;{v.bio}&rdquo;
-      </p>
+      <p className="text-snow/80 leading-relaxed mb-6 italic">&ldquo;{v.bio}&rdquo;</p>
 
       <div
         className="font-mono text-[10px] uppercase tracking-widest mb-3"
@@ -171,10 +156,7 @@ function VolunteerCard({ v, index }: { v: Volunteer; index: number }) {
       </div>
       <ul className="space-y-1.5 mb-6">
         {v.topics.map((t) => (
-          <li
-            key={t}
-            className="text-snow/70 text-sm flex items-start gap-2"
-          >
+          <li key={t} className="text-snow/70 text-sm flex items-start gap-2">
             <span style={{ color: ACCENT }}>·</span>
             {t}
           </li>
@@ -196,17 +178,12 @@ function VolunteerCard({ v, index }: { v: Volunteer; index: number }) {
             );
           })}
         </div>
-        <span
-          className="font-mono text-[10px] uppercase tracking-widest"
-          style={{ color: ACCENT }}
-        >
+        <span className="font-mono text-[10px] uppercase tracking-widest" style={{ color: ACCENT }}>
           {v.availability}
         </span>
       </div>
 
-      <button
-        className="mt-5 w-full inline-flex items-center justify-center gap-2 bg-sun text-night font-bold px-6 py-3 rounded-2xl text-sm transition-transform hover:scale-[1.01]"
-      >
+      <button className="mt-5 w-full inline-flex items-center justify-center gap-2 bg-sun text-night font-bold px-6 py-3 rounded-2xl text-sm transition-transform hover:scale-[1.01]">
         Demander un échange
         <ArrowRight className="w-4 h-4" />
       </button>

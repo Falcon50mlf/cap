@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import Link from "next/link";
-import { motion } from "framer-motion";
+import Link from 'next/link';
+import { motion } from 'framer-motion';
 import {
   ArrowLeft,
   Briefcase,
@@ -10,10 +10,10 @@ import {
   MessageSquare,
   Package,
   TrendingUp,
-} from "lucide-react";
-import { Logo } from "@/components/layout/logo";
-import { ThemeToggle } from "@/components/layout/theme-toggle";
-import { getJobsByFamily, type Job } from "@/lib/jobs-database";
+} from 'lucide-react';
+import { Logo } from '@/components/layout/logo';
+import { ThemeToggle } from '@/components/layout/theme-toggle';
+import { getJobsByFamily, type Job } from '@/lib/jobs-database';
 
 const ICONS: Record<string, React.ComponentType<{ className?: string }>> = {
   Megaphone,
@@ -24,10 +24,10 @@ const ICONS: Record<string, React.ComponentType<{ className?: string }>> = {
   Briefcase,
 };
 
-const ACCENT = "var(--family-marketing)";
+const ACCENT = 'var(--family-marketing)';
 
 export default function MarketingMetiersPage() {
-  const jobs = getJobsByFamily("marketing");
+  const jobs = getJobsByFamily('marketing');
 
   return (
     <main className="relative min-h-screen flex flex-col">
@@ -50,7 +50,7 @@ export default function MarketingMetiersPage() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ type: "spring", stiffness: 90, damping: 16 }}
+            transition={{ type: 'spring', stiffness: 90, damping: 16 }}
             className="mb-16"
           >
             <div
@@ -61,9 +61,10 @@ export default function MarketingMetiersPage() {
             </div>
             <h1
               className="font-display font-extrabold tracking-[-0.04em] leading-[0.95]"
-              style={{ fontSize: "clamp(48px, 7vw, 96px)" }}
+              style={{ fontSize: 'clamp(48px, 7vw, 96px)' }}
             >
-              5 métiers,<br />
+              5 métiers,
+              <br />
               <span className="text-snow/40">5 quotidiens.</span>
             </h1>
           </motion.div>
@@ -76,8 +77,7 @@ export default function MarketingMetiersPage() {
 
           <div className="mt-16 p-6 rounded-3xl border border-night-200 bg-night-soft text-center">
             <p className="text-snow/60 mb-4">
-              Tu veux échanger avec quelqu&rsquo;un qui fait l&rsquo;un de ces
-              métiers ?
+              Tu veux échanger avec quelqu&rsquo;un qui fait l&rsquo;un de ces métiers ?
             </p>
             <Link
               href="/decouverte/marketing/benevoles"
@@ -99,8 +99,8 @@ function JobCard({ job, index }: { job: Job; index: number }) {
     <motion.article
       initial={{ opacity: 0, y: 16 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-60px" }}
-      transition={{ delay: index * 0.06, type: "spring", stiffness: 90, damping: 16 }}
+      viewport={{ once: true, margin: '-60px' }}
+      transition={{ delay: index * 0.06, type: 'spring', stiffness: 90, damping: 16 }}
       className="relative p-6 md:p-8 rounded-3xl border-2 grid grid-cols-1 lg:grid-cols-12 gap-8"
       style={{ borderColor: ACCENT, background: `${ACCENT}10` }}
     >
@@ -117,10 +117,7 @@ function JobCard({ job, index }: { job: Job; index: number }) {
         >
           {job.name}
         </h2>
-        <p
-          className="text-snow/80 italic mb-5"
-          style={{ fontStyle: "italic" }}
-        >
+        <p className="text-snow/80 italic mb-5" style={{ fontStyle: 'italic' }}>
           {job.tagline}
         </p>
         <p className="text-snow/70 leading-relaxed mb-6">{job.description}</p>
@@ -151,14 +148,8 @@ function JobCard({ job, index }: { job: Job; index: number }) {
         </div>
         <ol className="space-y-2 mb-6">
           {job.journeeType.map((j, i) => (
-            <li
-              key={i}
-              className="flex items-start gap-3 text-snow/80 text-sm"
-            >
-              <span
-                className="font-mono font-bold w-12 shrink-0"
-                style={{ color: ACCENT }}
-              >
+            <li key={i} className="flex items-start gap-3 text-snow/80 text-sm">
+              <span className="font-mono font-bold w-12 shrink-0" style={{ color: ACCENT }}>
                 {j.hour}
               </span>
               <span className="leading-relaxed">{j.activity}</span>
@@ -184,10 +175,7 @@ function SmallStat({ label, value }: { label: string; value: string }) {
       <div className="font-mono text-[9px] uppercase tracking-widest text-snow/50 mb-1">
         {label}
       </div>
-      <div
-        className="font-display font-bold text-lg tracking-tight"
-        style={{ color: ACCENT }}
-      >
+      <div className="font-display font-bold text-lg tracking-tight" style={{ color: ACCENT }}>
         {value}
       </div>
     </div>

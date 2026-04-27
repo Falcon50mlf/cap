@@ -1,46 +1,46 @@
-"use client";
+'use client';
 
-import { motion } from "framer-motion";
-import { Building2, Landmark, School, GraduationCap } from "lucide-react";
-import { SlideContainer, Tag, fadeUp, stagger } from "../slide-utils";
+import { motion } from 'framer-motion';
+import { Building2, Landmark, School, GraduationCap } from 'lucide-react';
+import { SlideContainer, Tag, fadeUp, stagger } from '../slide-utils';
 
 type Slice = { value: number; color: string; label: string };
 
 const SLICES: Slice[] = [
-  { value: 40, color: "var(--sun)", label: "Communication & marketing" },
-  { value: 25, color: "var(--pivot)", label: "Entretiens & user research" },
+  { value: 40, color: 'var(--sun)', label: 'Communication & marketing' },
+  { value: 25, color: 'var(--pivot)', label: 'Entretiens & user research' },
   {
     value: 20,
-    color: "var(--mint)",
-    label: "Partenariats écoles & certifications",
+    color: 'var(--mint)',
+    label: 'Partenariats écoles & certifications',
   },
-  { value: 15, color: "#3B82F6", label: "Développement produit" },
+  { value: 15, color: '#3B82F6', label: 'Développement produit' },
 ];
 
 const PARTNERS = [
   {
     Icon: Building2,
-    name: "ONISEP",
-    note: "Référence orientation",
-    color: "var(--sun)",
+    name: 'ONISEP',
+    note: 'Référence orientation',
+    color: 'var(--sun)',
   },
   {
     Icon: Landmark,
     name: "Ministère de l'Éducation et de la Jeunesse",
-    note: "Légitimité institutionnelle",
-    color: "var(--pivot)",
+    note: 'Légitimité institutionnelle',
+    color: 'var(--pivot)',
   },
   {
     Icon: School,
-    name: "Lycées",
-    note: "Accès direct à la cible",
-    color: "var(--mint)",
+    name: 'Lycées',
+    note: 'Accès direct à la cible',
+    color: 'var(--mint)',
   },
   {
     Icon: GraduationCap,
-    name: "Écoles de commerce",
-    note: "Partenaires de contenu",
-    color: "#3B82F6",
+    name: 'Écoles de commerce',
+    note: 'Partenaires de contenu',
+    color: '#3B82F6',
   },
 ];
 
@@ -80,7 +80,7 @@ export default function Slide08() {
         <motion.h1
           variants={fadeUp}
           className="font-display font-extrabold tracking-[-0.04em] leading-[0.95] mb-3"
-          style={{ fontSize: "clamp(48px, 7vw, 96px)" }}
+          style={{ fontSize: 'clamp(48px, 7vw, 96px)' }}
         >
           Nos besoins
         </motion.h1>
@@ -88,7 +88,7 @@ export default function Slide08() {
         <motion.p
           variants={fadeUp}
           className="text-snow/70 mb-10"
-          style={{ fontSize: "clamp(18px, 1.8vw, 24px)" }}
+          style={{ fontSize: 'clamp(18px, 1.8vw, 24px)' }}
         >
           Pour passer du proto à 5 écoles partenaires en 12 mois.
         </motion.p>
@@ -129,23 +129,15 @@ export default function Slide08() {
 
               <ul className="space-y-2.5">
                 {SLICES.map((s) => (
-                  <li
-                    key={s.label}
-                    className="flex items-center gap-3 text-sm md:text-base"
-                  >
-                    <span
-                      className="w-4 h-4 rounded-sm shrink-0"
-                      style={{ background: s.color }}
-                    />
+                  <li key={s.label} className="flex items-center gap-3 text-sm md:text-base">
+                    <span className="w-4 h-4 rounded-sm shrink-0" style={{ background: s.color }} />
                     <span
                       className="font-display font-bold tabular-nums shrink-0"
                       style={{ color: s.color }}
                     >
                       {s.value}%
                     </span>
-                    <span className="text-snow/85 leading-snug">
-                      {s.label}
-                    </span>
+                    <span className="text-snow/85 leading-snug">{s.label}</span>
                   </li>
                 ))}
               </ul>

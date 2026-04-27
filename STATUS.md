@@ -5,6 +5,7 @@
 ## ✅ Fait
 
 ### Foundation (S1)
+
 - Next.js 14 (App Router) + TS strict + Tailwind v3 + Framer Motion + Zustand + Supabase SDK
 - Identité Cap&rsquo; complète (palette CSS variables, Bricolage Grotesque + JetBrains Mono, GrainOverlay, favicon SVG apostrophe iconique, OG image 1200×630)
 - `<Logo />` cliquable partout + apostrophe jaune iconique avec pulse hover
@@ -13,17 +14,20 @@
 - Light/dark mode toggle persistant + FOUC-free
 
 ### Auth (S2)
+
 - Email + password (sans confirmation, signup direct → session immédiate)
 - `/login` toggle login/signup, errors friendly FR
 - `/onboarding` choix rôle (lycéen / diplômé), upsert robuste
 - Auth-gated everywhere
 
 ### Schema Supabase v1
+
 - `profiles` (id FK auth.users, role nullable) + trigger `handle_new_user`
 - `game_results` (skills jsonb, enjoyment, score, family_id, payload)
-- `leads` (school_name, contact_*, message, source) — sert pour partnership ET student-to-school
+- `leads` (school*name, contact*\*, message, source) — sert pour partnership ET student-to-school
 
 ### Hub & Découverte (S2)
+
 - `/hub` à 2 univers (Découverte jaune / Programmes violet) + footer
 - `/decouverte` 6 familles (Marketing live, 5 autres "Bientôt")
 - Famille **Marketing** complète : `/decouverte/marketing` (fiche éditoriale) + `/metiers` (5 métiers détaillés) + `/benevoles` (Léa + Tom)
@@ -31,11 +35,13 @@
 - 🎮 **Mapping Concurrentiel** + 🎮 **Mix Marketing 4P** jouables (drag & drop, scoring)
 
 ### Pitch deck (S2/S3)
+
 - `/pitch` interactif 10 slides, navigation clavier (← → espace + ↑↓ + F + Esc), URL hash sync, fullscreen
 - Slides : Hook / Pourquoi nous (équipe) / Problématique / Benchmark / Solution / Démo live (iframe) / Intérêt écoles / Modèle éco / Nos besoins / Cap&rsquo; c&rsquo;est simple
 - Modal Critères de sélection des écoles partenaires (RNCP, Qualiopi, ECTS, AACSB)
 
 ### 🆕 Programmes · UCL Lille — Module Gestion d&rsquo;entreprise (S3)
+
 - **École partenaire pilote** : Université Catholique de Lille (cours de Monica Scarano)
 - `/programmes/ucl/gestion-entreprise` (hub module) — 4 cards sous-modules + bonus
 - 4 sous-modules avec page contenu éditoriale + mini-jeu jouable :
@@ -46,6 +52,7 @@
 - `/programmes/ucl/gestion-entreprise/termine` — page finale avec hero célébration, stats personnelles (skills + score), présentation UCL, programmes liés, témoignage, **lead form** qui insère dans `leads` avec `source='ucl-gestion-entreprise-student'`
 
 ### Cleanup écoles fictives (S3 ÉTAPE 1)
+
 - Supprimé toutes mentions ESCP / HEC / EMLyon / ESSEC / NEOMA / SKEMA dans le code
 - Palette `--school-*` retirée de `globals.css` + `tailwind.config.ts`
 - Section écoles partenaires de la landing reconstruite (UCL featured + 2 placeholders génériques)
@@ -69,12 +76,12 @@
 
 ## 🎮 Liens directs vers les 4 mini-jeux UCL
 
-| # | Sous-module | Mini-jeu | URL |
-|---|---|---|---|
-| 01 | Reconnaître une entreprise | EntrepriseExplorer | `/programmes/ucl/gestion-entreprise/reconnaitre-entreprise/jeu` |
-| 02 | Choisir le bon statut | StatutQuiz | `/programmes/ucl/gestion-entreprise/choisir-statut/jeu` |
-| 03 | Analyser l&rsquo;environnement | PestelMatch | `/programmes/ucl/gestion-entreprise/pestel/jeu` |
-| 04 | Comprendre son marché | MarketRadar | `/programmes/ucl/gestion-entreprise/marche/jeu` |
+| #   | Sous-module                    | Mini-jeu           | URL                                                             |
+| --- | ------------------------------ | ------------------ | --------------------------------------------------------------- |
+| 01  | Reconnaître une entreprise     | EntrepriseExplorer | `/programmes/ucl/gestion-entreprise/reconnaitre-entreprise/jeu` |
+| 02  | Choisir le bon statut          | StatutQuiz         | `/programmes/ucl/gestion-entreprise/choisir-statut/jeu`         |
+| 03  | Analyser l&rsquo;environnement | PestelMatch        | `/programmes/ucl/gestion-entreprise/pestel/jeu`                 |
+| 04  | Comprendre son marché          | MarketRadar        | `/programmes/ucl/gestion-entreprise/marche/jeu`                 |
 
 Page finale : `/programmes/ucl/gestion-entreprise/termine`
 

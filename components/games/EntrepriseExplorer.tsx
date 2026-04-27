@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import { useMemo, useState } from "react";
+import { useMemo, useState } from 'react';
 import {
   DndContext,
   DragEndEvent,
@@ -10,18 +10,18 @@ import {
   useDroppable,
   useSensor,
   useSensors,
-} from "@dnd-kit/core";
-import { motion } from "framer-motion";
-import { ArrowRight, Check, X } from "lucide-react";
-import { useGameShell } from "./game-shell-context";
+} from '@dnd-kit/core';
+import { motion } from 'framer-motion';
+import { ArrowRight, Check, X } from 'lucide-react';
+import { useGameShell } from './game-shell-context';
 
-const ACCENT = "var(--pivot)";
+const ACCENT = 'var(--pivot)';
 
 // ─── Données : 12 entreprises × 3 axes ────────────────────────────────────
-type Axis = "legal" | "sector" | "size";
-type LegalForm = "EI" | "SAS" | "SA" | "EPIC" | "SCOP";
-type Sector = "primaire" | "secondaire" | "tertiaire";
-type Size = "Micro" | "PME" | "ETI" | "GE";
+type Axis = 'legal' | 'sector' | 'size';
+type LegalForm = 'EI' | 'SAS' | 'SA' | 'EPIC' | 'SCOP';
+type Sector = 'primaire' | 'secondaire' | 'tertiaire';
+type Size = 'Micro' | 'PME' | 'ETI' | 'GE';
 
 type Company = {
   id: string;
@@ -32,96 +32,96 @@ type Company = {
 };
 
 const COMPANIES: Company[] = [
-  { id: "sncf", name: "SNCF", legal: "EPIC", sector: "tertiaire", size: "GE" },
+  { id: 'sncf', name: 'SNCF', legal: 'EPIC', sector: 'tertiaire', size: 'GE' },
   {
-    id: "bk",
-    name: "Burger King",
-    legal: "SAS",
-    sector: "tertiaire",
-    size: "GE",
+    id: 'bk',
+    name: 'Burger King',
+    legal: 'SAS',
+    sector: 'tertiaire',
+    size: 'GE',
   },
   {
-    id: "boulanger",
-    name: "Boulanger artisan local",
-    legal: "EI",
-    sector: "secondaire",
-    size: "Micro",
+    id: 'boulanger',
+    name: 'Boulanger artisan local',
+    legal: 'EI',
+    sector: 'secondaire',
+    size: 'Micro',
   },
-  { id: "edf", name: "EDF", legal: "SA", sector: "secondaire", size: "GE" },
+  { id: 'edf', name: 'EDF', legal: 'SA', sector: 'secondaire', size: 'GE' },
   {
-    id: "lecreuset",
-    name: "Le Creuset",
-    legal: "SAS",
-    sector: "secondaire",
-    size: "ETI",
-  },
-  {
-    id: "sephora",
-    name: "Sephora",
-    legal: "SAS",
-    sector: "tertiaire",
-    size: "GE",
+    id: 'lecreuset',
+    name: 'Le Creuset',
+    legal: 'SAS',
+    sector: 'secondaire',
+    size: 'ETI',
   },
   {
-    id: "renault",
-    name: "Renault",
-    legal: "SA",
-    sector: "secondaire",
-    size: "GE",
+    id: 'sephora',
+    name: 'Sephora',
+    legal: 'SAS',
+    sector: 'tertiaire',
+    size: 'GE',
   },
   {
-    id: "ae",
-    name: "Auto-entrepreneur consultant",
-    legal: "EI",
-    sector: "tertiaire",
-    size: "Micro",
+    id: 'renault',
+    name: 'Renault',
+    legal: 'SA',
+    sector: 'secondaire',
+    size: 'GE',
   },
   {
-    id: "scop",
-    name: "Coopérative agricole locale",
-    legal: "SCOP",
-    sector: "primaire",
-    size: "PME",
+    id: 'ae',
+    name: 'Auto-entrepreneur consultant',
+    legal: 'EI',
+    sector: 'tertiaire',
+    size: 'Micro',
   },
   {
-    id: "doctolib",
-    name: "Doctolib",
-    legal: "SAS",
-    sector: "tertiaire",
-    size: "ETI",
+    id: 'scop',
+    name: 'Coopérative agricole locale',
+    legal: 'SCOP',
+    sector: 'primaire',
+    size: 'PME',
   },
-  { id: "total", name: "Total", legal: "SA", sector: "secondaire", size: "GE" },
   {
-    id: "plombier",
-    name: "Plombier indépendant",
-    legal: "EI",
-    sector: "secondaire",
-    size: "Micro",
+    id: 'doctolib',
+    name: 'Doctolib',
+    legal: 'SAS',
+    sector: 'tertiaire',
+    size: 'ETI',
+  },
+  { id: 'total', name: 'Total', legal: 'SA', sector: 'secondaire', size: 'GE' },
+  {
+    id: 'plombier',
+    name: 'Plombier indépendant',
+    legal: 'EI',
+    sector: 'secondaire',
+    size: 'Micro',
   },
 ];
 
 const AXES: Record<Axis, { label: string; sub: string; values: string[] }> = {
   legal: {
-    label: "Forme juridique",
-    sub: "EI / SAS / SA / EPIC / SCOP",
-    values: ["EI", "SAS", "SA", "EPIC", "SCOP"],
+    label: 'Forme juridique',
+    sub: 'EI / SAS / SA / EPIC / SCOP',
+    values: ['EI', 'SAS', 'SA', 'EPIC', 'SCOP'],
   },
   sector: {
     label: "Secteur d'activité",
-    sub: "Primaire / Secondaire / Tertiaire",
-    values: ["primaire", "secondaire", "tertiaire"],
+    sub: 'Primaire / Secondaire / Tertiaire',
+    values: ['primaire', 'secondaire', 'tertiaire'],
   },
   size: {
-    label: "Taille",
-    sub: "Micro / PME / ETI / GE",
-    values: ["Micro", "PME", "ETI", "GE"],
+    label: 'Taille',
+    sub: 'Micro / PME / ETI / GE',
+    values: ['Micro', 'PME', 'ETI', 'GE'],
   },
 };
 
 const SECTOR_LABELS: Record<Sector, string> = {
-  primaire: "Primaire",
-  secondaire: "Secondaire",
-  tertiaire: "Tertiaire",
+  primaire: 'Primaire',
+  secondaire: 'Secondaire',
+  tertiaire: 'Tertiaire',
 };
 
 type Placements = Record<string, Partial<Record<Axis, string>>>;
@@ -129,13 +129,11 @@ type Placements = Record<string, Partial<Record<Axis, string>>>;
 // ─── Component ─────────────────────────────────────────────────────────────
 export default function EntrepriseExplorer() {
   const shell = useGameShell();
-  const [axis, setAxis] = useState<Axis>("legal");
+  const [axis, setAxis] = useState<Axis>('legal');
   const [placements, setPlacements] = useState<Placements>({});
   const [validated, setValidated] = useState(false);
   const [activeId, setActiveId] = useState<string | null>(null);
-  const sensors = useSensors(
-    useSensor(PointerSensor, { activationConstraint: { distance: 4 } }),
-  );
+  const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 4 } }));
 
   const totalAxesPlaced = useMemo(
     () =>
@@ -157,7 +155,7 @@ export default function EntrepriseExplorer() {
     if (!e.over || validated) return;
     const companyId = e.active.id as string;
     const zoneValue = e.over.id as string;
-    if (zoneValue === "pool") {
+    if (zoneValue === 'pool') {
       // Remove placement for current axis
       setPlacements((prev) => ({
         ...prev,
@@ -203,9 +201,7 @@ export default function EntrepriseExplorer() {
       {/* Tabs onglets */}
       <div className="flex gap-2 mb-5 overflow-x-auto pb-1">
         {(Object.keys(AXES) as Axis[]).map((a) => {
-          const placedForAxis = COMPANIES.filter(
-            (c) => placements[c.id]?.[a],
-          ).length;
+          const placedForAxis = COMPANIES.filter((c) => placements[c.id]?.[a]).length;
           const isActive = a === axis;
           return (
             <button
@@ -213,24 +209,21 @@ export default function EntrepriseExplorer() {
               onClick={() => setAxis(a)}
               className="px-4 py-2.5 rounded-2xl border-2 font-display font-semibold text-sm md:text-base whitespace-nowrap transition-colors"
               style={{
-                borderColor: isActive ? ACCENT : "var(--night-200)",
-                background: isActive ? `${ACCENT}1f` : "transparent",
-                color: isActive ? ACCENT : "var(--snow)",
+                borderColor: isActive ? ACCENT : 'var(--night-200)',
+                background: isActive ? `${ACCENT}1f` : 'transparent',
+                color: isActive ? ACCENT : 'var(--snow)',
               }}
             >
-              {AXES[a].label}{" "}
-              <span className="font-mono text-[10px] opacity-60 ml-1">
-                {placedForAxis}/12
-              </span>
+              {AXES[a].label}{' '}
+              <span className="font-mono text-[10px] opacity-60 ml-1">{placedForAxis}/12</span>
             </button>
           );
         })}
       </div>
 
       <p className="text-snow/60 text-sm mb-4">
-        Onglet actif : <strong className="text-snow">{meta.label}</strong> ·{" "}
-        Glisse les 12 entreprises dans la bonne case. Tu valides à la fin une
-        fois les 3 axes complets.
+        Onglet actif : <strong className="text-snow">{meta.label}</strong> · Glisse les 12
+        entreprises dans la bonne case. Tu valides à la fin une fois les 3 axes complets.
       </p>
 
       <DndContext
@@ -250,11 +243,7 @@ export default function EntrepriseExplorer() {
             <Zone
               key={v}
               id={v}
-              label={
-                axis === "sector"
-                  ? SECTOR_LABELS[v as Sector]
-                  : v
-              }
+              label={axis === 'sector' ? SECTOR_LABELS[v as Sector] : v}
               companies={COMPANIES.filter((c) => placements[c.id]?.[axis] === v)}
               axis={axis}
               validated={validated}
@@ -268,10 +257,7 @@ export default function EntrepriseExplorer() {
 
         <DragOverlay>
           {activeId ? (
-            <CompanyPill
-              name={COMPANIES.find((c) => c.id === activeId)?.name ?? ""}
-              floating
-            />
+            <CompanyPill name={COMPANIES.find((c) => c.id === activeId)?.name ?? ''} floating />
           ) : null}
         </DragOverlay>
       </DndContext>
@@ -286,13 +272,13 @@ export default function EntrepriseExplorer() {
           disabled={!allDone || validated}
           className="inline-flex items-center justify-center gap-2 bg-pivot text-snow font-bold px-7 py-4 rounded-2xl text-base disabled:opacity-50 disabled:cursor-not-allowed transition-transform hover:scale-[1.01]"
           style={{
-            boxShadow: allDone && !validated ? "0 0 24px var(--pivot)" : "none",
+            boxShadow: allDone && !validated ? '0 0 24px var(--pivot)' : 'none',
           }}
         >
           {validated
-            ? "Sauvegarde..."
+            ? 'Sauvegarde...'
             : allDone
-              ? "Valider mes classements"
+              ? 'Valider mes classements'
               : `Place encore ${36 - totalAxesPlaced} (sur 3 axes)`}
           {allDone && !validated && <ArrowRight className="w-5 h-5" />}
         </button>
@@ -324,14 +310,11 @@ function Zone({
       ref={setNodeRef}
       className="rounded-3xl border-2 p-3 min-h-[180px] transition-colors"
       style={{
-        borderColor: isOver ? ACCENT : "var(--night-200)",
-        background: isOver ? `${ACCENT}10` : "var(--night-soft)",
+        borderColor: isOver ? ACCENT : 'var(--night-200)',
+        background: isOver ? `${ACCENT}10` : 'var(--night-soft)',
       }}
     >
-      <div
-        className="font-display font-bold text-base mb-2 text-center"
-        style={{ color: ACCENT }}
-      >
+      <div className="font-display font-bold text-base mb-2 text-center" style={{ color: ACCENT }}>
         {label}
       </div>
       <div className="space-y-1.5">
@@ -340,9 +323,7 @@ function Zone({
             key={c.id}
             company={c}
             validated={validated}
-            isCorrect={
-              validated ? placements[c.id]?.[axis] === c[axis] : undefined
-            }
+            isCorrect={validated ? placements[c.id]?.[axis] === c[axis] : undefined}
           />
         ))}
         {companies.length === 0 && (
@@ -355,21 +336,15 @@ function Zone({
   );
 }
 
-function Pool({
-  companies,
-  validated,
-}: {
-  companies: Company[];
-  validated: boolean;
-}) {
-  const { setNodeRef, isOver } = useDroppable({ id: "pool" });
+function Pool({ companies, validated }: { companies: Company[]; validated: boolean }) {
+  const { setNodeRef, isOver } = useDroppable({ id: 'pool' });
   return (
     <div
       ref={setNodeRef}
       className="rounded-3xl border-2 border-dashed p-4 transition-colors"
       style={{
-        borderColor: isOver ? ACCENT : "var(--night-200)",
-        background: isOver ? `${ACCENT}08` : "transparent",
+        borderColor: isOver ? ACCENT : 'var(--night-200)',
+        background: isOver ? `${ACCENT}08` : 'transparent',
       }}
     >
       <div
@@ -401,21 +376,17 @@ function DraggableCompany({
   validated: boolean;
   isCorrect?: boolean;
 }) {
-  const { attributes, listeners, setNodeRef, transform, isDragging } =
-    useDraggable({ id: company.id, disabled: validated });
+  const { attributes, listeners, setNodeRef, transform, isDragging } = useDraggable({
+    id: company.id,
+    disabled: validated,
+  });
   const style: React.CSSProperties = {
-    transform: transform
-      ? `translate3d(${transform.x}px, ${transform.y}px, 0)`
-      : undefined,
+    transform: transform ? `translate3d(${transform.x}px, ${transform.y}px, 0)` : undefined,
     opacity: isDragging ? 0.4 : 1,
   };
   return (
     <div ref={setNodeRef} style={style} {...attributes} {...listeners}>
-      <CompanyPill
-        name={company.name}
-        validated={validated}
-        isCorrect={isCorrect}
-      />
+      <CompanyPill name={company.name} validated={validated} isCorrect={isCorrect} />
     </div>
   );
 }
@@ -431,15 +402,15 @@ function CompanyPill({
   isCorrect?: boolean;
   floating?: boolean;
 }) {
-  let borderColor = "var(--night-200)";
-  let textColor = "var(--snow)";
+  let borderColor = 'var(--night-200)';
+  let textColor = 'var(--snow)';
   if (validated) {
     if (isCorrect === true) {
-      borderColor = "var(--mint)";
-      textColor = "var(--mint)";
+      borderColor = 'var(--mint)';
+      textColor = 'var(--mint)';
     } else if (isCorrect === false) {
-      borderColor = "var(--coral)";
-      textColor = "var(--coral)";
+      borderColor = 'var(--coral)';
+      textColor = 'var(--coral)';
     }
   }
   return (
@@ -449,10 +420,8 @@ function CompanyPill({
       style={{
         borderColor,
         color: textColor,
-        cursor: validated ? "default" : "grab",
-        boxShadow: floating
-          ? `0 20px 40px rgba(0,0,0,0.5), 0 0 16px ${ACCENT}`
-          : undefined,
+        cursor: validated ? 'default' : 'grab',
+        boxShadow: floating ? `0 20px 40px rgba(0,0,0,0.5), 0 0 16px ${ACCENT}` : undefined,
       }}
     >
       {validated && isCorrect === true && (

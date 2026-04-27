@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import { motion } from "framer-motion";
+import { motion } from 'framer-motion';
 
 export function SlideContainer({
   children,
-  className = "",
+  className = '',
 }: {
   children: React.ReactNode;
   className?: string;
@@ -28,19 +28,17 @@ export const fadeUp = {
   show: {
     opacity: 1,
     y: 0,
-    transition: { type: "spring" as const, stiffness: 100, damping: 18 },
+    transition: { type: 'spring' as const, stiffness: 100, damping: 18 },
   },
 };
 
-export function MotionDiv(
-  props: React.ComponentProps<typeof motion.div>,
-) {
+export function MotionDiv(props: React.ComponentProps<typeof motion.div>) {
   return <motion.div {...props} />;
 }
 
 export function Tag({
   children,
-  color = "var(--sun)",
+  color = 'var(--sun)',
 }: {
   children: React.ReactNode;
   color?: string;
@@ -56,17 +54,11 @@ export function Tag({
   );
 }
 
-export function NumCircle({
-  n,
-  color = "var(--sun)",
-}: {
-  n: number | string;
-  color?: string;
-}) {
+export function NumCircle({ n, color = 'var(--sun)' }: { n: number | string; color?: string }) {
   return (
     <div
       className="w-10 h-10 rounded-full grid place-items-center font-display font-extrabold text-base shrink-0"
-      style={{ background: color, color: "#0E0E10" }}
+      style={{ background: color, color: '#0E0E10' }}
     >
       {n}
     </div>

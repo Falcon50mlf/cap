@@ -1,26 +1,17 @@
-"use client";
+'use client';
 
-import { notFound } from "next/navigation";
-import { GameShell } from "@/components/games/GameShell";
-import { gameComponents } from "@/lib/game-components";
-import { getSubmodule } from "@/lib/schools-database";
-import { getGame } from "@/lib/games-registry";
+import { notFound } from 'next/navigation';
+import { GameShell } from '@/components/games/GameShell';
+import { gameComponents } from '@/lib/game-components';
+import { getSubmodule } from '@/lib/schools-database';
+import { getGame } from '@/lib/games-registry';
 
-const VALID_IDS = [
-  "reconnaitre-entreprise",
-  "choisir-statut",
-  "pestel",
-  "marche",
-];
+const VALID_IDS = ['reconnaitre-entreprise', 'choisir-statut', 'pestel', 'marche'];
 
-export default function UclGamePage({
-  params,
-}: {
-  params: { moduleId: string };
-}) {
+export default function UclGamePage({ params }: { params: { moduleId: string } }) {
   if (!VALID_IDS.includes(params.moduleId)) notFound();
 
-  const sub = getSubmodule("ucl", "gestion-entreprise", params.moduleId);
+  const sub = getSubmodule('ucl', 'gestion-entreprise', params.moduleId);
   if (!sub) notFound();
 
   const meta = getGame(sub.gameId);
@@ -31,9 +22,9 @@ export default function UclGamePage({
 
   // À la fin du 4ème (et dernier) sous-module, on emmène l'utilisateur sur
   // la plaquette de fin + lead form, pas sur la page de contenu.
-  const isFinal = params.moduleId === "marche";
+  const isFinal = params.moduleId === 'marche';
   const returnHref = isFinal
-    ? "/programmes/ucl/gestion-entreprise/termine"
+    ? '/programmes/ucl/gestion-entreprise/termine'
     : `/programmes/ucl/gestion-entreprise/${params.moduleId}`;
 
   return (

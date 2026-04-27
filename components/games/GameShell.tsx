@@ -1,24 +1,14 @@
-"use client";
+'use client';
 
-import { useCallback, useMemo, useRef, useState } from "react";
-import { useRouter } from "next/navigation";
-import { AnimatePresence, motion } from "framer-motion";
-import {
-  X,
-  ChevronDown,
-  ChevronUp,
-  Star,
-  Loader2,
-  ArrowRight,
-} from "lucide-react";
-import { Logo } from "@/components/layout/logo";
-import { ThemeToggle } from "@/components/layout/theme-toggle";
-import { saveGameResult } from "@/lib/save-game-result";
-import {
-  GameShellContext,
-  type GameShellAPI,
-} from "./game-shell-context";
-import type { FamilyId, Skills } from "@/types/games";
+import { useCallback, useMemo, useRef, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { AnimatePresence, motion } from 'framer-motion';
+import { X, ChevronDown, ChevronUp, Star, Loader2, ArrowRight } from 'lucide-react';
+import { Logo } from '@/components/layout/logo';
+import { ThemeToggle } from '@/components/layout/theme-toggle';
+import { saveGameResult } from '@/lib/save-game-result';
+import { GameShellContext, type GameShellAPI } from './game-shell-context';
+import type { FamilyId, Skills } from '@/types/games';
 
 type Props = {
   gameId: string;
@@ -34,13 +24,13 @@ type Props = {
 };
 
 const FAMILY_COLOR: Record<FamilyId, string> = {
-  strategy: "var(--family-strategy)",
-  finance: "var(--family-finance)",
-  marketing: "var(--family-marketing)",
-  tech: "var(--family-tech)",
-  startup: "var(--family-startup)",
-  retail: "var(--family-retail)",
-  "programs-ucl": "var(--pivot)",
+  strategy: 'var(--family-strategy)',
+  finance: 'var(--family-finance)',
+  marketing: 'var(--family-marketing)',
+  tech: 'var(--family-tech)',
+  startup: 'var(--family-startup)',
+  retail: 'var(--family-retail)',
+  'programs-ucl': 'var(--pivot)',
 };
 
 export function GameShell({
@@ -78,7 +68,7 @@ export function GameShell({
         setEndState({ skills, score, payload });
       },
     }),
-    []
+    [],
   );
 
   const handleQuit = useCallback(() => {
@@ -110,23 +100,21 @@ export function GameShell({
         {/* Header sticky */}
         <header
           className="sticky top-0 z-30 backdrop-blur-md border-b border-night-200"
-          style={{ background: "var(--night)" }}
+          style={{ background: 'var(--night)' }}
         >
           <div className="px-6 md:px-10 py-4 flex items-center justify-between gap-4">
             <div className="flex items-center gap-4 min-w-0">
               <Logo size="nav" />
               <span className="hidden sm:inline-block w-px h-6 bg-night-200" />
-              <h1 className="font-display font-bold text-lg md:text-xl truncate">
-                {title}
-              </h1>
+              <h1 className="font-display font-bold text-lg md:text-xl truncate">{title}</h1>
             </div>
             <div className="flex items-center gap-3">
               <span
                 className="font-mono text-xs uppercase tracking-widest hidden sm:inline-block"
                 style={{ color: accentColor }}
               >
-                Manche {currentRound.toString().padStart(2, "0")} /{" "}
-                {totalRounds.toString().padStart(2, "0")}
+                Manche {currentRound.toString().padStart(2, '0')} /{' '}
+                {totalRounds.toString().padStart(2, '0')}
               </span>
               <ThemeToggle />
               <button
@@ -157,7 +145,7 @@ export function GameShell({
             {showInstructions && (
               <motion.div
                 initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: "auto" }}
+                animate={{ opacity: 1, height: 'auto' }}
                 exit={{ opacity: 0, height: 0 }}
                 transition={{ duration: 0.2 }}
                 className="overflow-hidden"
@@ -180,12 +168,9 @@ export function GameShell({
         <AnimatePresence>
           {confirmQuit && (
             <Modal onClose={() => setConfirmQuit(false)}>
-              <h2 className="font-display font-bold text-2xl mb-3">
-                Quitter le mini-jeu ?
-              </h2>
+              <h2 className="font-display font-bold text-2xl mb-3">Quitter le mini-jeu ?</h2>
               <p className="text-snow/70 mb-6">
-                Tu perdras ta progression sur cette session. Tu pourras
-                recommencer à tout moment.
+                Tu perdras ta progression sur cette session. Tu pourras recommencer à tout moment.
               </p>
               <div className="flex gap-3 justify-end">
                 <button
@@ -242,8 +227,8 @@ export function GameShell({
                         <Star
                           className="w-12 h-12 transition-colors"
                           style={{
-                            color: filled ? "var(--sun)" : "var(--night-200)",
-                            fill: filled ? "var(--sun)" : "transparent",
+                            color: filled ? 'var(--sun)' : 'var(--night-200)',
+                            fill: filled ? 'var(--sun)' : 'transparent',
                           }}
                         />
                       </motion.button>
@@ -256,10 +241,7 @@ export function GameShell({
                   disabled={enjoyment < 1 || submitting}
                   className="w-full inline-flex items-center justify-center gap-2 bg-sun text-night font-bold px-8 py-4 rounded-2xl text-lg disabled:opacity-50 disabled:cursor-not-allowed transition-transform hover:scale-[1.01] active:scale-[0.99]"
                   style={{
-                    boxShadow:
-                      enjoyment > 0 && !submitting
-                        ? "0 0 24px var(--sun)"
-                        : undefined,
+                    boxShadow: enjoyment > 0 && !submitting ? '0 0 24px var(--sun)' : undefined,
                   }}
                 >
                   {submitting ? (
@@ -283,13 +265,7 @@ export function GameShell({
   );
 }
 
-function Modal({
-  children,
-  onClose,
-}: {
-  children: React.ReactNode;
-  onClose?: () => void;
-}) {
+function Modal({ children, onClose }: { children: React.ReactNode; onClose?: () => void }) {
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -297,17 +273,17 @@ function Modal({
       exit={{ opacity: 0 }}
       transition={{ duration: 0.15 }}
       className="fixed inset-0 z-50 grid place-items-center px-6"
-      style={{ background: "rgba(0,0,0,0.7)" }}
+      style={{ background: 'rgba(0,0,0,0.7)' }}
       onClick={onClose}
     >
       <motion.div
         initial={{ scale: 0.95, y: 20 }}
         animate={{ scale: 1, y: 0 }}
         exit={{ scale: 0.95, y: 20 }}
-        transition={{ type: "spring", stiffness: 200, damping: 22 }}
+        transition={{ type: 'spring', stiffness: 200, damping: 22 }}
         onClick={(e) => e.stopPropagation()}
         className="w-full max-w-md bg-night-soft border border-night-200 rounded-3xl p-8"
-        style={{ boxShadow: "0 30px 60px rgba(0,0,0,0.6)" }}
+        style={{ boxShadow: '0 30px 60px rgba(0,0,0,0.6)' }}
       >
         {children}
       </motion.div>

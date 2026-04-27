@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import Link from "next/link";
-import { motion } from "framer-motion";
+import Link from 'next/link';
+import { motion } from 'framer-motion';
 import {
   ArrowLeft,
   ArrowRight,
@@ -12,11 +12,11 @@ import {
   TrendingUp,
   GraduationCap,
   Mail,
-} from "lucide-react";
-import { Logo } from "@/components/layout/logo";
-import { ThemeToggle } from "@/components/layout/theme-toggle";
-import { getModule, getSchool } from "@/lib/schools-database";
-import type { Submodule } from "@/lib/schools-database";
+} from 'lucide-react';
+import { Logo } from '@/components/layout/logo';
+import { ThemeToggle } from '@/components/layout/theme-toggle';
+import { getModule, getSchool } from '@/lib/schools-database';
+import type { Submodule } from '@/lib/schools-database';
 
 const ICONS: Record<string, React.ComponentType<{ className?: string }>> = {
   Building2,
@@ -25,11 +25,11 @@ const ICONS: Record<string, React.ComponentType<{ className?: string }>> = {
   TrendingUp,
 };
 
-const ACCENT = "var(--pivot)";
+const ACCENT = 'var(--pivot)';
 
 export default function UclGestionEntreprisePage() {
-  const school = getSchool("ucl");
-  const mod = getModule("ucl", "gestion-entreprise");
+  const school = getSchool('ucl');
+  const mod = getModule('ucl', 'gestion-entreprise');
   if (!school || !mod) return null;
 
   return (
@@ -53,7 +53,7 @@ export default function UclGestionEntreprisePage() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ type: "spring", stiffness: 90, damping: 16 }}
+            transition={{ type: 'spring', stiffness: 90, damping: 16 }}
           >
             <div
               className="font-mono text-[11px] uppercase tracking-widest mb-3"
@@ -64,15 +64,16 @@ export default function UclGestionEntreprisePage() {
 
             <h1
               className="font-display font-extrabold tracking-[-0.04em] leading-[0.95] mb-5"
-              style={{ fontSize: "clamp(48px, 7vw, 96px)" }}
+              style={{ fontSize: 'clamp(48px, 7vw, 96px)' }}
             >
-              Gestion<br />d&rsquo;entreprise
+              Gestion
+              <br />
+              d&rsquo;entreprise
             </h1>
 
             <p className="text-snow/70 text-lg md:text-xl leading-relaxed max-w-2xl mb-8">
-              Découvre les fondamentaux de la gestion d&rsquo;entreprise à
-              travers 4 modules interactifs, basés sur le cours de Monica
-              Scarano (UCL Lille).
+              Découvre les fondamentaux de la gestion d&rsquo;entreprise à travers 4 modules
+              interactifs, basés sur le cours de Monica Scarano (UCL Lille).
             </p>
 
             <div className="inline-flex items-center gap-3 px-4 py-3 rounded-2xl border border-pivot/40 bg-pivot/10">
@@ -122,7 +123,7 @@ export default function UclGestionEntreprisePage() {
           </div>
           <h2
             className="font-display font-bold tracking-[-0.03em] mb-8"
-            style={{ fontSize: "clamp(28px, 4vw, 44px)" }}
+            style={{ fontSize: 'clamp(28px, 4vw, 44px)' }}
           >
             Tu auras accès à...
           </h2>
@@ -150,13 +151,7 @@ export default function UclGestionEntreprisePage() {
   );
 }
 
-function SubmoduleCard({
-  sub,
-  index,
-}: {
-  sub: Submodule;
-  index: number;
-}) {
+function SubmoduleCard({ sub, index }: { sub: Submodule; index: number }) {
   const Icon = ICONS[sub.iconName] ?? Building2;
 
   return (
@@ -166,7 +161,7 @@ function SubmoduleCard({
         animate={{ opacity: 1, y: 0 }}
         transition={{
           delay: 0.05 * index,
-          type: "spring",
+          type: 'spring',
           stiffness: 90,
           damping: 16,
         }}
@@ -174,7 +169,7 @@ function SubmoduleCard({
         className="relative h-full p-7 rounded-3xl border-2 transition-shadow group flex flex-col cursor-pointer"
         style={{
           borderColor: ACCENT,
-          background: "rgba(140,110,255,0.08)",
+          background: 'rgba(140,110,255,0.08)',
         }}
       >
         <div className="flex items-start justify-between mb-5">
@@ -187,9 +182,9 @@ function SubmoduleCard({
           <span
             className="font-mono text-[10px] uppercase tracking-widest px-2.5 py-1 rounded-full border"
             style={{
-              borderColor: "var(--mint)",
-              color: "var(--mint)",
-              background: "rgba(0,212,168,0.1)",
+              borderColor: 'var(--mint)',
+              color: 'var(--mint)',
+              background: 'rgba(0,212,168,0.1)',
             }}
           >
             Disponible
@@ -208,9 +203,7 @@ function SubmoduleCard({
         >
           {sub.title}
         </h3>
-        <p className="text-snow/70 text-sm leading-relaxed mb-5 flex-1">
-          {sub.intro}
-        </p>
+        <p className="text-snow/70 text-sm leading-relaxed mb-5 flex-1">{sub.intro}</p>
 
         <div className="flex items-center justify-between pt-4 border-t border-night-200">
           <span className="font-mono text-[10px] uppercase tracking-widest text-snow/50">

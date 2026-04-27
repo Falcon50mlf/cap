@@ -1,21 +1,14 @@
-"use client";
+'use client';
 
-import Link from "next/link";
-import { motion } from "framer-motion";
-import {
-  ArrowLeft,
-  ArrowRight,
-  Briefcase,
-  Gamepad2,
-  Megaphone,
-  Users,
-} from "lucide-react";
-import { Logo } from "@/components/layout/logo";
-import { ThemeToggle } from "@/components/layout/theme-toggle";
-import { FAMILIES } from "@/lib/families-database";
+import Link from 'next/link';
+import { motion } from 'framer-motion';
+import { ArrowLeft, ArrowRight, Briefcase, Gamepad2, Megaphone, Users } from 'lucide-react';
+import { Logo } from '@/components/layout/logo';
+import { ThemeToggle } from '@/components/layout/theme-toggle';
+import { FAMILIES } from '@/lib/families-database';
 
 const FAMILY = FAMILIES.marketing;
-const ACCENT = "var(--family-marketing)";
+const ACCENT = 'var(--family-marketing)';
 
 export default function MarketingFichePage() {
   return (
@@ -40,7 +33,7 @@ export default function MarketingFichePage() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ type: "spring", stiffness: 90, damping: 16 }}
+            transition={{ type: 'spring', stiffness: 90, damping: 16 }}
           >
             <div
               className="font-mono text-[11px] uppercase tracking-widest mb-3"
@@ -50,9 +43,10 @@ export default function MarketingFichePage() {
             </div>
             <h1
               className="font-display font-extrabold tracking-[-0.04em] leading-[0.92] mb-6"
-              style={{ fontSize: "clamp(56px, 9vw, 130px)", color: ACCENT }}
+              style={{ fontSize: 'clamp(56px, 9vw, 130px)', color: ACCENT }}
             >
-              Marketing<br />& Brand.
+              Marketing
+              <br />& Brand.
             </h1>
             <p className="text-snow text-xl md:text-2xl leading-relaxed max-w-2xl mb-10 font-light">
               {FAMILY.tagline}
@@ -68,7 +62,7 @@ export default function MarketingFichePage() {
               <Link
                 href="/decouverte/marketing/jeux"
                 className="inline-flex items-center justify-center gap-2 bg-sun text-night font-bold px-7 py-4 rounded-2xl transition-transform hover:scale-[1.02]"
-                style={{ boxShadow: "0 0 24px var(--sun)" }}
+                style={{ boxShadow: '0 0 24px var(--sun)' }}
               >
                 <Gamepad2 className="w-5 h-5" />
                 Tester avec 7 mini-jeux
@@ -99,7 +93,7 @@ export default function MarketingFichePage() {
           <Tag>// C&rsquo;est quoi ?</Tag>
           <p
             className="text-snow text-2xl md:text-3xl leading-relaxed font-light"
-            style={{ letterSpacing: "-0.01em" }}
+            style={{ letterSpacing: '-0.01em' }}
           >
             {FAMILY.intro}
           </p>
@@ -116,19 +110,17 @@ export default function MarketingFichePage() {
               key={i}
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-80px" }}
-              transition={{ delay: i * 0.06, type: "spring", stiffness: 90, damping: 16 }}
+              viewport={{ once: true, margin: '-80px' }}
+              transition={{ delay: i * 0.06, type: 'spring', stiffness: 90, damping: 16 }}
               className="p-6 rounded-3xl border border-night-200 bg-night-200"
             >
               <div
                 className="font-mono text-[10px] uppercase tracking-widest mb-3"
                 style={{ color: ACCENT }}
               >
-                Scène {(i + 1).toString().padStart(2, "0")}
+                Scène {(i + 1).toString().padStart(2, '0')}
               </div>
-              <h3 className="font-display font-bold text-xl mb-3 tracking-tight">
-                {q.title}
-              </h3>
+              <h3 className="font-display font-bold text-xl mb-3 tracking-tight">{q.title}</h3>
               <p className="text-snow/70 leading-relaxed">{q.body}</p>
             </motion.div>
           ))}
@@ -145,8 +137,8 @@ export default function MarketingFichePage() {
               key={s.label}
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-80px" }}
-              transition={{ delay: i * 0.08, type: "spring", stiffness: 90, damping: 16 }}
+              viewport={{ once: true, margin: '-80px' }}
+              transition={{ delay: i * 0.08, type: 'spring', stiffness: 90, damping: 16 }}
               className="p-6 rounded-3xl border-2"
               style={{ borderColor: ACCENT, background: `${ACCENT}10` }}
             >
@@ -158,13 +150,11 @@ export default function MarketingFichePage() {
               </div>
               <div
                 className="font-display font-extrabold mb-3 tracking-tight"
-                style={{ fontSize: "clamp(32px, 4vw, 48px)", color: ACCENT }}
+                style={{ fontSize: 'clamp(32px, 4vw, 48px)', color: ACCENT }}
               >
                 {s.range}
               </div>
-              <p className="text-snow/70 text-sm leading-relaxed">
-                {s.description}
-              </p>
+              <p className="text-snow/70 text-sm leading-relaxed">{s.description}</p>
             </motion.div>
           ))}
         </div>
@@ -183,20 +173,18 @@ export default function MarketingFichePage() {
               key={p.step}
               initial={{ opacity: 0, x: -16 }}
               whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: "-60px" }}
-              transition={{ delay: i * 0.07, type: "spring", stiffness: 90, damping: 16 }}
+              viewport={{ once: true, margin: '-60px' }}
+              transition={{ delay: i * 0.07, type: 'spring', stiffness: 90, damping: 16 }}
               className="flex items-start gap-5"
             >
               <div
                 className="w-12 h-12 rounded-2xl grid place-items-center font-display font-extrabold text-xl shrink-0"
                 style={{ background: `${ACCENT}33`, color: ACCENT }}
               >
-                {p.step.toString().padStart(2, "0")}
+                {p.step.toString().padStart(2, '0')}
               </div>
               <div className="flex-1 pt-1.5 pb-6 border-b border-night-200 last:border-0">
-                <h3 className="font-display font-bold text-xl mb-1 tracking-tight">
-                  {p.title}
-                </h3>
+                <h3 className="font-display font-bold text-xl mb-1 tracking-tight">{p.title}</h3>
                 <p className="text-snow/70 leading-relaxed">{p.body}</p>
               </div>
             </motion.div>
@@ -243,14 +231,14 @@ export default function MarketingFichePage() {
           <Tag>// Prêt à tester ?</Tag>
           <h2
             className="font-display font-extrabold tracking-[-0.03em] leading-[0.95] mt-3 mb-8"
-            style={{ fontSize: "clamp(40px, 6vw, 72px)" }}
+            style={{ fontSize: 'clamp(40px, 6vw, 72px)' }}
           >
             7 mini-jeux pour comprendre le marketing par la main.
           </h2>
           <Link
             href="/decouverte/marketing/jeux"
             className="inline-flex items-center justify-center gap-2 bg-sun text-night font-bold px-8 py-5 rounded-2xl text-lg transition-transform hover:scale-[1.02]"
-            style={{ boxShadow: "0 0 24px var(--sun)" }}
+            style={{ boxShadow: '0 0 24px var(--sun)' }}
           >
             <Megaphone className="w-5 h-5" />
             Tester maintenant
@@ -264,14 +252,14 @@ export default function MarketingFichePage() {
 
 function Section({
   children,
-  bg = "default",
+  bg = 'default',
 }: {
   children: React.ReactNode;
-  bg?: "default" | "soft";
+  bg?: 'default' | 'soft';
 }) {
   return (
     <section
-      className={`px-6 md:px-10 py-20 md:py-28 ${bg === "soft" ? "bg-night-soft border-y border-night-200" : ""}`}
+      className={`px-6 md:px-10 py-20 md:py-28 ${bg === 'soft' ? 'bg-night-soft border-y border-night-200' : ''}`}
     >
       <div className="max-w-[1100px] mx-auto">{children}</div>
     </section>
@@ -280,10 +268,7 @@ function Section({
 
 function Tag({ children }: { children: React.ReactNode }) {
   return (
-    <div
-      className="font-mono text-[11px] uppercase tracking-widest mb-3"
-      style={{ color: ACCENT }}
-    >
+    <div className="font-mono text-[11px] uppercase tracking-widest mb-3" style={{ color: ACCENT }}>
       {children}
     </div>
   );
@@ -293,7 +278,7 @@ function H2({ children }: { children: React.ReactNode }) {
   return (
     <h2
       className="font-display font-extrabold tracking-[-0.03em] leading-[0.95]"
-      style={{ fontSize: "clamp(40px, 5.5vw, 64px)" }}
+      style={{ fontSize: 'clamp(40px, 5.5vw, 64px)' }}
     >
       {children}
     </h2>
@@ -309,9 +294,7 @@ function Stat({ label, value }: { label: string; value: string }) {
       >
         {value}
       </span>
-      <span className="font-mono text-[10px] uppercase tracking-widest text-snow/60">
-        {label}
-      </span>
+      <span className="font-mono text-[10px] uppercase tracking-widest text-snow/60">{label}</span>
     </div>
   );
 }

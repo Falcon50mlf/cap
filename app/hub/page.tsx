@@ -1,25 +1,19 @@
-"use client";
+'use client';
 
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-import Link from "next/link";
-import { motion } from "framer-motion";
-import {
-  ArrowRight,
-  Loader2,
-  LogOut,
-  Compass,
-  GraduationCap,
-} from "lucide-react";
-import { Logo } from "@/components/layout/logo";
-import { ThemeToggle } from "@/components/layout/theme-toggle";
-import { createClient } from "@/lib/supabase/client";
-import type { Profile } from "@/types/database";
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
+import { motion } from 'framer-motion';
+import { ArrowRight, Loader2, LogOut, Compass, GraduationCap } from 'lucide-react';
+import { Logo } from '@/components/layout/logo';
+import { ThemeToggle } from '@/components/layout/theme-toggle';
+import { createClient } from '@/lib/supabase/client';
+import type { Profile } from '@/types/database';
 
 export default function HubPage() {
   const router = useRouter();
   const [profile, setProfile] = useState<Profile | null>(null);
-  const [email, setEmail] = useState<string>("");
+  const [email, setEmail] = useState<string>('');
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -32,22 +26,22 @@ export default function HubPage() {
       if (cancelled) return;
 
       if (!user) {
-        router.replace("/login");
+        router.replace('/login');
         return;
       }
 
-      setEmail(user.email ?? "");
+      setEmail(user.email ?? '');
 
       const { data: p } = await supabase
-        .from("profiles")
-        .select("*")
-        .eq("id", user.id)
+        .from('profiles')
+        .select('*')
+        .eq('id', user.id)
         .maybeSingle();
 
       if (cancelled) return;
 
       if (!p?.role) {
-        router.replace("/onboarding");
+        router.replace('/onboarding');
         return;
       }
 
@@ -62,7 +56,7 @@ export default function HubPage() {
   async function logout() {
     const supabase = createClient();
     await supabase.auth.signOut();
-    router.push("/");
+    router.push('/');
   }
 
   if (loading || !profile) {
@@ -73,10 +67,8 @@ export default function HubPage() {
     );
   }
 
-  const roleLabel =
-    profile.role === "lyceen" ? "Lycéen·ne" : "Jeune diplômé·e";
-  const roleAccent =
-    profile.role === "lyceen" ? "var(--sun)" : "var(--pivot)";
+  const roleLabel = profile.role === 'lyceen' ? 'Lycéen·ne' : 'Jeune diplômé·e';
+  const roleAccent = profile.role === 'lyceen' ? 'var(--sun)' : 'var(--pivot)';
 
   return (
     <main className="relative min-h-screen flex flex-col">
@@ -102,7 +94,7 @@ export default function HubPage() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ type: "spring", stiffness: 90, damping: 16 }}
+            transition={{ type: 'spring', stiffness: 90, damping: 16 }}
             className="mt-8 mb-16"
           >
             <div
@@ -113,18 +105,17 @@ export default function HubPage() {
             </div>
             <h1
               className="font-display font-extrabold tracking-[-0.04em] leading-[0.95]"
-              style={{ fontSize: "clamp(48px, 7vw, 96px)" }}
+              style={{ fontSize: 'clamp(48px, 7vw, 96px)' }}
             >
-              Salut.{" "}
-              <span className="text-snow/40">Choisis ton</span>{" "}
-              <span className="text-sun" style={{ fontStyle: "italic" }}>
+              Salut. <span className="text-snow/40">Choisis ton</span>{' '}
+              <span className="text-sun" style={{ fontStyle: 'italic' }}>
                 cap
               </span>
               .
             </h1>
             <p className="mt-6 text-snow/60 text-lg max-w-xl">
-              Deux univers t&rsquo;attendent. Tu peux passer de l&rsquo;un à
-              l&rsquo;autre quand tu veux.
+              Deux univers t&rsquo;attendent. Tu peux passer de l&rsquo;un à l&rsquo;autre quand tu
+              veux.
             </p>
           </motion.div>
 
@@ -134,7 +125,7 @@ export default function HubPage() {
               animate={{ opacity: 1, x: 0 }}
               transition={{
                 delay: 0.15,
-                type: "spring",
+                type: 'spring',
                 stiffness: 90,
                 damping: 16,
               }}
@@ -156,7 +147,7 @@ export default function HubPage() {
               animate={{ opacity: 1, x: 0 }}
               transition={{
                 delay: 0.25,
-                type: "spring",
+                type: 'spring',
                 stiffness: 90,
                 damping: 16,
               }}
@@ -182,10 +173,7 @@ export default function HubPage() {
             // Donne-toi un cap.
           </span>
           <nav className="flex flex-wrap gap-5 text-sm">
-            <Link
-              href="/criteres"
-              className="text-snow/60 hover:text-snow transition-colors"
-            >
+            <Link href="/criteres" className="text-snow/60 hover:text-snow transition-colors">
               Critères de sélection des écoles
             </Link>
             <a
@@ -236,30 +224,22 @@ function UniverseCard({
         <Icon className="w-7 h-7" />
       </div>
 
-      <div
-        className="font-mono text-[10px] uppercase tracking-widest mb-3"
-        style={{ color }}
-      >
+      <div className="font-mono text-[10px] uppercase tracking-widest mb-3" style={{ color }}>
         {tag}
       </div>
       <h2
         className="font-display font-extrabold tracking-tight mb-4"
-        style={{ fontSize: "clamp(36px, 4.5vw, 56px)", color }}
+        style={{ fontSize: 'clamp(36px, 4.5vw, 56px)', color }}
       >
         {title}
       </h2>
-      <p className="text-snow/70 text-base md:text-lg leading-relaxed mb-10 max-w-md">
-        {body}
-      </p>
+      <p className="text-snow/70 text-base md:text-lg leading-relaxed mb-10 max-w-md">{body}</p>
 
       <div className="flex items-center justify-between border-t border-night-200 pt-6">
         <span className="font-mono text-[10px] uppercase tracking-widest text-snow/50">
           {stats}
         </span>
-        <span
-          className="inline-flex items-center gap-2 font-bold text-sm"
-          style={{ color }}
-        >
+        <span className="inline-flex items-center gap-2 font-bold text-sm" style={{ color }}>
           {cta}
           <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
         </span>

@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import { motion } from "framer-motion";
-import { ExternalLink } from "lucide-react";
-import { Tag, fadeUp, stagger } from "../slide-utils";
+import { motion } from 'framer-motion';
+import { ExternalLink } from 'lucide-react';
+import { Tag, fadeUp, stagger } from '../slide-utils';
 
-const GAME_PATH = "/decouverte/marketing/jeux/mapping-concurrentiel";
+const GAME_PATH = '/decouverte/marketing/jeux/mapping-concurrentiel';
 
 export default function Slide05() {
   return (
@@ -21,14 +21,14 @@ export default function Slide05() {
             <motion.h1
               variants={fadeUp}
               className="font-display font-extrabold tracking-[-0.04em] leading-[0.95]"
-              style={{ fontSize: "clamp(40px, 5vw, 72px)" }}
+              style={{ fontSize: 'clamp(40px, 5vw, 72px)' }}
             >
               Et concrètement ?
             </motion.h1>
             <motion.p
               variants={fadeUp}
               className="mt-2 text-snow/70"
-              style={{ fontSize: "clamp(16px, 1.5vw, 22px)" }}
+              style={{ fontSize: 'clamp(16px, 1.5vw, 22px)' }}
             >
               On l&rsquo;a déjà construit. Joue avec.
             </motion.p>
@@ -40,7 +40,7 @@ export default function Slide05() {
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 bg-sun text-night font-bold px-5 py-3 rounded-2xl text-sm transition-transform hover:scale-[1.02] self-start md:self-end"
-            style={{ boxShadow: "0 0 16px var(--sun)" }}
+            style={{ boxShadow: '0 0 16px var(--sun)' }}
           >
             <ExternalLink className="w-4 h-4" />
             Ouvrir en plein écran
@@ -50,7 +50,7 @@ export default function Slide05() {
         <motion.div
           variants={fadeUp}
           className="relative flex-1 rounded-3xl overflow-hidden border border-night-200 bg-night-soft"
-          style={{ boxShadow: "0 30px 60px rgba(0,0,0,0.45)", minHeight: 480 }}
+          style={{ boxShadow: '0 30px 60px rgba(0,0,0,0.45)', minHeight: 480 }}
         >
           <iframe
             src={GAME_PATH}

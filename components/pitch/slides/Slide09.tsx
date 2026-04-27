@@ -1,42 +1,36 @@
-"use client";
+'use client';
 
-import { motion } from "framer-motion";
-import {
-  SlideContainer,
-  Tag,
-  fadeUp,
-  stagger,
-  NumCircle,
-} from "../slide-utils";
+import { motion } from 'framer-motion';
+import { SlideContainer, Tag, fadeUp, stagger, NumCircle } from '../slide-utils';
 
 const TEAM = [
   {
     n: 1,
-    title: "INSEEC",
-    sub: "École de commerce",
-    note: "On connaît le marché",
-    color: "var(--sun)",
+    title: 'INSEEC',
+    sub: 'École de commerce',
+    note: 'On connaît le marché',
+    color: 'var(--sun)',
   },
   {
     n: 2,
-    title: "Gaming Campus",
-    sub: "dont 1 IRIIG",
-    note: "Game design + dev",
-    color: "var(--pivot)",
+    title: 'Gaming Campus',
+    sub: 'dont 1 IRIIG',
+    note: 'Game design + dev',
+    color: 'var(--pivot)',
   },
   {
     n: 3,
-    title: "IAE",
-    sub: "Gestion, stratégie",
-    note: "Vision business",
-    color: "var(--mint)",
+    title: 'IAE',
+    sub: 'Gestion, stratégie',
+    note: 'Vision business',
+    color: 'var(--mint)',
   },
   {
     n: 4,
-    title: "Cybersécurité",
-    sub: "Expertise tech",
-    note: "Fondations solides",
-    color: "#3B82F6",
+    title: 'Cybersécurité',
+    sub: 'Expertise tech',
+    note: 'Fondations solides',
+    color: '#3B82F6',
   },
 ];
 
@@ -54,7 +48,7 @@ export default function Slide09() {
         <motion.h1
           variants={fadeUp}
           className="font-display font-extrabold tracking-[-0.04em] leading-[0.95] mb-8"
-          style={{ fontSize: "clamp(48px, 7vw, 96px)" }}
+          style={{ fontSize: 'clamp(48px, 7vw, 96px)' }}
         >
           Pourquoi nous ?
         </motion.h1>
@@ -63,13 +57,13 @@ export default function Slide09() {
           variants={fadeUp}
           className="rounded-3xl p-7 mb-6"
           style={{
-            background: "linear-gradient(90deg, var(--sun), var(--pivot))",
-            color: "#0E0E10",
+            background: 'linear-gradient(90deg, var(--sun), var(--pivot))',
+            color: '#0E0E10',
           }}
         >
           <p
             className="font-display font-extrabold leading-tight"
-            style={{ fontSize: "clamp(22px, 2.4vw, 32px)" }}
+            style={{ fontSize: 'clamp(22px, 2.4vw, 32px)' }}
           >
             Équipe de 5 personnes complémentaires
           </p>
@@ -90,9 +84,7 @@ export default function Slide09() {
               >
                 {t.title}
               </div>
-              <div className="text-snow/80 text-sm font-medium mb-2">
-                {t.sub}
-              </div>
+              <div className="text-snow/80 text-sm font-medium mb-2">{t.sub}</div>
               <div className="font-mono text-[10px] uppercase tracking-widest text-snow/50">
                 {t.note}
               </div>
@@ -104,16 +96,15 @@ export default function Slide09() {
           variants={fadeUp}
           className="rounded-3xl p-7"
           style={{
-            background: "linear-gradient(90deg, var(--sun), var(--pivot))",
-            color: "#0E0E10",
+            background: 'linear-gradient(90deg, var(--sun), var(--pivot))',
+            color: '#0E0E10',
           }}
         >
           <p
             className="font-display font-extrabold leading-tight"
-            style={{ fontSize: "clamp(22px, 2.4vw, 32px)" }}
+            style={{ fontSize: 'clamp(22px, 2.4vw, 32px)' }}
           >
-            Business + Tech + Game Design ={" "}
-            <em style={{ fontStyle: "italic" }}>le trio parfait</em>
+            Business + Tech + Game Design = <em style={{ fontStyle: 'italic' }}>le trio parfait</em>
           </p>
         </motion.div>
       </motion.div>

@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import { useEffect, useMemo, useRef, useState } from "react";
-import { motion } from "framer-motion";
-import { ArrowRight, CheckCircle2, RotateCcw } from "lucide-react";
-import { useGameShell } from "./game-shell-context";
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { motion } from 'framer-motion';
+import { ArrowRight, CheckCircle2, RotateCcw } from 'lucide-react';
+import { useGameShell } from './game-shell-context';
 
 // ─── Données : 3 manches ──────────────────────────────────────────────────
 type Brand = {
@@ -15,46 +15,46 @@ type Round = { name: string; description: string; brands: Brand[] };
 
 const ROUNDS: Round[] = [
   {
-    name: "Automobile",
+    name: 'Automobile',
     description:
-      "Place 5 marques auto sur les axes prix (← bas / haut →) et qualité perçue (↓ basse / haute ↑).",
+      'Place 5 marques auto sur les axes prix (← bas / haut →) et qualité perçue (↓ basse / haute ↑).',
     brands: [
-      { id: "dacia", name: "Dacia", target: { x: 0.15, y: 0.2 } },
-      { id: "toyota", name: "Toyota", target: { x: 0.45, y: 0.55 } },
-      { id: "bmw", name: "BMW", target: { x: 0.75, y: 0.78 } },
-      { id: "tesla", name: "Tesla", target: { x: 0.8, y: 0.88 } },
-      { id: "lambo", name: "Lamborghini", target: { x: 0.95, y: 0.92 } },
+      { id: 'dacia', name: 'Dacia', target: { x: 0.15, y: 0.2 } },
+      { id: 'toyota', name: 'Toyota', target: { x: 0.45, y: 0.55 } },
+      { id: 'bmw', name: 'BMW', target: { x: 0.75, y: 0.78 } },
+      { id: 'tesla', name: 'Tesla', target: { x: 0.8, y: 0.88 } },
+      { id: 'lambo', name: 'Lamborghini', target: { x: 0.95, y: 0.92 } },
     ],
   },
   {
-    name: "Café",
+    name: 'Café',
     description:
-      "Mêmes axes, marché du café. Pense à ce que les gens paient et à la qualité ressentie.",
+      'Mêmes axes, marché du café. Pense à ce que les gens paient et à la qualité ressentie.',
     brands: [
-      { id: "maxwell", name: "Maxwell House", target: { x: 0.18, y: 0.22 } },
-      { id: "carte-noire", name: "Carte Noire", target: { x: 0.42, y: 0.5 } },
-      { id: "starbucks", name: "Starbucks", target: { x: 0.55, y: 0.6 } },
-      { id: "nespresso", name: "Nespresso", target: { x: 0.7, y: 0.75 } },
-      { id: "hayb", name: "Hayb", target: { x: 0.88, y: 0.9 } },
+      { id: 'maxwell', name: 'Maxwell House', target: { x: 0.18, y: 0.22 } },
+      { id: 'carte-noire', name: 'Carte Noire', target: { x: 0.42, y: 0.5 } },
+      { id: 'starbucks', name: 'Starbucks', target: { x: 0.55, y: 0.6 } },
+      { id: 'nespresso', name: 'Nespresso', target: { x: 0.7, y: 0.75 } },
+      { id: 'hayb', name: 'Hayb', target: { x: 0.88, y: 0.9 } },
     ],
   },
   {
-    name: "Smartphone",
+    name: 'Smartphone',
     description:
-      "Place 5 marques de smartphones. Garde en tête la perception qualité, pas juste les specs.",
+      'Place 5 marques de smartphones. Garde en tête la perception qualité, pas juste les specs.',
     brands: [
-      { id: "wiko", name: "Wiko", target: { x: 0.18, y: 0.2 } },
-      { id: "samsung-a", name: "Samsung A", target: { x: 0.4, y: 0.45 } },
-      { id: "huawei", name: "Huawei P", target: { x: 0.55, y: 0.65 } },
-      { id: "pixel", name: "Pixel", target: { x: 0.7, y: 0.82 } },
-      { id: "iphone", name: "iPhone", target: { x: 0.85, y: 0.9 } },
+      { id: 'wiko', name: 'Wiko', target: { x: 0.18, y: 0.2 } },
+      { id: 'samsung-a', name: 'Samsung A', target: { x: 0.4, y: 0.45 } },
+      { id: 'huawei', name: 'Huawei P', target: { x: 0.55, y: 0.65 } },
+      { id: 'pixel', name: 'Pixel', target: { x: 0.7, y: 0.82 } },
+      { id: 'iphone', name: 'iPhone', target: { x: 0.85, y: 0.9 } },
     ],
   },
 ];
 
 // ─── Helpers ──────────────────────────────────────────────────────────────
 type Placement = { x: number; y: number };
-const ACCENT = "var(--family-marketing)";
+const ACCENT = 'var(--family-marketing)';
 
 function dist(a: Placement, b: Placement) {
   return Math.hypot(a.x - b.x, a.y - b.y);
@@ -66,9 +66,9 @@ function matchScore(d: number) {
 }
 
 function colorForMatch(m: number) {
-  if (m >= 70) return "var(--mint)";
-  if (m >= 45) return "var(--sun)";
-  return "var(--coral)";
+  if (m >= 70) return 'var(--mint)';
+  if (m >= 45) return 'var(--sun)';
+  return 'var(--coral)';
 }
 
 // ─── Component ─────────────────────────────────────────────────────────────
@@ -111,9 +111,7 @@ export default function MappingConcurrentiel() {
   }
 
   function finish() {
-    const finalScore = Math.round(
-      scores.reduce((a, b) => a + b, 0) / scores.length,
-    );
+    const finalScore = Math.round(scores.reduce((a, b) => a + b, 0) / scores.length);
     const skills = computeSkills(scores);
     shell.complete(skills, finalScore, { roundScores: scores });
   }
@@ -128,9 +126,7 @@ export default function MappingConcurrentiel() {
           >
             Manche {roundIdx + 1} / {ROUNDS.length} · {round.name}
           </div>
-          <p className="text-snow/70 text-sm md:text-base max-w-2xl">
-            {round.description}
-          </p>
+          <p className="text-snow/70 text-sm md:text-base max-w-2xl">{round.description}</p>
         </div>
         <RoundsBadge scores={scores} total={ROUNDS.length} current={roundIdx} />
       </div>
@@ -146,21 +142,17 @@ export default function MappingConcurrentiel() {
         </div>
 
         <div className="lg:col-span-4 space-y-4">
-          <BrandsPool
-            brands={round.brands}
-            placements={placements}
-            onPlace={place}
-          />
+          <BrandsPool brands={round.brands} placements={placements} onPlace={place} />
 
           {!validated && (
             <button
               onClick={validate}
               disabled={!allPlaced}
               className="w-full inline-flex items-center justify-center gap-2 bg-sun text-night font-bold px-6 py-4 rounded-2xl text-base disabled:opacity-50 disabled:cursor-not-allowed transition-transform hover:scale-[1.01] active:scale-[0.99]"
-              style={{ boxShadow: allPlaced ? "0 0 24px var(--sun)" : "none" }}
+              style={{ boxShadow: allPlaced ? '0 0 24px var(--sun)' : 'none' }}
             >
               {allPlaced
-                ? "Valider mes positions"
+                ? 'Valider mes positions'
                 : `Place encore ${round.brands.length - Object.keys(placements).length}`}
               {allPlaced && <ArrowRight className="w-5 h-5" />}
             </button>
@@ -243,13 +235,13 @@ function Plane({
       </div>
       <div
         className="absolute top-1/2 -left-2 -translate-y-1/2 -rotate-90 origin-top-left font-mono text-[10px] uppercase tracking-widest text-snow/60 whitespace-nowrap"
-        style={{ transform: "rotate(-90deg) translateX(-50%)" }}
+        style={{ transform: 'rotate(-90deg) translateX(-50%)' }}
       >
         ← Prix bas
       </div>
       <div
         className="absolute top-1/2 -right-2 -translate-y-1/2 rotate-90 origin-top-right font-mono text-[10px] uppercase tracking-widest text-snow/60 whitespace-nowrap"
-        style={{ transform: "rotate(90deg) translateX(50%)" }}
+        style={{ transform: 'rotate(90deg) translateX(50%)' }}
       >
         Prix haut →
       </div>
@@ -262,7 +254,7 @@ function Plane({
         style={{
           borderColor: ACCENT,
           background:
-            "radial-gradient(circle at 50% 50%, rgba(255,77,109,0.04) 0%, transparent 60%), var(--night-soft)",
+            'radial-gradient(circle at 50% 50%, rgba(255,77,109,0.04) 0%, transparent 60%), var(--night-soft)',
         }}
       >
         {/* Grid lines */}
@@ -280,13 +272,13 @@ function Plane({
               style={{
                 left: `${b.target.x * 100}%`,
                 bottom: `${b.target.y * 100}%`,
-                transform: "translate(-50%, 50%)",
+                transform: 'translate(-50%, 50%)',
               }}
             >
               <div className="w-3 h-3 rounded-full border-2 border-mint bg-night-200" />
               <div
                 className="absolute top-4 left-1/2 -translate-x-1/2 font-mono text-[9px] uppercase tracking-wider text-mint whitespace-nowrap"
-                style={{ color: "var(--mint)" }}
+                style={{ color: 'var(--mint)' }}
               >
                 vraie pos.
               </div>
@@ -303,14 +295,14 @@ function Plane({
             <motion.div
               key={b.id}
               layout
-              transition={{ type: "spring", stiffness: 300, damping: 28 }}
+              transition={{ type: 'spring', stiffness: 300, damping: 28 }}
               className="absolute"
               style={{
                 left: `${p.x * 100}%`,
                 bottom: `${p.y * 100}%`,
-                transform: "translate(-50%, 50%)",
-                cursor: validated ? "default" : "grab",
-                touchAction: "none",
+                transform: 'translate(-50%, 50%)',
+                cursor: validated ? 'default' : 'grab',
+                touchAction: 'none',
               }}
               onPointerDown={(e) => startDrag(e, b.id)}
             >
@@ -319,15 +311,12 @@ function Plane({
                 style={{
                   borderColor: c,
                   color: c,
-                  background:
-                    "linear-gradient(180deg, rgba(0,0,0,0.5), rgba(0,0,0,0.7))",
+                  background: 'linear-gradient(180deg, rgba(0,0,0,0.5), rgba(0,0,0,0.7))',
                   boxShadow: `0 0 12px ${c}`,
                 }}
               >
                 {b.name}
-                {validated && (
-                  <span className="ml-2 font-mono text-[10px]">{m}%</span>
-                )}
+                {validated && <span className="ml-2 font-mono text-[10px]">{m}%</span>}
               </div>
             </motion.div>
           );
@@ -407,7 +396,7 @@ function ResultPanel({
     <motion.div
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ type: "spring", stiffness: 90, damping: 16 }}
+      transition={{ type: 'spring', stiffness: 90, damping: 16 }}
       className="p-5 rounded-3xl border-2 space-y-4"
       style={{ borderColor: ACCENT, background: `${ACCENT}10` }}
     >
@@ -420,7 +409,7 @@ function ResultPanel({
         </div>
         <div
           className="font-display font-extrabold tracking-tight"
-          style={{ fontSize: "60px", color: colorForMatch(score) }}
+          style={{ fontSize: '60px', color: colorForMatch(score) }}
         >
           {score}
           <span className="text-2xl text-snow/40">/100</span>
@@ -432,15 +421,9 @@ function ResultPanel({
           const p = placements[b.id];
           const m = p ? matchScore(dist(p, b.target)) : 0;
           return (
-            <div
-              key={b.id}
-              className="flex items-center justify-between text-sm"
-            >
+            <div key={b.id} className="flex items-center justify-between text-sm">
               <span className="text-snow/80">{b.name}</span>
-              <span
-                className="font-mono text-xs font-bold"
-                style={{ color: colorForMatch(m) }}
-              >
+              <span className="font-mono text-xs font-bold" style={{ color: colorForMatch(m) }}>
                 {m}%
               </span>
             </div>
@@ -479,7 +462,7 @@ function computeSkills(scores: number[]) {
   return {
     analyse: Math.min(100, analyse),
     communication: 30, // 10 par manche
-    creativite: 15,    // 5 par manche
+    creativite: 15, // 5 par manche
   };
 }
 
@@ -499,15 +482,15 @@ function RoundsBadge({
         const s = scores[i];
         const done = s !== undefined;
         const active = i === current;
-        const c = done ? colorForMatch(s) : "var(--night-200)";
+        const c = done ? colorForMatch(s) : 'var(--night-200)';
         return (
           <div
             key={i}
             className="px-2.5 py-1 rounded-full font-mono text-[10px] uppercase tracking-widest border"
             style={{
-              borderColor: active && !done ? "var(--snow)" : c,
-              color: done ? c : active ? "var(--snow)" : "var(--night-500)",
-              background: done ? `${c}15` : "transparent",
+              borderColor: active && !done ? 'var(--snow)' : c,
+              color: done ? c : active ? 'var(--snow)' : 'var(--night-500)',
+              background: done ? `${c}15` : 'transparent',
             }}
           >
             {done ? `${s}` : `M${i + 1}`}

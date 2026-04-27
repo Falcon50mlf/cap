@@ -2,15 +2,9 @@
 // Structure complète exigée par @supabase/supabase-js pour que `.select()`
 // et `.from()` infèrent correctement les types de retour.
 
-export type Family =
-  | "strategy"
-  | "finance"
-  | "marketing"
-  | "tech"
-  | "startup"
-  | "retail";
+export type Family = 'strategy' | 'finance' | 'marketing' | 'tech' | 'startup' | 'retail';
 
-export type Role = "lyceen" | "diplome";
+export type Role = 'lyceen' | 'diplome';
 
 export type Profile = {
   id: string;
@@ -52,21 +46,20 @@ export type Database = {
     Tables: {
       profiles: {
         Row: Profile;
-        Insert: Pick<Profile, "id"> & Partial<Omit<Profile, "id">>;
+        Insert: Pick<Profile, 'id'> & Partial<Omit<Profile, 'id'>>;
         Update: Partial<Profile>;
         Relationships: [];
       };
       game_results: {
         Row: GameResult;
-        Insert: Omit<GameResult, "id" | "completed_at"> &
-          Partial<Pick<GameResult, "id" | "completed_at">>;
+        Insert: Omit<GameResult, 'id' | 'completed_at'> &
+          Partial<Pick<GameResult, 'id' | 'completed_at'>>;
         Update: Partial<GameResult>;
         Relationships: [];
       };
       leads: {
         Row: Lead;
-        Insert: Omit<Lead, "id" | "created_at"> &
-          Partial<Pick<Lead, "id" | "created_at">>;
+        Insert: Omit<Lead, 'id' | 'created_at'> & Partial<Pick<Lead, 'id' | 'created_at'>>;
         Update: Partial<Lead>;
         Relationships: [];
       };

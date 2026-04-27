@@ -1,32 +1,26 @@
-"use client";
+'use client';
 
-import { motion } from "framer-motion";
-import { Eye, AlertCircle, DollarSign } from "lucide-react";
-import {
-  SlideContainer,
-  Tag,
-  fadeUp,
-  stagger,
-  NumCircle,
-} from "../slide-utils";
+import { motion } from 'framer-motion';
+import { Eye, AlertCircle, DollarSign } from 'lucide-react';
+import { SlideContainer, Tag, fadeUp, stagger, NumCircle } from '../slide-utils';
 
 const POINTS = [
   {
     n: 1,
     Icon: Eye,
-    color: "var(--sun)",
-    text: "Manque de visibilité sur les métiers du commerce",
+    color: 'var(--sun)',
+    text: 'Manque de visibilité sur les métiers du commerce',
   },
   {
     n: 2,
     Icon: AlertCircle,
-    color: "var(--pivot)",
-    text: "Orientation subie plutôt que choisie",
+    color: 'var(--pivot)',
+    text: 'Orientation subie plutôt que choisie',
   },
   {
     n: 3,
     Icon: DollarSign,
-    color: "var(--sun)",
+    color: 'var(--sun)',
     text: "Coût financier et humain d'une mauvaise orientation",
   },
 ];
@@ -45,7 +39,7 @@ export default function Slide02() {
         <motion.h1
           variants={fadeUp}
           className="font-display font-extrabold tracking-[-0.04em] leading-[0.95] mb-6"
-          style={{ fontSize: "clamp(56px, 8vw, 112px)" }}
+          style={{ fontSize: 'clamp(56px, 8vw, 112px)' }}
         >
           Problématique
         </motion.h1>
@@ -54,38 +48,33 @@ export default function Slide02() {
           variants={fadeUp}
           className="text-snow font-light italic mb-10 max-w-3xl"
           style={{
-            fontSize: "clamp(24px, 2.8vw, 40px)",
+            fontSize: 'clamp(24px, 2.8vw, 40px)',
             fontWeight: 600,
-            fontStyle: "italic",
+            fontStyle: 'italic',
             lineHeight: 1.25,
-            letterSpacing: "-0.01em",
+            letterSpacing: '-0.01em',
           }}
         >
-          Comment bien s&rsquo;orienter, quand la{" "}
-          <span style={{ color: "var(--sun)" }}>transition</span> lycée — études
-          sup n&rsquo;est que théorique ?
+          Comment bien s&rsquo;orienter, quand la{' '}
+          <span style={{ color: 'var(--sun)' }}>transition</span> lycée — études sup n&rsquo;est que
+          théorique ?
         </motion.p>
 
         <motion.div
           variants={fadeUp}
           className="bg-night-soft rounded-3xl p-7 md:p-9 mb-6 border-l-4"
-          style={{ borderLeftColor: "var(--sun)" }}
+          style={{ borderLeftColor: 'var(--sun)' }}
         >
           <p
             className="text-snow/85 font-light leading-relaxed"
-            style={{ fontSize: "clamp(18px, 1.8vw, 24px)" }}
+            style={{ fontSize: 'clamp(18px, 1.8vw, 24px)' }}
           >
-            Chaque année,{" "}
-            <span style={{ color: "var(--sun)", fontWeight: 600 }}>
-              des milliers de lycéens
-            </span>{" "}
-            s&rsquo;engagent dans des études à{" "}
-            <span style={{ color: "var(--sun)", fontWeight: 600 }}>
-              10 000€
-            </span>{" "}
-            sans jamais avoir réellement expérimenté les matières
-            qu&rsquo;ils vont étudier ni les métiers qu&rsquo;ils vont
-            exercer.
+            Chaque année,{' '}
+            <span style={{ color: 'var(--sun)', fontWeight: 600 }}>des milliers de lycéens</span>{' '}
+            s&rsquo;engagent dans des études à{' '}
+            <span style={{ color: 'var(--sun)', fontWeight: 600 }}>10 000€</span> sans jamais avoir
+            réellement expérimenté les matières qu&rsquo;ils vont étudier ni les métiers
+            qu&rsquo;ils vont exercer.
           </p>
         </motion.div>
 
@@ -104,9 +93,7 @@ export default function Slide02() {
                 <NumCircle n={p.n} color={p.color} />
                 <p.Icon className="w-5 h-5" style={{ color: p.color }} />
               </div>
-              <p className="text-snow/85 leading-snug font-medium text-base">
-                {p.text}
-              </p>
+              <p className="text-snow/85 leading-snug font-medium text-base">{p.text}</p>
             </motion.div>
           ))}
         </div>
@@ -115,14 +102,13 @@ export default function Slide02() {
           variants={fadeUp}
           className="rounded-3xl p-6 md:p-7 border-2"
           style={{
-            borderColor: "var(--sun)",
-            background:
-              "linear-gradient(135deg, rgba(255,220,50,0.08), rgba(255,220,50,0.02))",
+            borderColor: 'var(--sun)',
+            background: 'linear-gradient(135deg, rgba(255,220,50,0.08), rgba(255,220,50,0.02))',
           }}
         >
           <div
             className="font-mono text-[11px] uppercase tracking-widest mb-3"
-            style={{ color: "var(--sun)" }}
+            style={{ color: 'var(--sun)' }}
           >
             // Potentiel marché
           </div>
@@ -131,17 +117,13 @@ export default function Slide02() {
               <div className="font-display font-extrabold text-xl md:text-2xl text-snow mb-1">
                 230 écoles · 115 000 places/an
               </div>
-              <div className="text-snow/60 text-sm">
-                Marché total adressable
-              </div>
+              <div className="text-snow/60 text-sm">Marché total adressable</div>
             </div>
             <div>
               <div className="font-display font-extrabold text-xl md:text-2xl text-snow mb-1">
                 500 — 2 000€ / étudiant
               </div>
-              <div className="text-snow/60 text-sm">
-                Budget acquisition actuel des écoles
-              </div>
+              <div className="text-snow/60 text-sm">Budget acquisition actuel des écoles</div>
             </div>
           </div>
         </motion.div>

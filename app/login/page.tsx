@@ -1,20 +1,20 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { motion } from "framer-motion";
-import { Mail, Lock, Loader2, ArrowRight, Eye, EyeOff } from "lucide-react";
-import { Logo } from "@/components/layout/logo";
-import { ThemeToggle } from "@/components/layout/theme-toggle";
-import { createClient } from "@/lib/supabase/client";
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { motion } from 'framer-motion';
+import { Mail, Lock, Loader2, ArrowRight, Eye, EyeOff } from 'lucide-react';
+import { Logo } from '@/components/layout/logo';
+import { ThemeToggle } from '@/components/layout/theme-toggle';
+import { createClient } from '@/lib/supabase/client';
 
-type Mode = "login" | "signup";
+type Mode = 'login' | 'signup';
 
 export default function LoginPage() {
   const router = useRouter();
-  const [mode, setMode] = useState<Mode>("login");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [mode, setMode] = useState<Mode>('login');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -26,7 +26,7 @@ export default function LoginPage() {
 
     const supabase = createClient();
 
-    if (mode === "signup") {
+    if (mode === 'signup') {
       const { error: signUpError } = await supabase.auth.signUp({
         email,
         password,
@@ -54,17 +54,17 @@ export default function LoginPage() {
     } = await supabase.auth.getUser();
     if (!user) {
       setLoading(false);
-      setError("Auth réussie mais session introuvable. Réessaie.");
+      setError('Auth réussie mais session introuvable. Réessaie.');
       return;
     }
 
     const { data: profile } = await supabase
-      .from("profiles")
-      .select("role")
-      .eq("id", user.id)
+      .from('profiles')
+      .select('role')
+      .eq('id', user.id)
       .maybeSingle();
 
-    router.push(profile?.role ? "/hub" : "/onboarding");
+    router.push(profile?.role ? '/hub' : '/onboarding');
   }
 
   return (
@@ -73,7 +73,7 @@ export default function LoginPage() {
         <Logo size="nav" />
         <div className="flex items-center gap-4">
           <span className="hidden sm:inline-block font-mono text-[11px] uppercase tracking-widest text-night-500">
-            {mode === "login" ? "// Bon retour" : "// Bienvenue"}
+            {mode === 'login' ? '// Bon retour' : '// Bienvenue'}
           </span>
           <ThemeToggle />
         </div>
@@ -84,27 +84,24 @@ export default function LoginPage() {
           key={mode}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ type: "spring", stiffness: 90, damping: 16 }}
+          transition={{ type: 'spring', stiffness: 90, damping: 16 }}
           className="w-full max-w-md"
         >
           <h1
             className="font-display font-extrabold tracking-[-0.04em] leading-[0.95] mb-3"
-            style={{ fontSize: "clamp(40px, 6vw, 72px)" }}
+            style={{ fontSize: 'clamp(40px, 6vw, 72px)' }}
           >
-            Donne-toi un{" "}
-            <span className="text-sun" style={{ fontStyle: "italic" }}>
+            Donne-toi un{' '}
+            <span className="text-sun" style={{ fontStyle: 'italic' }}>
               cap
             </span>
             <span className="text-sun">.</span>
           </h1>
           <p className="text-snow/70 text-lg mb-3">
-            {mode === "login"
-              ? "Connecte-toi en 5 secondes."
-              : "Crée ton compte en 5 secondes."}
+            {mode === 'login' ? 'Connecte-toi en 5 secondes.' : 'Crée ton compte en 5 secondes.'}
           </p>
           <p className="font-mono text-[11px] uppercase tracking-widest text-night-500 mb-10">
-            // Pas d&rsquo;email de confirmation, pas de magic link, juste toi
-            et ton cap.
+            // Pas d&rsquo;email de confirmation, pas de magic link, juste toi et ton cap.
           </p>
 
           <form onSubmit={handleSubmit} className="space-y-4">
@@ -126,19 +123,13 @@ export default function LoginPage() {
             <div className="relative">
               <Lock className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-snow/40 pointer-events-none" />
               <input
-                type={showPassword ? "text" : "password"}
+                type={showPassword ? 'text' : 'password'}
                 required
                 minLength={6}
-                autoComplete={
-                  mode === "signup" ? "new-password" : "current-password"
-                }
+                autoComplete={mode === 'signup' ? 'new-password' : 'current-password'}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder={
-                  mode === "signup"
-                    ? "Min. 6 caractères"
-                    : "Ton mot de passe"
-                }
+                placeholder={mode === 'signup' ? 'Min. 6 caractères' : 'Ton mot de passe'}
                 disabled={loading}
                 className="w-full bg-night-soft border border-night-200 rounded-2xl pl-14 pr-14 py-5 text-lg font-sans placeholder:text-snow/30 focus:outline-none focus:border-snow transition-colors disabled:opacity-50"
               />
@@ -147,17 +138,9 @@ export default function LoginPage() {
                 onClick={() => setShowPassword((s) => !s)}
                 tabIndex={-1}
                 className="absolute right-5 top-1/2 -translate-y-1/2 text-snow/40 hover:text-snow/70 transition-colors"
-                aria-label={
-                  showPassword
-                    ? "Cacher le mot de passe"
-                    : "Afficher le mot de passe"
-                }
+                aria-label={showPassword ? 'Cacher le mot de passe' : 'Afficher le mot de passe'}
               >
-                {showPassword ? (
-                  <EyeOff className="w-5 h-5" />
-                ) : (
-                  <Eye className="w-5 h-5" />
-                )}
+                {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
               </button>
             </div>
 
@@ -176,17 +159,17 @@ export default function LoginPage() {
               disabled={loading || email.length < 3 || password.length < 6}
               className="w-full inline-flex items-center justify-center gap-2 bg-sun text-night font-bold px-8 py-5 rounded-2xl text-lg disabled:opacity-50 disabled:cursor-not-allowed transition-transform hover:scale-[1.01] active:scale-[0.99]"
               style={{
-                boxShadow: loading ? "none" : "0 0 24px var(--sun)",
+                boxShadow: loading ? 'none' : '0 0 24px var(--sun)',
               }}
             >
               {loading ? (
                 <>
                   <Loader2 className="w-5 h-5 animate-spin" />
-                  {mode === "signup" ? "Création..." : "Connexion..."}
+                  {mode === 'signup' ? 'Création...' : 'Connexion...'}
                 </>
               ) : (
                 <>
-                  {mode === "signup" ? "Créer mon compte" : "Se connecter"}
+                  {mode === 'signup' ? 'Créer mon compte' : 'Se connecter'}
                   <ArrowRight className="w-5 h-5" />
                 </>
               )}
@@ -197,21 +180,18 @@ export default function LoginPage() {
             <button
               type="button"
               onClick={() => {
-                setMode((m) => (m === "login" ? "signup" : "login"));
+                setMode((m) => (m === 'login' ? 'signup' : 'login'));
                 setError(null);
               }}
               className="text-snow/60 hover:text-snow text-sm transition-colors"
             >
-              {mode === "login" ? (
+              {mode === 'login' ? (
                 <>
-                  Première fois ?{" "}
-                  <span className="text-sun font-semibold">
-                    Crée ton compte
-                  </span>
+                  Première fois ? <span className="text-sun font-semibold">Crée ton compte</span>
                 </>
               ) : (
                 <>
-                  Tu as déjà un compte ?{" "}
+                  Tu as déjà un compte ?{' '}
                   <span className="text-sun font-semibold">Connecte-toi</span>
                 </>
               )}
@@ -226,25 +206,23 @@ export default function LoginPage() {
 // Map les messages d'erreur Supabase vers du français parlant.
 function friendlyError(msg: string, mode: Mode): string {
   const m = msg.toLowerCase();
-  if (m.includes("invalid login credentials")) {
-    return "Email ou mot de passe incorrect.";
+  if (m.includes('invalid login credentials')) {
+    return 'Email ou mot de passe incorrect.';
   }
-  if (m.includes("user already registered") || m.includes("already exists")) {
-    return "Cet email est déjà utilisé. Connecte-toi plutôt.";
+  if (m.includes('user already registered') || m.includes('already exists')) {
+    return 'Cet email est déjà utilisé. Connecte-toi plutôt.';
   }
-  if (m.includes("password should be at least")) {
-    return "Le mot de passe doit faire au moins 6 caractères.";
+  if (m.includes('password should be at least')) {
+    return 'Le mot de passe doit faire au moins 6 caractères.';
   }
-  if (m.includes("email not confirmed")) {
+  if (m.includes('email not confirmed')) {
     return "Ton email n'est pas confirmé (re-désactive 'Confirm email' dans Supabase).";
   }
-  if (m.includes("rate limit")) {
-    return "Trop de tentatives. Réessaie dans une minute.";
+  if (m.includes('rate limit')) {
+    return 'Trop de tentatives. Réessaie dans une minute.';
   }
-  if (m.includes("invalid email")) {
+  if (m.includes('invalid email')) {
     return "Cet email a l'air invalide.";
   }
-  return mode === "signup"
-    ? `Création impossible : ${msg}`
-    : `Connexion impossible : ${msg}`;
+  return mode === 'signup' ? `Création impossible : ${msg}` : `Connexion impossible : ${msg}`;
 }

@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import Link from "next/link";
-import { motion } from "framer-motion";
+import Link from 'next/link';
+import { motion } from 'framer-motion';
 import {
   ArrowRight,
   Briefcase,
@@ -15,53 +15,53 @@ import {
   Users,
   GraduationCap,
   ContactRound,
-} from "lucide-react";
-import { Logo } from "@/components/layout/logo";
-import { ThemeToggle } from "@/components/layout/theme-toggle";
-import { PartnershipSection } from "@/components/landing/partnership-section";
+} from 'lucide-react';
+import { Logo } from '@/components/layout/logo';
+import { ThemeToggle } from '@/components/layout/theme-toggle';
+import { PartnershipSection } from '@/components/landing/partnership-section';
 
 const FAMILIES = [
   {
-    key: "strategy",
-    name: "Conseil & Stratégie",
-    color: "var(--family-strategy)",
+    key: 'strategy',
+    name: 'Conseil & Stratégie',
+    color: 'var(--family-strategy)',
     Icon: Briefcase,
-    preview: "Consultant MBB · Big 4 · Stratégiste interne",
+    preview: 'Consultant MBB · Big 4 · Stratégiste interne',
   },
   {
-    key: "finance",
-    name: "Finance",
-    color: "var(--family-finance)",
+    key: 'finance',
+    name: 'Finance',
+    color: 'var(--family-finance)',
     Icon: TrendingUp,
-    preview: "Analyste M&A · Private Equity · Asset Manager",
+    preview: 'Analyste M&A · Private Equity · Asset Manager',
   },
   {
-    key: "marketing",
-    name: "Marketing & Brand",
-    color: "var(--family-marketing)",
+    key: 'marketing',
+    name: 'Marketing & Brand',
+    color: 'var(--family-marketing)',
     Icon: Megaphone,
-    preview: "Brand Manager · Growth · Chef de produit FMCG",
+    preview: 'Brand Manager · Growth · Chef de produit FMCG',
   },
   {
-    key: "tech",
-    name: "Tech & Produit",
-    color: "var(--family-tech)",
+    key: 'tech',
+    name: 'Tech & Produit',
+    color: 'var(--family-tech)',
     Icon: Cpu,
-    preview: "Product Manager · Tech Sales · Customer Success",
+    preview: 'Product Manager · Tech Sales · Customer Success',
   },
   {
-    key: "startup",
-    name: "Entrepreneuriat & Startups",
-    color: "var(--family-startup)",
+    key: 'startup',
+    name: 'Entrepreneuriat & Startups',
+    color: 'var(--family-startup)',
     Icon: Rocket,
-    preview: "Founder · Chief of Staff · VC Analyst",
+    preview: 'Founder · Chief of Staff · VC Analyst',
   },
   {
-    key: "retail",
-    name: "Luxe, Retail & FMCG",
-    color: "var(--family-retail)",
+    key: 'retail',
+    name: 'Luxe, Retail & FMCG',
+    color: 'var(--family-retail)',
     Icon: Sparkles,
-    preview: "Buyer · Visual Merchandiser · Trade Marketing",
+    preview: 'Buyer · Visual Merchandiser · Trade Marketing',
   },
 ] as const;
 
@@ -72,7 +72,7 @@ const fadeUp = {
     y: 0,
     transition: {
       delay: i * 0.08,
-      type: "spring" as const,
+      type: 'spring' as const,
       stiffness: 90,
       damping: 16,
     },
@@ -114,12 +114,12 @@ export default function Home() {
               animate="show"
               custom={1}
               className="font-display font-extrabold tracking-[-0.05em] leading-[0.92]"
-              style={{ fontSize: "clamp(64px, 9vw, 130px)" }}
+              style={{ fontSize: 'clamp(64px, 9vw, 130px)' }}
             >
               <span className="block">Donne-toi</span>
               <span className="block">
-                un <span className="strike-coral">quiz</span>{" "}
-                <em className="text-sun" style={{ fontStyle: "italic" }}>
+                un <span className="strike-coral">quiz</span>{' '}
+                <em className="text-sun" style={{ fontStyle: 'italic' }}>
                   cap
                 </em>
                 .
@@ -133,9 +133,8 @@ export default function Home() {
               custom={3}
               className="mt-8 text-[18px] leading-relaxed text-snow/70 max-w-[480px]"
             >
-              Cap&rsquo; te fait découvrir les écoles de commerce et leurs
-              débouchés à travers des mini-jeux qui simulent{" "}
-              <strong className="text-snow">le vrai monde pro</strong>. Joue,
+              Cap&rsquo; te fait découvrir les écoles de commerce et leurs débouchés à travers des
+              mini-jeux qui simulent <strong className="text-snow">le vrai monde pro</strong>. Joue,
               comprends, échange avec ceux qui y sont déjà.
             </motion.p>
 
@@ -179,7 +178,7 @@ export default function Home() {
               animate={{ opacity: 1, x: 0, rotate: -6 }}
               transition={{
                 delay: 0.45,
-                type: "spring",
+                type: 'spring',
                 stiffness: 70,
                 damping: 14,
               }}
@@ -192,8 +191,7 @@ export default function Home() {
                 Client Brief
               </div>
               <p className="text-sm leading-snug opacity-80">
-                Une marque de chocolat veut rajeunir sa cible. Quelle est ton
-                insight ?
+                Une marque de chocolat veut rajeunir sa cible. Quelle est ton insight ?
               </p>
               <div className="mt-6 flex items-center justify-between font-mono text-[10px] uppercase tracking-wider opacity-60">
                 <span>Famille Conseil</span>
@@ -207,7 +205,7 @@ export default function Home() {
               animate={{ opacity: 1, x: 0, rotate: 4 }}
               transition={{
                 delay: 0.6,
-                type: "spring",
+                type: 'spring',
                 stiffness: 70,
                 damping: 14,
               }}
@@ -220,8 +218,7 @@ export default function Home() {
                 Gestion d&rsquo;entreprise
               </div>
               <p className="text-sm leading-snug opacity-90">
-                4 sous-modules pour comprendre les fondamentaux par
-                l&rsquo;expérience.
+                4 sous-modules pour comprendre les fondamentaux par l&rsquo;expérience.
               </p>
               <div className="mt-6 flex flex-wrap gap-2">
                 <span className="bg-white/15 px-3 py-1 rounded-full text-xs font-mono">
@@ -239,7 +236,7 @@ export default function Home() {
               animate={{ opacity: 1, x: 0, rotate: -3 }}
               transition={{
                 delay: 0.75,
-                type: "spring",
+                type: 'spring',
                 stiffness: 70,
                 damping: 14,
               }}
@@ -253,18 +250,14 @@ export default function Home() {
                   className="w-12 h-12 rounded-full grid place-items-center font-display font-extrabold text-xl text-night"
                   style={{
                     background:
-                      "linear-gradient(135deg, var(--family-finance), var(--family-strategy))",
+                      'linear-gradient(135deg, var(--family-finance), var(--family-strategy))',
                   }}
                 >
                   LM
                 </div>
                 <div>
-                  <div className="font-display font-bold leading-none">
-                    Léa M., 22 ans
-                  </div>
-                  <div className="text-xs opacity-60 mt-1">
-                    Master Marketing · 2 échanges/mois
-                  </div>
+                  <div className="font-display font-bold leading-none">Léa M., 22 ans</div>
+                  <div className="text-xs opacity-60 mt-1">Master Marketing · 2 échanges/mois</div>
                 </div>
               </div>
               <div className="flex flex-wrap gap-2 mt-4">
@@ -289,10 +282,10 @@ export default function Home() {
             </div>
             <h2
               className="font-display font-extrabold tracking-[-0.03em]"
-              style={{ fontSize: "clamp(40px, 6vw, 72px)" }}
+              style={{ fontSize: 'clamp(40px, 6vw, 72px)' }}
             >
-              2 univers, 1{" "}
-              <span className="text-sun" style={{ fontStyle: "italic" }}>
+              2 univers, 1{' '}
+              <span className="text-sun" style={{ fontStyle: 'italic' }}>
                 cap
               </span>
               .
@@ -312,9 +305,9 @@ export default function Home() {
                 Découverte
               </h3>
               <p className="text-snow/70 text-[18px] leading-relaxed mb-10 max-w-[480px]">
-                Explore les 6 familles de métiers post-école de commerce.
-                Chaque mini-jeu te donne accès à : fiche secteur ONISEP, liste
-                des métiers, et 3 bénévoles disponibles pour échanger.
+                Explore les 6 familles de métiers post-école de commerce. Chaque mini-jeu te donne
+                accès à : fiche secteur ONISEP, liste des métiers, et 3 bénévoles disponibles pour
+                échanger.
               </p>
 
               <div className="space-y-4">
@@ -355,9 +348,9 @@ export default function Home() {
                 Programmes
               </h3>
               <p className="text-snow/70 text-[18px] leading-relaxed mb-10 max-w-[480px]">
-                Teste les modules de cours emblématiques des écoles
-                partenaires. Tu joues avec leurs vraies notions, tu vois leur
-                vision pédagogique, et tu peux entrer en contact directement.
+                Teste les modules de cours emblématiques des écoles partenaires. Tu joues avec leurs
+                vraies notions, tu vois leur vision pédagogique, et tu peux entrer en contact
+                directement.
               </p>
 
               <div className="space-y-4">
@@ -400,7 +393,7 @@ export default function Home() {
           </div>
           <h2
             className="font-display font-extrabold tracking-[-0.03em] mb-12 md:mb-16"
-            style={{ fontSize: "clamp(36px, 5vw, 56px)" }}
+            style={{ fontSize: 'clamp(36px, 5vw, 56px)' }}
           >
             Les 6 familles de métiers.
           </h2>
@@ -411,10 +404,10 @@ export default function Home() {
                 key={f.key}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-80px" }}
+                viewport={{ once: true, margin: '-80px' }}
                 transition={{
                   delay: i * 0.05,
-                  type: "spring",
+                  type: 'spring',
                   stiffness: 90,
                   damping: 16,
                 }}
@@ -431,9 +424,7 @@ export default function Home() {
                 >
                   <f.Icon className="w-6 h-6" />
                 </div>
-                <h3 className="font-display font-bold text-2xl mb-2 tracking-tight">
-                  {f.name}
-                </h3>
+                <h3 className="font-display font-bold text-2xl mb-2 tracking-tight">{f.name}</h3>
                 <p className="text-sm text-snow/60 leading-snug">{f.preview}</p>
               </motion.div>
             ))}
@@ -449,13 +440,12 @@ export default function Home() {
           </div>
           <h2
             className="font-display font-extrabold tracking-[-0.03em] mb-3"
-            style={{ fontSize: "clamp(36px, 5vw, 56px)" }}
+            style={{ fontSize: 'clamp(36px, 5vw, 56px)' }}
           >
             Écoles partenaires.
           </h2>
           <p className="text-snow/60 text-[18px] mb-12 max-w-[560px]">
-            On commence avec l&rsquo;UCL Lille. D&rsquo;autres écoles
-            arrivent.
+            On commence avec l&rsquo;UCL Lille. D&rsquo;autres écoles arrivent.
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-5 gap-5">
@@ -463,9 +453,9 @@ export default function Home() {
             <div
               className="md:col-span-3 p-8 rounded-3xl border-2 relative overflow-hidden"
               style={{
-                borderColor: "var(--pivot)",
+                borderColor: 'var(--pivot)',
                 background:
-                  "linear-gradient(135deg, rgba(140,110,255,0.18), rgba(140,110,255,0.04))",
+                  'linear-gradient(135deg, rgba(140,110,255,0.18), rgba(140,110,255,0.04))',
               }}
             >
               <div className="absolute top-5 right-5 font-mono text-[10px] uppercase tracking-widest bg-mint/15 text-mint px-2.5 py-1 rounded-full border border-mint/30">
@@ -473,7 +463,7 @@ export default function Home() {
               </div>
               <div
                 className="font-display font-extrabold text-3xl tracking-tight mb-1"
-                style={{ color: "var(--pivot)" }}
+                style={{ color: 'var(--pivot)' }}
               >
                 Université Catholique de Lille
               </div>
@@ -498,17 +488,12 @@ export default function Home() {
             </div>
 
             {/* Coming soon — placeholders génériques */}
-            {[
-              { name: "École en attente" },
-              { name: "École en attente" },
-            ].map((s, i) => (
+            {[{ name: 'École en attente' }, { name: 'École en attente' }].map((s, i) => (
               <div
                 key={i}
                 className="md:col-span-1 p-6 rounded-3xl border border-night-200 opacity-50 hover:opacity-70 transition-opacity"
               >
-                <div className="font-display font-bold text-xl tracking-tight mb-3">
-                  {s.name}
-                </div>
+                <div className="font-display font-bold text-xl tracking-tight mb-3">{s.name}</div>
                 <div className="font-mono text-[10px] uppercase tracking-widest text-snow/40">
                   Bientôt
                 </div>
@@ -535,10 +520,7 @@ export default function Home() {
             <Link className="hover:text-snow transition-colors" href="/login">
               Pour les diplômés
             </Link>
-            <Link
-              className="hover:text-snow transition-colors"
-              href="/criteres"
-            >
+            <Link className="hover:text-snow transition-colors" href="/criteres">
               Critères de sélection des écoles
             </Link>
             <Link className="hover:text-snow transition-colors" href="/login">
@@ -574,9 +556,7 @@ function FeatureRow({
         <Icon className="w-5 h-5" />
       </div>
       <div>
-        <div className="font-display font-bold text-base leading-tight">
-          {title}
-        </div>
+        <div className="font-display font-bold text-base leading-tight">{title}</div>
         <div className="text-snow/60 text-sm mt-1">{body}</div>
       </div>
     </div>
