@@ -5,3 +5,5 @@ build/
 .refactor-snapshots/
 package-lock.json
 *.lock
+test-results/
+playwright-report/
