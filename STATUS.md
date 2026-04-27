@@ -1,63 +1,65 @@
 # STATUS — Cap&rsquo;
 
-> Dernière update : Session 2 (full reprise) · 2026-04-26 · démo-ready
+> Dernière update : Session 3 · 2026-04-27 · pivot UCL Lille + nettoyage
 
 ## ✅ Fait
 
 ### Foundation (S1)
 - Next.js 14 (App Router) + TS strict + Tailwind v3 + Framer Motion + Zustand + Supabase SDK
-- Identité Cap&rsquo; câblée (palette CSS variables + Bricolage Grotesque + JetBrains Mono + GrainOverlay)
-- `<Logo />` avec apostrophe jaune iconique + pulse au hover
-- **Landing complète** : hero 2 cols + 3 cards inclinées, section "2 univers, 1 cap", grid 6 familles, ESCP featured, **section partenariat école avec modal & insert direct dans `leads`**
+- Identité Cap&rsquo; complète (palette CSS variables, Bricolage Grotesque + JetBrains Mono, GrainOverlay, favicon SVG apostrophe iconique, OG image 1200×630)
+- `<Logo />` cliquable partout + apostrophe jaune iconique avec pulse hover
+- **Landing complète** : hero 2 cols + 3 cards inclinées (Découverte / UCL Programmes / bénévole), section "2 univers, 1 cap", grid 6 familles, section écoles partenaires (UCL featured), section partenariat école (modal, insert direct dans `leads`), pitch deck CTA
+- Page `/criteres` (10 critères de sélection des écoles + footer mention indépendance)
+- Light/dark mode toggle persistant + FOUC-free
 
 ### Auth (S2)
 - Email + password (sans confirmation, signup direct → session immédiate)
-- `/login` avec toggle login ↔ signup, validation password ≥ 6, errors friendly en FR
-- `/onboarding` dépouillé : juste le choix du rôle, écrit `profiles.role`
-- Auth-gated everywhere (redirect approprié si pas de session ou pas de rôle)
-- Logout fonctionnel
+- `/login` toggle login/signup, errors friendly FR
+- `/onboarding` choix rôle (lycéen / diplômé), upsert robuste
+- Auth-gated everywhere
 
 ### Schema Supabase v1
-- 3 tables : `profiles` (id FK auth.users, role nullable), `game_results` (skills jsonb + enjoyment 1-5), `leads` (candidatures écoles)
-- RLS partout : user voit/édite que son profil, anon peut insérer des leads (insert-only, pas de read)
-- Trigger `handle_new_user` auto-crée le profil au signup avec `role = raw_user_meta_data->>'role'` (null par défaut → /onboarding)
+- `profiles` (id FK auth.users, role nullable) + trigger `handle_new_user`
+- `game_results` (skills jsonb, enjoyment, score, family_id, payload)
+- `leads` (school_name, contact_*, message, source) — sert pour partnership ET student-to-school
 
-### Hub & Découverte
-- `/hub` à 2 univers (Découverte jaune / Programmes violet), header email + déconnexion
-- `/decouverte` : grid 6 familles (Marketing live, 5 autres "Bientôt")
-- **`/decouverte/marketing` — fiche secteur éditoriale complète** : intro, 4 scènes du quotidien, 3 ranges salaires, 5 étapes parcours, 15 entreprises, soft skills
-- `/decouverte/marketing/metiers` : 5 métiers détaillés (Brand Manager, PMM, Growth Marketer, Communication Manager, Chef Produit FMCG) — journée type, salaires, parcours
-- `/decouverte/marketing/benevoles` : 2 bénévoles en dur (Léa M., ESCP M2 / Mondelēz · Tom G., Doctolib / ex-Vinted) avec topics, formats, dispo
+### Hub & Découverte (S2)
+- `/hub` à 2 univers (Découverte jaune / Programmes violet) + footer
+- `/decouverte` 6 familles (Marketing live, 5 autres "Bientôt")
+- Famille **Marketing** complète : `/decouverte/marketing` (fiche éditoriale) + `/metiers` (5 métiers détaillés) + `/benevoles` (Léa + Tom)
+- Hub jeux Marketing : 7 jeux (2 jouables / 5 placeholders éditoriaux)
+- 🎮 **Mapping Concurrentiel** + 🎮 **Mix Marketing 4P** jouables (drag & drop, scoring)
 
-### Mini-jeux Marketing
-- Architecture scalable : `lib/games-registry.ts` + `lib/game-components.ts` (lazy loading) + `<GameShell />` (header sticky + manche counter + instructions toggle + quit confirm + 5-stars rating + Supabase save)
-- `/decouverte/marketing/jeux` — hub des 7 jeux (2 jouables / 5 placeholders éditoriaux)
-- **`/decouverte/marketing/jeux/[gameId]`** — résolveur dynamique (Coming Soon page si non-mappé)
-- **🎮 Mapping Concurrentiel JOUABLE** — 3 manches (Auto, Café, Smartphone), drag & drop pointer events, scoring euclidien, 5 marques par manche, feedback couleurs (mint > 70% / sun > 45% / coral)
-- **🎮 Mix Marketing 4P JOUABLE** — 3 manches (Apple, Decathlon, Lush), drag & drop @dnd-kit dans 4 colonnes (Produit/Prix/Place/Promo), 12 cartes par manche, validation avec checkmarks/X
-- Sauvegarde auto dans `game_results` à la fin (skills + enjoyment + score + duration), backup localStorage pour mode invité
+### Pitch deck (S2/S3)
+- `/pitch` interactif 10 slides, navigation clavier (← → espace + ↑↓ + F + Esc), URL hash sync, fullscreen
+- Slides : Hook / Pourquoi nous (équipe) / Problématique / Benchmark / Solution / Démo live (iframe) / Intérêt écoles / Modèle éco / Nos besoins / Cap&rsquo; c&rsquo;est simple
+- Modal Critères de sélection des écoles partenaires (RNCP, Qualiopi, ECTS, AACSB)
 
-## 🟡 Décisions produit prises sans confirmation
+### 🆕 Programmes · UCL Lille — Module Gestion d&rsquo;entreprise (S3)
+- **École partenaire pilote** : Université Catholique de Lille (cours de Monica Scarano)
+- `/programmes/ucl/gestion-entreprise` (hub module) — 4 cards sous-modules + bonus
+- 4 sous-modules avec page contenu éditoriale + mini-jeu jouable :
+  1. **Reconnaître une entreprise** (`/reconnaitre-entreprise`) → 🎮 **EntrepriseExplorer** : tri 12 entreprises × 3 axes (forme juridique / secteur / taille), score sur 36
+  2. **Choisir le bon statut** (`/choisir-statut`) → 🎮 **StatutQuiz** : arbre de décision interactif sur 5 cas (Léa / Marc / Sophie / Famille Dupont / Collectif Code) menant à EI / EURL / SARL / SAS / SCOP
+  3. **Analyser l&rsquo;environnement** (`/pestel`) → 🎮 **PestelMatch** : drag&drop 18 facteurs × 6 dimensions (P/E/S/T/É/L) sur 3 manches (pétrolière / mode / auto électrique)
+  4. **Comprendre son marché** (`/marche`) → 🎮 **MarketRadar** : 3 manches × 3 épreuves (segmentation produits / segmentation clients NCR-NCA-CA-CP / calcul PM ou pénétration) sur Peugeot / Decathlon / Netflix
+- `/programmes/ucl/gestion-entreprise/termine` — page finale avec hero célébration, stats personnelles (skills + score), présentation UCL, programmes liés, témoignage, **lead form** qui insère dans `leads` avec `source='ucl-gestion-entreprise-student'`
 
-(L&rsquo;user a explicitement dit "fais confiance, lecture libre depuis CLAUDE.md".)
+### Cleanup écoles fictives (S3 ÉTAPE 1)
+- Supprimé toutes mentions ESCP / HEC / EMLyon / ESSEC / NEOMA / SKEMA dans le code
+- Palette `--school-*` retirée de `globals.css` + `tailwind.config.ts`
+- Section écoles partenaires de la landing reconstruite (UCL featured + 2 placeholders génériques)
+- Bénévole Léa rendue générique ("Master Marketing" au lieu d&rsquo;"ESCP M2")
+- Seules **écoles réelles de l&rsquo;équipe** mentionnées (slide pitch "Pourquoi nous") : INSEEC, Gaming Campus, IRIIG, IAE, Cybersécurité
 
-- **Section partenariat** placée juste avant le footer de la landing (cohérent avec le funnel : on parle aux étudiants, puis à la fin on parle aux écoles)
-- **Tagline section partenariat** : "Tu diriges une école ?" (tutoiement même pour B2B, conforme à la copy Cap&rsquo;)
-- **Card échantillon ESCP** dans la section partenariat (chiffrée : Time-to-Live 21j, format 8 min) pour montrer concrètement le rendu
-- **Email contact partenariat** : `team@cap.app` (placeholder)
-- **2 bénévoles Marketing** : Léa M. (étudiante ESCP M2 stagiaire annonceur) et Tom G. (jeune diplômé en poste growth) — couvrent les 2 audiences cibles (étudiant + post-école)
-- **Résolveur `[gameId]`** affiche une page Coming Soon éditoriale stylée pour les 5 placeholders (concept, aperçu en 3 bullets, retour) — plus engageante qu&rsquo;une 404
-- **Skills tracking** : 4 dimensions (analyse, communication, creativite, strategie) en jsonb pour rester souple. Calcul par jeu : Mapping privilégie analyse, Mix favorise stratégie
+## 🔴 Pour Session 4
 
-## 🔴 Reste pour Session 3
-
-- Module **ESCP Business Plan** (mini-jeu BusinessCanvas + plaquette ESCP + formulaire de contact étudiant qui collecte les leads B2C)
-- 5 autres mini-jeux Marketing (Persona Builder, Segmentation, Positionnement, Budget Pub, SWOT)
+- Module ESCP / HEC / autres écoles partenaires (à réactiver QUAND on signe)
 - Dashboard étudiant `/dashboard` (badges, jeux complétés, secteurs explorés, contacts à venir)
 - Mode invité réel `/jeux-libres`
-- 5 autres familles à remplir (Conseil, Finance, Tech, Startup, Retail)
-- Resend SMTP custom dans Supabase si on revient sur magic link
-- Polish responsive mobile sur les pages éditoriales et les jeux
+- 5 autres familles Découverte à remplir (Conseil, Finance, Tech, Startup, Retail)
+- 5 autres mini-jeux Marketing (Persona Builder, Segmentation, Positionnement, Budget Pub, SWOT)
+- Resend SMTP custom dans Supabase (pour réactiver magic link / OTP en prod)
 
 ## 📦 Déploiement
 
@@ -65,29 +67,41 @@
 - **URL Vercel (alias stable)** : https://cap-two-fawn.vercel.app
 - **Vercel project** : `lekarma2s-projects/cap` (auto-deploy on push to `main`)
 
-## 🧪 Test end-to-end pour la démo
+## 🎮 Liens directs vers les 4 mini-jeux UCL
 
-1. **Logout** sur la landing
-2. **/login** → "Première fois ?" → mode signup → `demo@cap.app` / `demo1234` → bouton créer
-3. **Onboarding** : choisis "Lycéen·ne" → atterrit sur **/hub**
-4. **/hub** → click card jaune "Découverte"
-5. **/decouverte** → click card Marketing
-6. **/decouverte/marketing** → scroll la fiche entière (intro, quotidien, salaires, parcours, entreprises, soft skills)
-7. Click "Voir les 5 métiers" → check les cards
-8. Retour, click "Échanger avec bénévoles" → check Léa & Tom
-9. Retour, click "Tester avec 7 mini-jeux"
-10. Click "Mapping Concurrentiel" (carte jaune en haut) → joue les 3 manches → notation 5 étoiles → submit → retour au hub jeux
-11. Click "Mix Marketing (4P)" → joue les 3 manches → submit
-12. Vérifie dans **Supabase Table Editor → `game_results`** : 2 lignes créées
-13. Click un jeu "Bientôt" (Persona Builder) → vérifie la page Coming Soon
-14. Logout, retour landing, scroll en bas, click "Devenir partenaire" → soumets une candidature → vérifie dans **Supabase Table Editor → `leads`**
+| # | Sous-module | Mini-jeu | URL |
+|---|---|---|---|
+| 01 | Reconnaître une entreprise | EntrepriseExplorer | `/programmes/ucl/gestion-entreprise/reconnaitre-entreprise/jeu` |
+| 02 | Choisir le bon statut | StatutQuiz | `/programmes/ucl/gestion-entreprise/choisir-statut/jeu` |
+| 03 | Analyser l&rsquo;environnement | PestelMatch | `/programmes/ucl/gestion-entreprise/pestel/jeu` |
+| 04 | Comprendre son marché | MarketRadar | `/programmes/ucl/gestion-entreprise/marche/jeu` |
 
-## 📝 Notes techniques
+Page finale : `/programmes/ucl/gestion-entreprise/termine`
 
-- **Database type** hand-rolled avec structure complète (Tables/Views/Functions/Enums/CompositeTypes + Relationships par table) pour que l&rsquo;inférence stricte de `@supabase/supabase-js` fonctionne
-- **shadcn 4.5** initialement installé puis virié (incompat Tailwind v4 ↔ v3) — on utilise du HTML+Tailwind direct partout
-- **ESLint** : `react/jsx-no-comment-textnodes` désactivé (le `// ...` mono fait partie de l&rsquo;identité visuelle)
-- **Border-radius** : 16px / 24px conformément à l&rsquo;identité
-- **Mode dark only**, pas de toggle clair
-- **Mini-jeux mode invité** : `saveGameResult` accepte user_id null (RLS le permet) + backup localStorage `cap.game_results`
-- **Drag&drop** : pointer events natifs pour Mapping (positionnement libre), `@dnd-kit/core` pour Mix Marketing (drop zones discrètes)
+## 📂 Fichiers ajoutés (S3)
+
+- `lib/schools-database.ts` — école UCL + module + 4 sous-modules avec contenu pédagogique
+- `app/programmes/ucl/gestion-entreprise/page.tsx` — hub module
+- `app/programmes/ucl/gestion-entreprise/[moduleId]/page.tsx` — page contenu dynamique
+- `app/programmes/ucl/gestion-entreprise/[moduleId]/jeu/page.tsx` — résolveur de mini-jeu
+- `app/programmes/ucl/gestion-entreprise/termine/page.tsx` — plaquette finale + lead form
+- `components/games/EntrepriseExplorer.tsx` — tri multi-critères 12 entreprises × 3 axes
+- `components/games/StatutQuiz.tsx` — arbre de décision 5 cas
+- `components/games/PestelMatch.tsx` — drag&drop 18 facteurs × 6 dimensions × 3 secteurs
+- `components/games/MarketRadar.tsx` — 3 manches × 3 épreuves (segmentation + calcul)
+
+## 🗑️ Fichiers retirés / nettoyés (S3 ÉTAPE 1)
+
+- `globals.css` — palette `--school-escp/-hec/-emlyon/-essec` retirée (root + light mode)
+- `tailwind.config.ts` — `colors.school` retiré
+- Mentions textes ESCP/HEC/EMLyon/ESSEC/NEOMA/SKEMA dans : `app/page.tsx`, `app/hub/page.tsx`, `app/programmes/page.tsx`, `app/dashboard/page.tsx`, `app/decouverte/marketing/jeux/page.tsx`, `components/landing/partnership-section.tsx`, `lib/jobs-database.ts`, `lib/volunteers-database.ts`, `CLAUDE.md`, `STATUS.md`
+- Aucun fichier supprimé physiquement (les routes/composants n&rsquo;existaient pas comme fichiers indépendants — c&rsquo;était uniquement des références textuelles)
+
+## 📝 Décisions techniques (S3)
+
+- **`FamilyId` étendu** avec `"programs-ucl"` (au lieu de famille séparée par école — plus simple pour 1 école pilote, on extraira si besoin pour scale)
+- **Skills** : ajout de `rigueur` aux 4 dims existantes (analyse / communication / créativité / stratégie / rigueur)
+- **Routes dynamiques `[moduleId]`** : 1 page contenu + 1 page jeu pour les 4 sous-modules → DRY, contenu vit dans `schools-database.ts`
+- **Page `/termine`** : route statique placée à côté de `[moduleId]` — Next.js privilégie les routes statiques sur les dynamiques, donc pas de conflit
+- **Lead form étudiant → école** : insère dans la table `leads` existante avec `source='ucl-gestion-entreprise-student'` (pas de table dédiée ; le `school_name` indique vers qui le lead doit être routé)
+- **Stats sur `/termine`** : lues depuis localStorage `cap.game_results` (filtré par `family_id='programs-ucl'`) — pas de query Supabase pour éviter le délai et fonctionner en mode invité

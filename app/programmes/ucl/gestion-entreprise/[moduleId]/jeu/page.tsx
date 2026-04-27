@@ -29,6 +29,13 @@ export default function UclGamePage({
   const Game = gameComponents[meta.id];
   if (!Game) notFound();
 
+  // À la fin du 4ème (et dernier) sous-module, on emmène l'utilisateur sur
+  // la plaquette de fin + lead form, pas sur la page de contenu.
+  const isFinal = params.moduleId === "marche";
+  const returnHref = isFinal
+    ? "/programmes/ucl/gestion-entreprise/termine"
+    : `/programmes/ucl/gestion-entreprise/${params.moduleId}`;
+
   return (
     <GameShell
       gameId={meta.id}
@@ -37,7 +44,7 @@ export default function UclGamePage({
       totalRounds={meta.totalRounds}
       instructions={meta.concept}
       accent="var(--pivot)"
-      returnHref={`/programmes/ucl/gestion-entreprise/${params.moduleId}`}
+      returnHref={returnHref}
     >
       <Game />
     </GameShell>
