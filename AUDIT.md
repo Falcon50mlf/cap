@@ -127,10 +127,19 @@
 - **Décision Session 3** : pragmatique, pas de migration nécessaire — discriminé via `source`.
 - **Action recommandée** : à long terme, séparer `partnership_leads` et `student_leads` (migration SQL). À noter dans `TODO_PHASE_4.md` car ça touche au schéma DB.
 
-### I8. Duplication de pattern entre les 6 mini-jeux
+### I8. Duplication de pattern entre les mini-jeux drag-sort (triade `Pool / Zone / DraggableX / Pill`)
 
-- Tous ont : `RoundsBadge`, `ResultPanel`/`ResultActions`, `validated state`, `scores: number[]`, color thresholds (mint > 75 > sun > 50 > coral).
-- **Action recommandée** : extraire `<RoundsBadge scores total current />` et `<ResultActions score isLast onNext onFinish />` dans `components/games/shared/`. **Risque visuel : 0** si props identiques.
+- **Pattern révélé par les 4 audits GDD UCL** (commit `a202dbd`, voir `AUDIT-product.md`).
+- **Triade dupliquée** : `Zone` + `Pool` + `DraggableX` + `XPill` (~145 lignes / jeu).
+  - `EntrepriseExplorer` : `Zone` (244-289) + `Pool` (290-321) + `DraggableCompany` (323-345) + `CompanyPill` (347-389).
+  - `PestelMatch` : `Zone` (304-358) + `Pool` (359-393) + `DraggableCard` (394-417) + `CardPill` (418-468).
+  - `MixMarketing4P` : même triade avec naming `DraggableCard` / `CardPill` (à harmoniser).
+- **Total dupliqué** : ~435 lignes (3 jeux × 145).
+- **Jeux non concernés** : `StatutQuiz` (decision tree, pas de drag), `MarketRadar` (QCM phases, pas de drag), `MappingConcurrentiel` (pointer events natifs, drag 2D libre).
+- **Bonus partagé par les 6 jeux** : `RoundsBadge`, `ResultPanel`/`ResultActions`, `validated state`, `scores: number[]`, color thresholds (mint > 75 > sun > 50 > coral).
+- **Sortie cible** : `components/games/shared/{DragSortGame.tsx, Zone.tsx, Pool.tsx, DraggablePill.tsx}` + harmoniser le naming `Pill` (vs `Card`/`Company`). Plus `<RoundsBadge>` et `<ResultActions>`.
+- **Action recommandée** : extraire la triade + les 2 composants partagés. **Risque visuel : 0** si props identiques.
+- **Effort** : **L** (~4 h — refactor structurel touchant 3 fichiers > 400 lignes + 1 helper de drag context).
 
 ---
 
@@ -172,7 +181,7 @@ Ordre suggéré pour la Phase 3, du plus safe au plus risqué visuellement.
 2. **I2 — Drop unused deps** (10 min, risque visuel 0, gain bundle)
 3. **C2 + C3 — Add `error.tsx` + `loading.tsx`** (30 min, risque visuel 0)
 4. **M4 — Migrer Mapping vers `lib/scoring.ts`** (15 min, risque visuel 0)
-5. **I8 — Extraire `<RoundsBadge>` + `<ResultActions>` partagés** (45 min, risque visuel 0)
+5. **I8 — Extraire la triade `Pool/Zone/DraggablePill` + `<RoundsBadge>` + `<ResultActions>` partagés** (~4 h, risque visuel 0 — voir AUDIT-product.md)
 6. **I1 — Splitter les fichiers jeux > 300 lignes** (2 h, risque visuel 0 si props/styles conservés)
 7. **I1 — Splitter `app/page.tsx` et `termine/page.tsx`** (1 h, risque visuel 0)
 8. **I4 — Promouvoir `#3B82F6` et `#E8732D` en CSS vars** (30 min, risque visuel 0 si valeurs identiques)
@@ -180,7 +189,7 @@ Ordre suggéré pour la Phase 3, du plus safe au plus risqué visuellement.
 10. **M2 — Focus-visible styles** (30 min, risque visuel ≈0)
 11. **M1 — Aria-labels** (15 min, risque visuel 0)
 
-Total estimé : **~6 h 30** de refactor pur. À étaler sur 2 sessions de 3 h.
+Total estimé : **~9 h 45** de refactor pur (I8 ré-évalué M→L après audit GDD). À étaler sur 3 sessions de ~3 h.
 
 ---
 
