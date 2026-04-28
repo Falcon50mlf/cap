@@ -4,6 +4,19 @@
 
 ---
 
+## 📚 Game design references — LIRE AVANT TOUTE TÂCHE GAMIFICATION
+
+Pour toute tâche impliquant gamification, mini-jeux, ou features de type jeu :
+
+1. **Lire d'abord** : `docs/game-design-knowledge.md` — théorie, frameworks, anti-patterns
+2. **Suivre le workflow** : `docs/game-design-workflow.md` — process en 7 étapes obligatoires
+3. **Choisir parmi le catalogue** : `docs/game-mechanics-catalog.md` — mécaniques validées et combinables
+4. **Ne jamais coder** sans avoir produit un GDD.md pour la feature
+
+Ces fichiers sont la source de vérité pour la qualité game design sur Cap'. La gamification doit incarner les concepts éducatifs, jamais les décorer avec des points/badges.
+
+---
+
 ## 🎯 Projet
 
 **Cap'** — Plateforme de découverte des écoles de commerce et de leurs débouchés, à travers des mini-jeux qui simulent le vrai monde pro et les vrais cours.
