@@ -6,7 +6,7 @@
 
 Ce document liste la dette **backend & data** de Cap'. Pour la dette technique frontend voir `AUDIT.md`. Pour la dette gameplay voir `AUDIT-product.md`.
 
-**Statut courant :** 4 critiques, 11 importants, 6 mineurs. Base saine en données (5 lignes total, pré-launch) mais structure fragile.
+**Statut courant :** 4 critiques, **10** importants (était 11), **8** mineurs (était 6). Base saine en données (5 lignes total, pré-launch) mais structure fragile.
 
 ---
 
@@ -87,53 +87,49 @@ Même problème de fragmentation. Pas d'énum ni de table de référence.
 ### I-DB-3 — `profiles.role` en text libre
 
 Risque sécurité : un rôle écrit "Lyceen" au lieu de "lyceen" peut faire échouer silencieusement les RLS futures.
-**Sortie :** énum Postgres strict (`CREATE TYPE user_role AS ENUM ('lyceen', 'etudiant', 'cap_admin')`) + ALTER COLUMN.
+**Sortie :** énum Postgres strict (`CREATE TYPE user_role AS ENUM ('lyceen', 'etudiant_sup', 'cap_admin')`) + ALTER COLUMN.
+**Migration data :** avant ALTER COLUMN, `UPDATE profiles SET role = 'etudiant_sup' WHERE role = 'diplome'` (1-2 lignes en base).
+**UI mapping :** le frontend mappera vers "Lycéen", "Étudiant sup'", "Cap' admin" via un dictionnaire `ROLE_LABELS` (apostrophes / accents restent côté UI, valeurs SQL propres).
 **Effort :** S (5 min, 2 lignes en base à vérifier)
 
-### I-DB-4 — `profiles.niveau` en text libre
-
-Niveau scolaire devrait être un set fini (2nde, 1ere, tale, bac+1, bac+2).
-**Sortie :** énum Postgres strict (`CREATE TYPE niveau_scolaire AS ENUM (...)`) + ALTER COLUMN.
-**Effort :** S
-
-### I-DB-5 — Tables de référence `games` et `families` absentes
+### I-DB-4 — Tables de référence `games` et `families` absentes
 
 Le modèle business Cap' (jeux issus de modules de différentes écoles, attribution éditoriale) n'est pas matérialisé en base.
 **Sortie :** créer les 2 tables avec colonnes `source_school` et `source_module` sur `games` pour matérialiser l'attribution école.
 **Effort :** M (couvert par I-DB-1)
 
-### I-DB-6 — `profiles.school_name` manquant
+### I-DB-5 — `profiles.school_name` manquant
 
 Aucun lien entre un lycéen et son lycée d'origine. Bloque le futur pilotage des partenariats école.
 **Sortie :** ajouter colonne `profiles.school_name TEXT NULLABLE`. Plus tard, table `schools` séparée si pertinent.
 **Effort :** S
 
-### I-DB-7 — `handle_new_user` sans exception handling
+### I-DB-6 — `handle_new_user` sans exception handling
 
 Si la fonction plante (role manquant, contrainte violée), tout le signup rollback avec une erreur cryptique.
 **Sortie :** wrap dans `BEGIN EXCEPTION WHEN OTHERS THEN ... RETURN NEW`.
 **Effort :** S
 
-### I-DB-8 — `handle_new_user` ne copie que `id` et `role`
+### I-DB-7 — Colonnes `profiles` mort-nées : `first_name`, `last_name`, `niveau`
 
-Les champs `first_name`, `last_name`, `niveau` ne sont jamais copiés depuis `raw_user_meta_data`. Probablement complétés par UPDATE post-signup côté frontend.
-**Préalable :** auditer le code frontend signup (`supabase.auth.signUp(...)`) pour voir le contrat actuel.
-**Sortie :** étendre le trigger pour copier tous les champs disponibles dans metadata, avec defaults sûrs (`COALESCE`).
-**Effort :** S (mais dépend d'une décision contrat frontend ↔ trigger)
+**Diagnostic :** l'audit code frontend (29 avril 2026) confirme que ces 3 colonnes ne sont **jamais écrites** par le code app. Le formulaire signup (`app/login/page.tsx`) demande email + password uniquement, sans `options.data`. L'onboarding upsert (`app/onboarding/page.tsx`) ne touche que `id` + `role` + `updated_at`. Conséquence : ces 3 colonnes sont **mortes** en base — toujours `NULL` à vie pour chaque user.
+**Sortie :** **DROP** les 3 colonnes (`ALTER TABLE profiles DROP COLUMN first_name, DROP COLUMN last_name, DROP COLUMN niveau`). Si onboarding enrichi devient un besoin futur, recréer les colonnes proprement avec le code frontend qui les écrit dès le départ.
+**Effort :** S (3 ALTER TABLE DROP COLUMN, données 0 ligne à migrer)
 
-### I-DB-9 — `handle_new_user` n'a pas de default sur `role`
+### I-DB-8 — `handle_new_user` n'a pas de default sur `role`
 
 Quand on aura passé `profiles.role` en NOT NULL + énum strict (cf. I-DB-3), un signup sans `role` dans metadata plantera.
 **Sortie :** `COALESCE(new.raw_user_meta_data ->> 'role', 'lyceen')`.
-**Effort :** S (à grouper avec I-DB-7)
+**Note :** le frontend ne passe rien dans `options.data` au signup, donc le `COALESCE` tombera **systématiquement** sur `'lyceen'`. C'est OK : l'onboarding mettra à jour le rôle ensuite. Le default sert juste à ne pas planter si NOT NULL est appliqué à `role`.
+**Effort :** S (à grouper avec I-DB-6)
 
-### I-DB-10 — Pas de policy DELETE sur `profiles` et `leads`
+### I-DB-9 — Pas de policy DELETE sur `profiles` et `leads`
 
 Conformité RGPD : un user ne peut pas supprimer son compte/données via RLS standard. Force un script admin manuel pour chaque demande.
 **Sortie :** policies DELETE scopées (`auth.uid() = id OR is_admin()` sur profiles, `is_admin()` sur leads).
 **Effort :** S (à grouper avec C-DB-4)
 
-### I-DB-11 — Pas de policy UPDATE/DELETE sur `game_results`
+### I-DB-10 — Pas de policy UPDATE/DELETE sur `game_results`
 
 Décision actée : `game_results` est immutable (pas d'UPDATE jamais). DELETE pour user (RGPD) et admin (cleanup).
 **Sortie :** policy DELETE uniquement (`auth.uid() = user_id OR is_admin()`).
@@ -178,30 +174,54 @@ Permettrait de relier plusieurs sessions du même joueur anonyme.
 **Sortie :** ajouter colonne `game_results.device_id TEXT NULLABLE`. Logique de génération côté frontend (UUID local persistant).
 **Effort :** S (priorité basse, "si possible mais pas critique" actée)
 
+### M-DB-7 — Reads `profiles` sans gestion d'erreur côté frontend
+
+**Diagnostic :** 3 lectures silencieuses dans le code frontend, identifiées par l'audit code du 29 avril 2026 :
+
+- `app/login/page.tsx:62` — `.select('role')` post-auth
+- `app/hub/page.tsx:36` — `.select('*')`
+- `app/onboarding/page.tsx:34` — `.select('role')` gate check
+
+L'erreur est destructurée mais ignorée (`const { data } = await ...`, pas de `, error`). Si la query plante (RLS, latence, row inexistante), `data = null` et le user est redirigé silencieusement vers `/onboarding` ou bloqué.
+**Sortie :** ajouter `, error` à chaque destructuration, gérer explicitement (afficher message coral + log console + retour state error). Pattern existe déjà dans onboarding upsert et login signUp.
+**À inclure dans :** la session migration corrective (Étape 4 sync code repo).
+**Effort :** S (~1 h, ~30 lignes touchées sur 3 fichiers)
+
+### M-DB-8 — Filet de sécurité implicite via upsert onboarding
+
+**Diagnostic :** l'upsert dans `/onboarding` (l. 70) fait INSERT si la row `profiles` n'existe pas, UPDATE sinon. Conséquence : même si le trigger `handle_new_user` plante (cas du finding I-DB-6), l'upsert d'onboarding crée la row à la volée. **Sécurité accidentelle, pas par design.**
+**Sortie :** documenter explicitement ce filet via un commentaire SQL sur le trigger `handle_new_user` ET un commentaire TS dans `app/onboarding/page.tsx`. Pas de changement de code, juste rendre l'intention explicite.
+**Effort :** S (10 min)
+
 ---
 
 ## 📋 Plan de résolution ordonné
 
 Toute la résolution se fait en **une seule session** (~5h), parce que les modifications sont imbriquées et la base est vide. Pas d'avantage à découper.
 
-### Étape 1 — Préalables (30 min)
+### Étape 1 — Préalables ✅ FAIT — audit frontend signup réalisé le 29 avril 2026
 
-- Auditer le code frontend signup pour clarifier le contrat metadata (cf. I-DB-8)
-- Décider du contrat final : tous les champs au signup vs progressive
+**Findings de l'audit frontend** (3 décisions actées) :
+
+- **DROP les colonnes mort-nées** `first_name`, `last_name`, `niveau` — le frontend ne les écrit jamais (cf. I-DB-7).
+- **Énum role = `('lyceen', 'etudiant_sup', 'cap_admin')`** — naming aligné sur la cible Cap' réelle (lycéens + étudiants supérieur). UI mappera via dictionnaire `ROLE_LABELS` (cf. I-DB-3).
+- **Inclure le refactor des 3 reads silencieux** (`profiles.select` sans gestion d'erreur dans login/hub/onboarding) dans la session migration corrective (cf. M-DB-7).
 
 ### Étape 2 — Migration corrective SQL (2h)
 
 Ordre d'exécution important (dépendances) :
 
+0. **Migration data** : `UPDATE profiles SET role = 'etudiant_sup' WHERE role = 'diplome'` (cf. I-DB-3, à faire AVANT l'ALTER COLUMN énum)
 1. Créer fonction `is_admin()` (C-DB-4)
 2. Créer trigger générique `set_updated_at()` (M-DB-1)
-3. Créer énums `user_role`, `niveau_scolaire` (I-DB-3, I-DB-4)
-4. Créer tables `families` puis `games` (I-DB-1, I-DB-2, I-DB-5)
-5. ALTER `profiles` : énums + `school_name` + commentaires (I-DB-3, I-DB-4, I-DB-6, M-DB-2)
-6. ALTER `game_results` : FK + `device_id` + commentaires (C-DB-1, M-DB-3, M-DB-6)
-7. Ré-écrire `handle_new_user` (I-DB-7, I-DB-8, I-DB-9)
-8. Réécrire toutes les policies RLS (C-DB-2, C-DB-3, I-DB-10, I-DB-11)
-9. Ajouter index manquants (M-DB-4, M-DB-5)
+3. Créer énum `user_role` (I-DB-3)
+4. Créer tables `families` puis `games` (I-DB-1, I-DB-2, I-DB-4)
+5. ALTER `profiles` : énum role + `school_name` + commentaires (I-DB-3, I-DB-5, M-DB-2)
+6. **5.bis** — DROP COLUMN `first_name`, `last_name`, `niveau` (résout I-DB-7 reformulé)
+7. ALTER `game_results` : FK + `device_id` + commentaires (C-DB-1, M-DB-3, M-DB-6)
+8. Ré-écrire `handle_new_user` avec exception handling + COALESCE default (I-DB-6, I-DB-8) + commentaire SQL documentant le filet de sécurité onboarding (M-DB-8)
+9. Réécrire toutes les policies RLS (C-DB-2, C-DB-3, I-DB-9, I-DB-10)
+10. Ajouter index manquants (M-DB-4, M-DB-5)
 
 ### Étape 3 — Promotion admin (5 min)
 
@@ -213,6 +233,9 @@ Ordre d'exécution important (dépendances) :
 
 - Aligner `supabase/schema.sql` sur la nouvelle prod (résout AUDIT.md C1)
 - Régénérer les types TS Supabase
+- **Refactor des 3 reads `profiles` avec gestion d'erreur** dans login/hub/onboarding (résout M-DB-7)
+- **Ajouter `ROLE_LABELS` dictionnaire** dans `types/database.ts` ou un fichier dédié pour mapper les valeurs SQL (`'lyceen'`, `'etudiant_sup'`, `'cap_admin'`) vers UI ("Lycéen", "Étudiant sup'", "Cap' admin")
+- **Mettre à jour `app/onboarding/page.tsx`** pour utiliser `'etudiant_sup'` au lieu de `'diplome'` + ajouter commentaire TS sur l'upsert documentant le filet de sécurité (M-DB-8)
 - Adapter le code frontend si le contrat signup a changé
 
 ### Étape 5 — Tests de non-régression (30 min)
@@ -231,19 +254,23 @@ Ordre d'exécution important (dépendances) :
 
 Pour traçabilité dans le temps :
 
-| Décision                                                                      | Justification                                                                               |
-| ----------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- |
-| `game_results` immutable (pas d'UPDATE)                                       | Événements passés, audit trail naturel, analytics propres                                   |
-| Admin via JWT claim `app_metadata.role`                                       | Pattern Supabase recommandé : non-récursif, performant, extensible                          |
-| Modèle hybride anonymous/loggé en `game_results.user_id NULLABLE`             | Validé : libre-service ouvert, modules école nécessitent compte                             |
-| Pas de notion de "programme école" en DB                                      | Modèle business : attribution éditoriale uniquement, pas pilotage tech                      |
-| FK avec `ON DELETE CASCADE` sur profiles, `SET NULL` sur game_results.user_id | RGPD-friendly : suppression user = suppression profile, mais préserve analytics anonymisées |
+| Décision                                                                      | Justification                                                                                                                       |
+| ----------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
+| `game_results` immutable (pas d'UPDATE)                                       | Événements passés, audit trail naturel, analytics propres                                                                           |
+| Admin via JWT claim `app_metadata.role`                                       | Pattern Supabase recommandé : non-récursif, performant, extensible                                                                  |
+| Modèle hybride anonymous/loggé en `game_results.user_id NULLABLE`             | Validé : libre-service ouvert, modules école nécessitent compte                                                                     |
+| Pas de notion de "programme école" en DB                                      | Modèle business : attribution éditoriale uniquement, pas pilotage tech                                                              |
+| FK avec `ON DELETE CASCADE` sur profiles, `SET NULL` sur game_results.user_id | RGPD-friendly : suppression user = suppression profile, mais préserve analytics anonymisées                                         |
+| Colonnes `profiles` mort-nées DROPées (`first_name`, `last_name`, `niveau`)   | Schema doit refléter ce que le frontend fait réellement, pas une intention abandonnée                                               |
+| Énum role = `('lyceen', 'etudiant_sup', 'cap_admin')`                         | Aligne sur cible Cap' réelle (lycéens + étudiants sup) plutôt que `diplome` trop restrictif                                         |
+| UI mapping via dictionnaire `ROLE_LABELS`                                     | Permet d'afficher "Lycéen", "Étudiant sup'", "Cap' admin" tout en gardant des valeurs SQL propres (pas d'apostrophe, pas d'accents) |
 
 ---
 
 ## 🔗 Cross-références
 
 - **AUDIT.md C1** (schema.sql désynchronisé) → résolu par Étape 4 du plan ci-dessus
+- **Audit frontend signup** : effectué le 29 avril 2026, résultats intégrés dans les findings I-DB-3, I-DB-7, I-DB-8, M-DB-7, M-DB-8
 - **AUDIT-product.md** → indépendant, peut avancer en parallèle
 - **CLAUDE.md** → à mettre à jour après migration pour référencer le nouveau modèle de données
 
